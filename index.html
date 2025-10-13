@@ -11,49 +11,24 @@
     <header>
       <img src="perfil.jpg" alt="Foto de perfil" class="logo" />
       <h1>Meus Textos</h1>
-      <p>Um espaço para minhas crônicas, reflexões e poesias.</p>
+      <p>Um espaço para minhas crônicas e reflexões pessoais.</p>
     </header>
 
-    <div id="categorias">
-      <button class="categoria-btn active" data-categoria="tudo">Tudo</button>
-      <button class="categoria-btn" data-categoria="cronicas">Crônicas</button>
-      <button class="categoria-btn" data-categoria="poesias">Poesias</button>
-      <button class="categoria-btn" data-categoria="reflexoes">Reflexões</button>
-    </div>
-
     <div id="catalogo">
-      <div class="texto-card" data-categoria="cronicas">
-        <h3>Silêncio nas Ruas</h3>
+      <div class="texto-card">
+        <h3>Por que é tão difícil ficar sem celular?</h3>
         <p>
-No meio da cidade, onde o barulho nunca dorme, há uma pausa.  
-O vento carrega histórias não contadas, e cada luz acesa parece guardar um segredo.  
+Vivemos grudados nas telas.  
+Cada notificação é como um pequeno chamado de atenção — um lembrete de que o mundo digital continua girando, mesmo quando tentamos parar.  
 
-Caminho sem destino, ouvindo passos que não são meus,  
-e percebo: o silêncio, às vezes, diz mais do que qualquer voz.
-        </p>
-        <a href="#" class="ler-mais">Ler mais</a>
-      </div>
+Mas por que é tão difícil simplesmente deixar o celular de lado?  
+Talvez porque ele se tornou mais do que uma ferramenta: é uma extensão da nossa mente, da nossa identidade e até da nossa solidão.  
 
-      <div class="texto-card" data-categoria="poesias">
-        <h3>Fragmentos</h3>
-        <p>
-Entre o que fui e o que serei, há um intervalo de luz.  
-Ali, repousa a dúvida, o medo, e a beleza do incerto.  
+Desbloquear a tela é como abrir uma janela para infinitas possibilidades — e infinitas distrações.  
+A cada toque, buscamos algo: uma mensagem, uma validação, um pouco de dopamina.  
 
-Ser inteiro é também saber quebrar —  
-e ainda assim se reconhecer nos cacos.
-        </p>
-        <a href="#" class="ler-mais">Ler mais</a>
-      </div>
-
-      <div class="texto-card" data-categoria="reflexoes">
-        <h3>Sobre o Tempo</h3>
-        <p>
-O tempo não cura, mas ensina.  
-Ele mostra que nem toda ferida fecha, mas toda dor se transforma.  
-
-O tempo é um espelho que não mente —  
-reflete o que insistimos em não ver.
+O problema é que, quanto mais nos acostumamos com esse fluxo constante, mais o silêncio parece incômodo.  
+Ficar sem o celular é, de certa forma, enfrentar a si mesmo — e nem sempre estamos prontos para isso.
         </p>
         <a href="#" class="ler-mais">Ler mais</a>
       </div>
@@ -65,26 +40,6 @@ reflete o que insistimos em não ver.
   </div>
 
   <script>
-    // Alternar entre categorias
-    const botoes = document.querySelectorAll('.categoria-btn');
-    const cards = document.querySelectorAll('.texto-card');
-
-    botoes.forEach(btn => {
-      btn.addEventListener('click', () => {
-        botoes.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const cat = btn.getAttribute('data-categoria');
-
-        cards.forEach(card => {
-          if (cat === 'tudo' || card.getAttribute('data-categoria') === cat) {
-            card.style.display = 'block';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
-    });
-
     // Ler mais / recolher texto
     const botoesLerMais = document.querySelectorAll('.ler-mais');
     botoesLerMais.forEach(botao => {
