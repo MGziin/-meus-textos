@@ -1,43 +1,100 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meus Textos</title>
   <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
 </head>
 <body>
   <div class="container">
     <header>
-      <img src="https://i.imgur.com/VILKZQm.png" alt="Logo" class="logo" />
-      <h1>@mgziin</h1>
-      <p>Catálogo de textos • Poemas, Crônicas e Contos</p>
+      <img src="perfil.jpg" alt="Foto de perfil" class="logo" />
+      <h1>Meus Textos</h1>
+      <p>Um espaço para minhas crônicas, reflexões e poesias.</p>
     </header>
 
+    <div id="categorias">
+      <button class="categoria-btn active" data-categoria="tudo">Tudo</button>
+      <button class="categoria-btn" data-categoria="cronicas">Crônicas</button>
+      <button class="categoria-btn" data-categoria="poesias">Poesias</button>
+      <button class="categoria-btn" data-categoria="reflexoes">Reflexões</button>
+    </div>
 
-    <main>
-      <section id="categorias">
-        <button class="categoria-btn active" data-categoria="todos">Todos</button>
-        <button class="categoria-btn" data-categoria="poemas">Poemas</button>
-        <button class="categoria-btn" data-categoria="cronicas">Crônicas</button>
-        <button class="categoria-btn" data-categoria="contos">Contos</button>
-      </section>
+    <div id="catalogo">
+      <div class="texto-card" data-categoria="cronicas">
+        <h3>Silêncio nas Ruas</h3>
+        <p>
+No meio da cidade, onde o barulho nunca dorme, há uma pausa.  
+O vento carrega histórias não contadas, e cada luz acesa parece guardar um segredo.  
 
+Caminho sem destino, ouvindo passos que não são meus,  
+e percebo: o silêncio, às vezes, diz mais do que qualquer voz.
+        </p>
+        <a href="#" class="ler-mais">Ler mais</a>
+      </div>
 
-      <section id="catalogo">
-        <div class="texto-card" data-categoria="cronicas">
-          <h3>Por que é tão difícil ficar sem celular?</h3>
-          <p>Uma reflexão sobre o vício moderno e a dependência digital...</p>
-          <a href="#" class="ler-mais">Ler texto completo</a>
-        </div>
-      </section>
-    </main>
+      <div class="texto-card" data-categoria="poesias">
+        <h3>Fragmentos</h3>
+        <p>
+Entre o que fui e o que serei, há um intervalo de luz.  
+Ali, repousa a dúvida, o medo, e a beleza do incerto.  
 
+Ser inteiro é também saber quebrar —  
+e ainda assim se reconhecer nos cacos.
+        </p>
+        <a href="#" class="ler-mais">Ler mais</a>
+      </div>
+
+      <div class="texto-card" data-categoria="reflexoes">
+        <h3>Sobre o Tempo</h3>
+        <p>
+O tempo não cura, mas ensina.  
+Ele mostra que nem toda ferida fecha, mas toda dor se transforma.  
+
+O tempo é um espelho que não mente —  
+reflete o que insistimos em não ver.
+        </p>
+        <a href="#" class="ler-mais">Ler mais</a>
+      </div>
+    </div>
 
     <footer>
-      <p>© 2025 @mgziin — Todos os direitos reservados.</p>
+      <p>© 2025 - Feito por MGZiin</p>
     </footer>
   </div>
+
+  <script>
+    // Alternar entre categorias
+    const botoes = document.querySelectorAll('.categoria-btn');
+    const cards = document.querySelectorAll('.texto-card');
+
+    botoes.forEach(btn => {
+      btn.addEventListener('click', () => {
+        botoes.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.getAttribute('data-categoria');
+
+        cards.forEach(card => {
+          if (cat === 'tudo' || card.getAttribute('data-categoria') === cat) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Ler mais / recolher texto
+    const botoesLerMais = document.querySelectorAll('.ler-mais');
+    botoesLerMais.forEach(botao => {
+      botao.addEventListener('click', (e) => {
+        e.preventDefault();
+        const card = botao.closest('.texto-card');
+        card.classList.toggle('expandido');
+        botao.textContent = card.classList.contains('expandido') ? 'Ler menos' : 'Ler mais';
+      });
+    });
+  </script>
 </body>
 </html>
