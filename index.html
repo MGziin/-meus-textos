@@ -1,95 +1,191 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meus Textos</title>
+  <title>📱 Por que é tão difícil ficar sem celular?</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    :root {
+      --fundo: #0f0f0f;
+      --card: #1b1b1b;
+      --texto: #ffffff;
+      --destaque: #F4DF9E;
+      --botao: #F4DF9E;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--fundo);
+      color: var(--texto);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 700px;
+      text-align: center;
+      padding: 2rem 0;
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    header {
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: slideDown 1.2s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    .foto-perfil {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 25px var(--destaque);
+      animation: brilho 4s ease-in-out infinite alternate;
+    }
+
+    h1 {
+      font-weight: 600;
+      color: var(--destaque);
+      margin-bottom: 1rem;
+    }
+
+    .texto {
+      background-color: var(--card);
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: left;
+      line-height: 1.6;
+      color: #ddd;
+      font-size: 1rem;
+      box-shadow: 0 0 10px #00000050;
+      transition: 0.3s;
+      max-height: 350px;
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1.2s ease forwards;
+      animation-delay: 0.5s;
+    }
+
+    .texto.expandido {
+      max-height: none;
+    }
+
+    .ler-mais {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--botao);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards;
+      animation-delay: 1.2s;
+    }
+
+    .ler-mais:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #777;
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards;
+      animation-delay: 1.5s;
+    }
+
+    /* ✨ Animações */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes brilho {
+      from { box-shadow: 0 0 20px var(--destaque); }
+      to { box-shadow: 0 0 40px var(--destaque); }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <img src="perfil.jpg" alt="Foto de perfil" class="logo" />
-      <h1>Meus Textos</h1>
-      <p>Um espaço para minhas crônicas e reflexões pessoais.</p>
+      <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil" />
+      <h1>📱 Por que é tão difícil ficar sem celular?</h1>
     </header>
 
-    <div id="catalogo">
-      <div class="texto-card">
-        <h3>📱 Por que é tão difícil ficar sem celular?</h3>
+    <div class="texto" id="texto">
+      <p>Fico pensando… por que é tão difícil ficar sem celular?</p>
 
-        <div class="texto-curto">
-Fico pensando…  
-por que é tão difícil ficar sem celular?
+      <p>Já faz algumas semanas que tô sem o meu, e mesmo tendo telas por todo canto da casa… ainda sinto falta daquela telinha na mão, sabe?</p>
 
-Já faz algumas semanas que tô sem o meu,  
-e mesmo tendo telas por todo canto da casa…  
-ainda sinto falta daquela telinha na mão, sabe?
-        </div>
+      <p>E… eu fico me perguntando o porquê disso. Tipo, será que é só por falta do que fazer? Ou será porque eu tava cheio de planos… coisas que eu ia fazer com o meu celular… e ele quebrou justo na pior hora?</p>
 
-        <div class="texto-completo">
-E… eu fico me perguntando o porquê disso.  
-Tipo, será que é só por falta do que fazer?  
-Ou será porque eu tava cheio de planos…  
-coisas que eu ia fazer com o meu celular…  
-e ele quebrou justo na pior hora?
+      <p>Tanto financeiramente falando quanto… sei lá, qualquer outra “coisa falando”.</p>
 
-Tanto financeiramente falando quanto… sei lá, qualquer outra “coisa falando”.
+      <p>Porque se fosse só por não ter o que fazer, olha… minha pia tá cheia de vasilha, meu guarda-roupa tá uma bagunça, minhas playlists do Spotify tão prontas pra serem atualizadas…</p>
 
-Porque se fosse só por não ter o que fazer, olha…  
-minha pia tá cheia de vasilha,  
-meu guarda-roupa tá uma bagunça,  
-minhas playlists do Spotify tão prontas pra serem atualizadas…
+      <p>E nossa! Parando pra pensar… eu podia ficar aqui até amanhã falando das coisas que eu tenho pra fazer.</p>
 
-E nossa!  
-Parando pra pensar…  
-eu podia ficar aqui até amanhã falando das coisas que eu tenho pra fazer.
+      <p>Tantas respostas pra uma única pergunta: por que é tão difícil ficar sem celular?</p>
 
-Tantas respostas pra uma única pergunta:  
-por que é tão difícil ficar sem celular?
+      <p>Às vezes nem é o celular que faz falta em si, e sim o que ele escondia só por estar ali na nossa mão. Sabe?</p>
 
-Às vezes nem é o celular que faz falta em si,  
-e sim o que ele escondia só por estar ali na nossa mão.  
-Sabe?
+      <p>Talvez seja porque, sem ele, o vazio grita na cara da gente: “E aí? Vai fazer o quê?”</p>
 
-Talvez seja porque, sem ele, o vazio grita na cara da gente:  
-“E aí? Vai fazer o quê?”
+      <p>— não porque não tem nada pra fazer… mas porque a gente não faz ideia do que fazer.</p>
 
-— não porque não tem nada pra fazer…  
-mas porque a gente não faz ideia do que fazer.
+      <p>E… talvez, no final das contas, o que me incomoda nem seja estar sem celular… e sim a falta da cortina de fumaça que ele jogava por cima desse vazio quieto que é estar sem celular.</p>
 
-E… talvez, no final das contas,  
-o que me incomoda nem seja estar sem celular…  
-e sim a falta da cortina de fumaça  
-que ele jogava por cima desse vazio quieto que é estar sem celular.
+      <p>Contraditório, né?</p>
 
-Contraditório, né?
-
-E aí você fica olhando pro nada…  
-só olhando…  
-e pensando que, no fim…  
-talvez o tempo seja o que mais dá falta.
-        </div>
-
-        <a href="#" class="ler-mais">Ler mais</a>
-      </div>
+      <p>E aí você fica olhando pro nada… só olhando… e pensando que, no fim… talvez o tempo seja o que mais da falta.</p>
     </div>
 
+    <a class="ler-mais" id="lerMais">Ler mais</a>
+
     <footer>
-      <p>© 2025 - Feito por MGZiin</p>
+      <p>© 2025 — Meus Textos</p>
     </footer>
   </div>
 
   <script>
-    const botoes = document.querySelectorAll('.ler-mais');
-    botoes.forEach(botao => {
-      botao.addEventListener('click', e => {
-        e.preventDefault();
-        const card = botao.closest('.texto-card');
-        const completo = card.querySelector('.texto-completo');
-        completo.classList.toggle('mostrar');
-        botao.textContent = completo.classList.contains('mostrar') ? 'Ler menos' : 'Ler mais';
-      });
+    const botao = document.getElementById('lerMais');
+    const texto = document.getElementById('texto');
+
+    botao.addEventListener('click', () => {
+      texto.classList.toggle('expandido');
+      botao.textContent = texto.classList.contains('expandido') ? 'Mostrar menos' : 'Ler mais';
     });
   </script>
 </body>
