@@ -1,37 +1,43 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo de Textos</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meus Textos</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>Meus Textos</h1>
+    <header>
+      <img src="https://i.imgur.com/VILKZQm.png" alt="Logo" class="logo" />
+      <h1>@mgziin</h1>
+      <p>Catálogo de textos • Poemas, Crônicas e Contos</p>
+    </header>
 
-    <div class="filtros">
-      <button onclick="filtrarCategoria('Todos')">Todos</button>
-      <button onclick="filtrarCategoria('Poemas')">Poemas</button>
-      <button onclick="filtrarCategoria('Crônicas')">Crônicas</button>
-      <button onclick="filtrarCategoria('Contos')">Contos</button>
-      <button onclick="filtrarCategoria('Reflexões')">Reflexões</button>
-    </div>
 
-    <div id="cards-container" class="cards-linktree"></div>
+    <main>
+      <section id="categorias">
+        <button class="categoria-btn active" data-categoria="todos">Todos</button>
+        <button class="categoria-btn" data-categoria="poemas">Poemas</button>
+        <button class="categoria-btn" data-categoria="cronicas">Crônicas</button>
+        <button class="categoria-btn" data-categoria="contos">Contos</button>
+      </section>
+
+
+      <section id="catalogo">
+        <div class="texto-card" data-categoria="cronicas">
+          <h3>Por que é tão difícil ficar sem celular?</h3>
+          <p>Uma reflexão sobre o vício moderno e a dependência digital...</p>
+          <a href="#" class="ler-mais">Ler texto completo</a>
+        </div>
+      </section>
+    </main>
+
+
+    <footer>
+      <p>© 2025 @mgziin — Todos os direitos reservados.</p>
+    </footer>
   </div>
-
-  <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-conteudo">
-      <span class="fechar" onclick="fecharModal()">&times;</span>
-      <h2 id="modal-titulo"></h2>
-      <p id="modal-texto"></p>
-    </div>
-  </div>
-
-  <script src="textos.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
-
