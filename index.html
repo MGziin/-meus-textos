@@ -11,85 +11,86 @@
     <header>
       <img src="perfil.jpg" alt="Foto de perfil" class="logo" />
       <h1>Meus Textos</h1>
-      <p>Um espaço para minhas crônicas, poemas e reflexões pessoais.</p>
+      <p>Um espaço para minhas crônicas e reflexões pessoais.</p>
     </header>
 
     <div id="catalogo">
       <div class="texto-card">
-        <h3>Por que é tão difícil ficar sem celular?</h3>
-        <p>
-Fico pensando…
+        <h3>📱 Por que é tão difícil ficar sem celular?</h3>
+
+        <div class="texto-curto">
+Fico pensando…  
 por que é tão difícil ficar sem celular?
 
-Já faz algumas semanas que tô sem o meu,
-e mesmo tendo telas por todo canto da casa…
+Já faz algumas semanas que tô sem o meu,  
+e mesmo tendo telas por todo canto da casa…  
 ainda sinto falta daquela telinha na mão, sabe?
+        </div>
 
-E… eu fico me perguntando o porquê disso.
-Tipo, será que é só por falta do que fazer?
-Ou será porque eu tava cheio de planos…
-coisas que eu ia fazer com o meu celular…
+        <div class="texto-completo">
+E… eu fico me perguntando o porquê disso.  
+Tipo, será que é só por falta do que fazer?  
+Ou será porque eu tava cheio de planos…  
+coisas que eu ia fazer com o meu celular…  
 e ele quebrou justo na pior hora?
 
 Tanto financeiramente falando quanto… sei lá, qualquer outra “coisa falando”.
 
-Porque se fosse só por não ter o que fazer, olha…
-minha pia tá cheia de vasilha,
-meu guarda-roupa tá uma bagunça,
+Porque se fosse só por não ter o que fazer, olha…  
+minha pia tá cheia de vasilha,  
+meu guarda-roupa tá uma bagunça,  
 minhas playlists do Spotify tão prontas pra serem atualizadas…
 
-E nossa!
-Parando pra pensar…
+E nossa!  
+Parando pra pensar…  
 eu podia ficar aqui até amanhã falando das coisas que eu tenho pra fazer.
 
-Tantas respostas pra uma única pergunta:
+Tantas respostas pra uma única pergunta:  
 por que é tão difícil ficar sem celular?
 
-Às vezes nem é o celular que faz falta em si,
-e sim o que ele escondia só por estar ali na nossa mão.
+Às vezes nem é o celular que faz falta em si,  
+e sim o que ele escondia só por estar ali na nossa mão.  
 Sabe?
 
-Talvez seja porque, sem ele, o vazio grita na cara da gente:
+Talvez seja porque, sem ele, o vazio grita na cara da gente:  
 “E aí? Vai fazer o quê?”
 
-— não porque não tem nada pra fazer…
+— não porque não tem nada pra fazer…  
 mas porque a gente não faz ideia do que fazer.
 
-E… talvez, no final das contas,
-o que me incomoda nem seja estar sem celular…
-e sim a falta da cortina de fumaça
+E… talvez, no final das contas,  
+o que me incomoda nem seja estar sem celular…  
+e sim a falta da cortina de fumaça  
 que ele jogava por cima desse vazio quieto que é estar sem celular.
 
 Contraditório, né?
 
-E aí você fica olhando pro nada…
-só olhando…
-e pensando que, no fim…
-talvez o tempo seja o que mais da falta.
-        </p>
+E aí você fica olhando pro nada…  
+só olhando…  
+e pensando que, no fim…  
+talvez o tempo seja o que mais dá falta.
+        </div>
+
         <a href="#" class="ler-mais">Ler mais</a>
       </div>
     </div>
 
     <footer>
-      <p>© 2025 - Feito por Brendon Phillipe</p>
+      <p>© 2025 - Feito por MGZiin</p>
     </footer>
   </div>
 
   <script>
-    // Ler mais / recolher texto
-    const botoesLerMais = document.querySelectorAll('.ler-mais');
-    botoesLerMais.forEach(botao => {
-      botao.addEventListener('click', (e) => {
+    const botoes = document.querySelectorAll('.ler-mais');
+    botoes.forEach(botao => {
+      botao.addEventListener('click', e => {
         e.preventDefault();
         const card = botao.closest('.texto-card');
-        card.classList.toggle('expandido');
-        botao.textContent = card.classList.contains('expandido') ? 'Ler menos' : 'Ler mais';
+        const completo = card.querySelector('.texto-completo');
+        completo.classList.toggle('mostrar');
+        botao.textContent = completo.classList.contains('mostrar') ? 'Ler menos' : 'Ler mais';
       });
     });
   </script>
 </body>
 </html>
-
-
-
