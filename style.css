@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 :root {
-  --fundo: #F4DF9E;
+  --fundo: #0f0f0f;
   --card: #1b1b1b;
   --texto: #ffffff;
   --destaque: #d6baff;
@@ -51,33 +51,6 @@ p {
   font-size: 0.9rem;
 }
 
-/* 🔹 CATEGORIAS */
-#categorias {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-}
-
-.categoria-btn {
-  background-color: transparent;
-  border: 1px solid var(--destaque);
-  color: var(--destaque);
-  padding: 0.4rem 0.8rem;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.categoria-btn.active,
-.categoria-btn:hover {
-  background-color: var(--botao);
-  color: #fff;
-  border-color: var(--botao);
-}
-
-/* 🔹 TEXTOS */
 #catalogo {
   display: flex;
   flex-direction: column;
@@ -102,11 +75,28 @@ p {
   margin-bottom: 0.4rem;
 }
 
-/* ✅ Mantém quebras de linha e parágrafos no texto */
-.texto-card p {
+.texto-curto,
+.texto-completo {
   font-size: 0.9rem;
   color: #bbb;
   white-space: pre-line;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+/* Esconde o texto completo até clicar */
+.texto-completo {
+  display: none;
+}
+
+.texto-completo.mostrar {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .ler-mais {
@@ -115,12 +105,15 @@ p {
   color: var(--botao);
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.3s;
 }
 
-/* 🔹 RODAPÉ */
+.ler-mais:hover {
+  color: var(--destaque);
+}
+
 footer {
   margin-top: 2rem;
   font-size: 0.8rem;
   color: #777;
 }
-
