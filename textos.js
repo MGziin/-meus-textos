@@ -1,8 +1,7 @@
 const textos = [
   {
-    titulo: "Por que é tão difícil ficar sem celular?",
-    categoria: "Reflexões",
-    resumo: "Uma reflexão sobre o vazio e o tempo perdido com o celular.",
+    titulo: "📱 Por que é tão difícil ficar sem celular?",
+    categoria: "Crônica",
     conteudo: `Fico pensando…
 por que é tão difícil ficar sem celular?
 
@@ -50,6 +49,6 @@ Contraditório, né?
 E aí você fica olhando pro nada…
 só olhando…
 e pensando que, no fim…
-talvez o tempo seja o que mais da falta.`
+talvez o tempo seja o que mais dá falta.`
   }
 ];
