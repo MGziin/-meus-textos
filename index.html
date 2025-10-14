@@ -1,180 +1,77 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meus Textos</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
-    :root {
-      --fundo: #F4DF9E;
-      --card: #fff8dc;
-      --texto: #2c2c2c;
-      --destaque: #b08f2f;
-      --botao: #c5a53a;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: var(--fundo);
-      color: var(--texto);
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 700px;
-      text-align: center;
-    }
-
-    header {
-      margin-bottom: 2rem;
-    }
-
-    .logo {
-      width: 110px;
-      border-radius: 50%;
-      margin-bottom: 1rem;
-      box-shadow: 0 0 20px var(--botao);
-    }
-
-    h1 {
-      font-weight: 600;
-      color: var(--destaque);
-      margin-bottom: 0.3rem;
-    }
-
-    .descricao {
-      color: #4a4a4a;
-      font-size: 0.95rem;
-      margin-bottom: 1.5rem;
-      font-style: italic;
-    }
-
-    #catalogo {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-
-    .texto-card {
-      background-color: var(--card);
-      padding: 1.5rem;
-      border-radius: 15px;
-      text-align: left;
-      transition: 0.3s;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    }
-
-    .texto-card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 12px var(--botao);
-    }
-
-    .texto-card h3 {
-      color: var(--destaque);
-      margin-bottom: 0.5rem;
-    }
-
-    .tags {
-      font-size: 0.8rem;
-      color: #6b5b25;
-      margin-bottom: 0.8rem;
-      font-weight: 500;
-    }
-
-    .texto-card p {
-      font-size: 0.95rem;
-      color: #3d3d3d;
-      line-height: 1.6;
-      white-space: pre-line;
-    }
-
-    footer {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      color: #5c4d1b;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <header>
       <img src="perfil.jpg" alt="Foto de perfil" class="logo">
       <h1>Meus Textos</h1>
-      <p class="descricao">Um pouco dos meus textos, poemas, crônicas e pensamentos…</p>
+      <p class="descricao">Um pouco dos meus textos, poemas, crônicas e reflexões...</p>
     </header>
 
-    <section id="catalogo">
-      <div class="texto-card">
-        <h3>📱 Por que é tão difícil ficar sem celular?</h3>
-        <p class="tags">Crônica · Reflexão</p>
-        <p>
-Fico pensando…
-por que é tão difícil ficar sem celular?
-
-Já faz algumas semanas que tô sem o meu,
-e mesmo tendo telas por todo canto da casa…
-ainda sinto falta daquela telinha na mão, sabe?
-
-E… eu fico me perguntando o porquê disso.
-Tipo, será que é só por falta do que fazer?
-Ou será porque eu tava cheio de planos…
-coisas que eu ia fazer com o meu celular…
-e ele quebrou justo na pior hora?
-
-Tanto financeiramente falando quanto… sei lá, qualquer outra “coisa falando”.
-
-Porque se fosse só por não ter o que fazer, olha…
-minha pia tá cheia de vasilha,
-meu guarda-roupa tá uma bagunça,
-minhas playlists do Spotify tão prontas pra serem atualizadas…
-
-E nossa!
-Parando pra pensar…
-eu podia ficar aqui até amanhã falando das coisas que eu tenho pra fazer.
-
-Tantas respostas pra uma única pergunta:
-por que é tão difícil ficar sem celular?
-
-Às vezes nem é o celular que faz falta em si,
-e sim o que ele escondia só por estar ali na nossa mão.
-Sabe?
-
-Talvez seja porque, sem ele, o vazio grita na cara da gente:
-“E aí? Vai fazer o quê?”
-
-— não porque não tem nada pra fazer…
-mas porque a gente não faz ideia do que fazer.
-
-E… talvez, no final das contas,
-o que me incomoda nem seja estar sem celular…
-e sim a falta da cortina de fumaça
-que ele jogava por cima desse vazio quieto que é estar sem celular.
-
-Contraditório, né?
-
-E aí você fica olhando pro nada…
-só olhando…
-e pensando que, no fim…
-talvez o tempo seja o que mais dá falta.
-        </p>
-      </div>
+    <section id="categorias">
+      <button class="categoria-btn active" data-categoria="tudo">Todos</button>
+      <button class="categoria-btn" data-categoria="crônica">Crônicas</button>
+      <button class="categoria-btn" data-categoria="poema">Poemas</button>
+      <button class="categoria-btn" data-categoria="reflexão">Reflexões</button>
     </section>
 
+    <section id="catalogo"></section>
+
     <footer>
-      © 2025 — Criado por mgziin
+      <p>© 2025 - Feito com carinho 💛</p>
     </footer>
   </div>
+
+  <script src="textos.js"></script>
+  <script>
+    const catalogo = document.getElementById("catalogo");
+    const botoes = document.querySelectorAll(".categoria-btn");
+
+    function mostrarTextos(filtro = "tudo") {
+      catalogo.innerHTML = "";
+      const filtrados = filtro === "tudo" ? textos : textos.filter(t => t.categoria === filtro);
+      
+      filtrados.forEach(t => {
+        const card = document.createElement("div");
+        card.classList.add("texto-card");
+        card.innerHTML = `
+          <h3>${t.titulo}</h3>
+          <p>${t.conteudo.substring(0, 300)}...</p>
+          <p class="tag">${t.categoria}</p>
+          <a href="#" class="ler-mais" onclick="abrirTexto('${t.titulo}')">Ler mais</a>
+        `;
+        catalogo.appendChild(card);
+      });
+    }
+
+    function abrirTexto(titulo) {
+      const texto = textos.find(t => t.titulo === titulo);
+      if (!texto) return;
+      catalogo.innerHTML = `
+        <div class="texto-card">
+          <h3>${texto.titulo}</h3>
+          <p>${texto.conteudo.replace(/\n/g, '<br>')}</p>
+          <p class="tag">${texto.categoria}</p>
+          <a href="#" class="ler-mais" onclick="mostrarTextos()">← Voltar</a>
+        </div>
+      `;
+    }
+
+    botoes.forEach(btn => {
+      btn.addEventListener("click", () => {
+        botoes.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        mostrarTextos(btn.dataset.categoria);
+      });
+    });
+
+    mostrarTextos();
+  </script>
 </body>
 </html>
