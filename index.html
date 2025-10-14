@@ -1,77 +1,54 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meus Textos</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <header>
-      <img src="perfil.jpg" alt="Foto de perfil" class="logo">
-      <h1>Meus Textos</h1>
-      <p class="descricao">Um pouco dos meus textos, poemas, crônicas e reflexões...</p>
-    </header>
+const textos = [
+  {
+    titulo: "📱 Por que é tão difícil ficar sem celular?",
+    categoria: "Crônica",
+    conteudo: `Fico pensando…
+por que é tão difícil ficar sem celular?
 
-    <section id="categorias">
-      <button class="categoria-btn active" data-categoria="tudo">Todos</button>
-      <button class="categoria-btn" data-categoria="crônica">Crônicas</button>
-      <button class="categoria-btn" data-categoria="poema">Poemas</button>
-      <button class="categoria-btn" data-categoria="reflexão">Reflexões</button>
-    </section>
+Já faz algumas semanas que tô sem o meu,
+e mesmo tendo telas por todo canto da casa…
+ainda sinto falta daquela telinha na mão, sabe?
 
-    <section id="catalogo"></section>
+E… eu fico me perguntando o porquê disso.
+Tipo, será que é só por falta do que fazer?
+Ou será porque eu tava cheio de planos…
+coisas que eu ia fazer com o meu celular…
+e ele quebrou justo na pior hora?
 
-    <footer>
-      <p>© 2025 - Feito com carinho 💛</p>
-    </footer>
-  </div>
+Tanto financeiramente falando quanto… sei lá, qualquer outra “coisa falando”.
 
-  <script src="textos.js"></script>
-  <script>
-    const catalogo = document.getElementById("catalogo");
-    const botoes = document.querySelectorAll(".categoria-btn");
+Porque se fosse só por não ter o que fazer, olha…
+minha pia tá cheia de vasilha,
+meu guarda-roupa tá uma bagunça,
+minhas playlists do Spotify tão prontas pra serem atualizadas…
 
-    function mostrarTextos(filtro = "tudo") {
-      catalogo.innerHTML = "";
-      const filtrados = filtro === "tudo" ? textos : textos.filter(t => t.categoria === filtro);
-      
-      filtrados.forEach(t => {
-        const card = document.createElement("div");
-        card.classList.add("texto-card");
-        card.innerHTML = `
-          <h3>${t.titulo}</h3>
-          <p>${t.conteudo.substring(0, 300)}...</p>
-          <p class="tag">${t.categoria}</p>
-          <a href="#" class="ler-mais" onclick="abrirTexto('${t.titulo}')">Ler mais</a>
-        `;
-        catalogo.appendChild(card);
-      });
-    }
+E nossa!
+Parando pra pensar…
+eu podia ficar aqui até amanhã falando das coisas que eu tenho pra fazer.
 
-    function abrirTexto(titulo) {
-      const texto = textos.find(t => t.titulo === titulo);
-      if (!texto) return;
-      catalogo.innerHTML = `
-        <div class="texto-card">
-          <h3>${texto.titulo}</h3>
-          <p>${texto.conteudo.replace(/\n/g, '<br>')}</p>
-          <p class="tag">${texto.categoria}</p>
-          <a href="#" class="ler-mais" onclick="mostrarTextos()">← Voltar</a>
-        </div>
-      `;
-    }
+Tantas respostas pra uma única pergunta:
+por que é tão difícil ficar sem celular?
 
-    botoes.forEach(btn => {
-      btn.addEventListener("click", () => {
-        botoes.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        mostrarTextos(btn.dataset.categoria);
-      });
-    });
+Às vezes nem é o celular que faz falta em si,
+e sim o que ele escondia só por estar ali na nossa mão.
+Sabe?
 
-    mostrarTextos();
-  </script>
-</body>
-</html>
+Talvez seja porque, sem ele, o vazio grita na cara da gente:
+“E aí? Vai fazer o quê?”
+
+— não porque não tem nada pra fazer…
+mas porque a gente não faz ideia do que fazer.
+
+E… talvez, no final das contas,
+o que me incomoda nem seja estar sem celular…
+e sim a falta da cortina de fumaça
+que ele jogava por cima desse vazio quieto que é estar sem celular.
+
+Contraditório, né?
+
+E aí você fica olhando pro nada…
+só olhando…
+e pensando que, no fim…
+talvez o tempo seja o que mais dá falta.`
+  }
+];
