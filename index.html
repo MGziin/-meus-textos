@@ -3,32 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meus Textos</title>
+  <title>Meus Textos — Início</title>
   <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <img src="perfil.jpg" alt="Foto de perfil" class="logo">
-      <h1>Meus Textos ✍️</h1>
-      <p class="descricao">Um pouco dos meus textos, poemas e crônicas</p>
-    </header>
-
-    <div id="categorias">
-      <button class="categoria-btn active" data-categoria="todas">Todos</button>
-      <button class="categoria-btn" data-categoria="Crônica">Crônicas</button>
-      <button class="categoria-btn" data-categoria="Poema">Poemas</button>
+  <header class="cabecalho">
+    <div class="menu-toggle" id="menu-toggle">
+      ☰
     </div>
+    <nav class="menu" id="menu">
+      <a href="#sobre">Sobre</a>
+      <a href="#destaques">Textos</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
 
-    <section id="catalogo"></section>
+  <section id="inicio" class="secao-inicio">
+    <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil">
+    <h1>Brendon Phillipe</h1>
+    <p class="descricao">Um pouco dos meus textos, poemas, crônicas e pensamentos espalhados por aqui.</p>
+  </section>
 
-    <footer>
-      <p>© 2025 — Feito por Brendon Phillipe</p>
-    </footer>
-  </div>
+  <section id="destaques" class="secao-destaques">
+    <h2>✨ Destaque</h2>
+    <div class="texto-destaque">
+      <h3>📱 Por que é tão difícil ficar sem celular?</h3>
+      <p>
+        Fico pensando… por que é tão difícil ficar sem celular?<br><br>
+        Já faz algumas semanas que tô sem o meu, e mesmo tendo telas por todo canto da casa… ainda sinto falta daquela telinha na mão, sabe?
+      </p>
+      <a href="textos.html" class="btn">Ler texto completo</a>
+      <span class="tag">#Crônica</span>
+    </div>
+  </section>
 
-  <script src="textos.js"></script>
-  <script src="script.js"></script>
+  <section id="contato" class="secao-contato">
+    <h2>📬 Contato</h2>
+    <p>Quer conversar, sugerir algo ou apenas trocar ideias?</p>
+    <ul>
+      <li>Email: <a href="mailto:seuemail@email.com">seuemail@email.com</a></li>
+      <li>GitHub: <a href="https://github.com/MGziin" target="_blank">MGziin</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>© 2025 — Feito por Brendon Phillipe</p>
+  </footer>
 </body>
 </html>
-
