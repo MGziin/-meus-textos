@@ -38,7 +38,13 @@ categoriaBtns.forEach(btn => {
     categoriaBtns.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     mostrarTextos(btn.dataset.categoria);
+    // ======= Menu Hambúrguer =======
+document.getElementById('menu-toggle')?.addEventListener('click', () => {
+  document.getElementById('menu').classList.toggle('active');
+});
+
   });
 });
 
 mostrarTextos("todas");
+
