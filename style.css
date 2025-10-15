@@ -125,11 +125,14 @@ h1 {
   font-weight: 500;
 }
 
-footer {
-  /* ======= Estilo da Página de Índice ======= */
+/* ======= Estilo da Página de Índice (corrigido) ======= */
 body {
   background-color: #F4DF9E;
   color: #3a2f0b;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 .cabecalho {
@@ -179,27 +182,36 @@ body {
   display: flex;
 }
 
+/* ==== Sessão de início (foto e descrição) ==== */
 .secao-inicio {
   text-align: center;
   margin-top: 120px;
+  padding: 2rem 1rem;
 }
 
 .foto-perfil {
-  width: 120px;
-  height: 120px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   margin-bottom: 1rem;
+  object-fit: cover;
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+h1 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 .descricao {
   font-size: 1rem;
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
   color: #4a3a0d;
 }
 
-.secao-destaques, .secao-contato {
+/* ==== Destaques ==== */
+.secao-destaques {
   padding: 3rem 1rem;
   text-align: center;
 }
@@ -209,8 +221,18 @@ body {
   padding: 1.5rem;
   border-radius: 15px;
   max-width: 600px;
-  margin: 1rem auto;
+  margin: 1.5rem auto;
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  text-align: left;
+}
+
+.texto-destaque h3 {
+  color: #3a2f0b;
+}
+
+.texto-destaque p {
+  color: #4a3a0d;
+  line-height: 1.5;
 }
 
 .texto-destaque .btn {
@@ -239,8 +261,32 @@ body {
   font-size: 0.8rem;
 }
 
-  margin-top: 2rem;
-  font-size: 0.8rem;
-  color: #7b6b3d;
+/* ==== Contato ==== */
+.secao-contato {
+  background: #faefc1;
+  padding: 3rem 1rem;
+  text-align: center;
+  border-top: 2px solid #e8c64a;
 }
 
+.secao-contato ul {
+  list-style: none;
+  padding: 0;
+}
+
+.secao-contato li {
+  margin: 0.5rem 0;
+}
+
+.secao-contato a {
+  color: #3a2f0b;
+  text-decoration: underline;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #4a3a0d;
+  background: #f6e6a8;
+}
