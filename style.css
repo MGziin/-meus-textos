@@ -1,276 +1,163 @@
-/* =========================
-   style.css - Versão revisada
-   Mantém paleta amarelada e estilos do site,
-   corrige layout do índice (imagem gigante) e conflitos.
-   ========================= */
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-/* ---------- Paleta ---------- */
-:root{
+:root {
   --fundo: #F4DF9E;
-  --card: #f5e7b5;
-  --texto: #2b2b2b;
+  --card: #f7eab7;
+  --texto: #3a2f0b;
   --destaque: #b5892e;
-  --botao: #e6c36a;
+  --botao: #e8c64a;
 }
 
-/* ---------- Reset / base ---------- */
-*{ margin:0; padding:0; box-sizing:border-box; }
-
-html,body{
-  height:100%;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
-/* ---------- BODY: fluxo normal (não usar flex centralizador) ---------- */
-body{
+/* ===== GERAL ===== */
+body {
   background-color: var(--fundo);
   color: var(--texto);
   font-family: 'Poppins', sans-serif;
-  line-height:1.4;
-  margin:0;
-  padding:0;
-  overflow-x:hidden;
+  line-height: 1.6;
 }
 
-/* ---------- Container central (controla largura) ---------- */
-.container{
-  width: 92%;
-  max-width: 900px; /* mais largura para índice */
-  margin: 0 auto;   /* centraliza horizontalmente */
-  padding: 20px 0 60px;
+/* ===== CABEÇALHO ===== */
+.cabecalho {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(244, 223, 158, 0.9);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  z-index: 100;
 }
 
-/* ---------- Header / logo (usado nas páginas de textos) ---------- */
-header{
-  margin-bottom: 1.5rem;
-  text-align:center;
-}
-
-/* .logo usado em outras páginas */
-.logo, .foto-perfil {
-  display:block;
-  margin-left:auto;
-  margin-right:auto;
-  border-radius:50%;
-  object-fit:cover;
-}
-
-/* estilo para logo pequena (quando usada) */
-.logo{
-  width:100px;
-  height:100px;
-  box-shadow: 0 0 15px var(--botao);
-}
-
-/* título padrão */
-h1{
-  font-weight:600;
+.logo-site {
+  font-weight: 600;
   color: var(--destaque);
-  margin-top: 0.6rem;
-  margin-bottom: 0.3rem;
-  text-align:center;
+  font-size: 1.2rem;
 }
 
-/* descrição (agora unificada) */
-.descricao{
-  color:#5c4a1d;
-  font-size:0.95rem;
-  margin-top:0.2rem;
-  max-width:700px;
-  margin-left:auto;
-  margin-right:auto;
-  text-align:center;
-  font-style: italic;
+.menu-links a {
+  margin: 0 0.8rem;
+  color: var(--texto);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
 }
 
-/* ---------- categorias e catálogo (página de textos) ---------- */
-#categorias{
-  display:flex;
-  justify-content:center;
-  gap:0.5rem;
-  flex-wrap:wrap;
-  margin:1rem 0 1.5rem;
+.menu-links a:hover {
+  color: var(--destaque);
 }
 
-.categoria-btn{
-  background:transparent;
-  border:1px solid var(--destaque);
-  color:var(--destaque);
-  padding:0.4rem 0.8rem;
-  border-radius:50px;
-  cursor:pointer;
-  transition:0.22s;
+/* ===== SEÇÕES ===== */
+section {
+  padding: 100px 20px 60px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.categoria-btn.active,
-.categoria-btn:hover{
-  background:var(--botao);
-  color:#fff;
-  border-color:var(--botao);
+/* ===== INÍCIO ===== */
+.foto-perfil {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  margin-bottom: 1rem;
 }
 
-#catalogo{
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
+.descricao {
+  font-size: 1rem;
+  color: #4a3a0d;
 }
 
-/* cartão de texto (página textos) */
-.texto-card{
-  background:var(--card);
-  padding:1rem;
-  border-radius:12px;
-  text-align:left;
-  transition: transform .2s, box-shadow .2s;
+/* ===== SOBRE ===== */
+.secao-sobre h2 {
+  color: var(--destaque);
+  margin-bottom: 1rem;
 }
 
-.texto-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+/* ===== TEXTOS FAVORITOS ===== */
+.secao-destaques h2 {
+  color: var(--destaque);
+  margin-bottom: 1rem;
 }
 
-.texto-card h3{ color:var(--destaque); margin-bottom:.4rem; }
-.texto-card p{ font-size:.95rem; color:#3b3222; white-space:pre-line; }
-.tag{
-  display:inline-block;
-  background:var(--botao);
-  color:#fff;
-  font-size:.75rem;
-  padding:0.2rem 0.5rem;
-  border-radius:50px;
-  margin-bottom:0.4rem;
-}
-.ler-mais{
-  display:inline-block;
-  margin-top:0.5rem;
-  color:var(--destaque);
-  text-decoration:none;
-  font-weight:500;
+.texto-card {
+  background: var(--card);
+  padding: 1.5rem;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  text-align: left;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
 }
 
-/* ---------- Estilos específicos da página índice (menu e seções) ---------- */
-
-/* cabeçalho fixo com menu hambúrguer */
-.cabecalho{
-  position:fixed;
-  left:0;
-  right:0;
-  top:0;
-  height:64px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 20px;
-  background: rgba(255,248,220,0.85);
-  backdrop-filter: blur(6px);
-  z-index:999;
-  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+.texto-card:hover {
+  transform: scale(1.02);
 }
 
-/* menu toggle (3 barrinhas) */
-.menu-toggle{
-  font-size:1.6rem;
-  cursor:pointer;
-  user-select:none;
-  padding:6px 8px;
-  border-radius:8px;
+.texto-card h3 {
+  color: var(--destaque);
+  margin-bottom: 0.5rem;
 }
 
-/* menu dropdown lateral */
-.menu{
-  display:none;
-  position:absolute;
-  top:68px;
-  right:18px;
-  background:#fff7d1;
-  border-radius:10px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.12);
-  overflow:hidden;
-  min-width:160px;
-  flex-direction:column;
+.texto-card p {
+  white-space: pre-line;
+  color: #3a2f0b;
 }
 
-/* quando ativar via JS, use .active */
-.menu.active{ display:flex; }
-
-/* links do menu */
-.menu a{
-  display:block;
-  padding:10px 12px;
-  color:var(--destaque);
-  text-decoration:none;
-  font-weight:600;
-}
-.menu a:hover{ background:#f1e1a6; }
-
-/* espaço para o corpo não ficar sob o header fixo */
-.secao-inicio{ padding-top:90px; }
-
-/* seção de início (foto e descrição) */
-.secao-inicio .foto-perfil{
-  width:140px;            /* tamanho controlado */
-  height:140px;
-  margin-bottom:12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+/* ===== TAGS ===== */
+.secao-tags h2 {
+  color: var(--destaque);
+  margin-bottom: 1rem;
 }
 
-/* centraliza texto e controla largura */
-.secao-inicio .descricao{
-  max-width:640px;
-  margin:0.3rem auto;
+#lista-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-/* destaques (preview do texto) */
-.secao-destaques{
-  padding: 40px 16px;
-}
-.texto-destaque{
-  background:#fff7d1;
-  padding:18px;
-  border-radius:12px;
-  max-width:720px;
-  margin:0 auto;
-  box-shadow:0 8px 16px rgba(0,0,0,0.06);
-}
-.texto-destaque h3{ color:var(--destaque); margin-bottom:8px; }
-.texto-destaque p{ color:#4a3a0d; line-height:1.5; }
-.texto-destaque .btn{
-  margin-top:12px;
-  display:inline-block;
-  background:var(--botao);
-  color:#3a2f0b;
-  padding:8px 14px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:700;
+.tag {
+  background: var(--botao);
+  color: #fff;
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
 }
 
-/* contato */
-.secao-contato{
-  padding:36px 16px;
-  background:#faefc1;
-  border-top:2px solid #e8c64a;
-}
-.secao-contato a{ color:#3a2f0b; text-decoration:underline; }
-
-/* footer */
-footer{
-  text-align:center;
-  padding:18px 10px;
-  color:#4a3a0d;
-  background:#f6e6a8;
-  margin-top:18px;
+/* ===== CONTATO ===== */
+.secao-contato {
+  background: #f9edb4;
+  border-top: 2px solid var(--destaque);
+  padding: 3rem 1rem;
 }
 
-/* ---------- Responsividade ---------- */
-@media (max-width:700px){
-  .container{ width:95%; padding:10px 0; }
-  .cabecalho{ padding:0 12px; }
-  .menu{ right:10px; }
-  .secao-inicio .foto-perfil{ width:120px; height:120px; }
-  .texto-destaque{ padding:14px; }
-  .texto-card{ padding:12px; }
+.secao-contato a {
+  color: var(--destaque);
+  text-decoration: none;
+}
+
+.secao-contato a:hover {
+  text-decoration: underline;
+}
+
+/* ===== RODAPÉ ===== */
+footer {
+  background: #f6e6a8;
+  color: #4a3a0d;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
 }
