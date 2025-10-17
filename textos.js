@@ -2,7 +2,8 @@ const textos = [
   {
     titulo: "📱 Por que é tão difícil ficar sem celular?",
     categoria: "Crônica",
-    conteudo: `Fico pensando… por que é tão difícil ficar sem celular?
+    conteudo: `Fico pensando…
+por que é tão difícil ficar sem celular?
 
 Já faz algumas semanas que tô sem o meu,
 e mesmo tendo telas por todo canto da casa…
