@@ -3,53 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meus Textos — Início</title>
+  <title>Meu Cantinho de Palavras</title>
   <link rel="stylesheet" href="style.css">
-  <script defer src="script.js"></script>
 </head>
 <body>
+
+  <!-- ===== MENU FIXO ===== -->
   <header class="cabecalho">
-    <div class="menu-toggle" id="menu-toggle">
-      ☰
-    </div>
-    <nav class="menu" id="menu">
-      <a href="#sobre">Sobre</a>
-      <a href="#destaques">Textos</a>
+    <h2 class="logo-site">Meu Cantinho ✨</h2>
+    <nav class="menu-links">
+      <a href="#inicio">Início</a>
+      <a href="#sobre">Sobre Mim</a>
+      <a href="#textos">Meus Textos Favoritos</a>
+      <a href="#tags">Tags</a>
       <a href="#contato">Contato</a>
     </nav>
   </header>
 
+  <!-- ===== SEÇÃO INÍCIO ===== -->
   <section id="inicio" class="secao-inicio">
     <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil">
-    <h1>Brendon Phillipe</h1>
-    <p class="descricao">Um pouco dos meus textos, poemas, crônicas e pensamentos espalhados por aqui.</p>
+    <h1>Bem-vindo ao meu cantinho de palavras</h1>
+    <p class="descricao">
+      Aqui estão alguns dos meus textos, crônicas e poemas.  
+      Fique à vontade para dar uma olhada 🌻
+    </p>
   </section>
 
-  <section id="destaques" class="secao-destaques">
-    <h2>✨ Destaque</h2>
-    <div class="texto-destaque">
-      <h3>📱 Por que é tão difícil ficar sem celular?</h3>
-      <p>
-        Fico pensando… por que é tão difícil ficar sem celular?<br><br>
-        Já faz algumas semanas que tô sem o meu, e mesmo tendo telas por todo canto da casa… ainda sinto falta daquela telinha na mão, sabe?
-      </p>
-      <a href="textos.html" class="btn">Ler texto completo</a>
-      <span class="tag">#Crônica</span>
-    </div>
+  <!-- ===== SEÇÃO SOBRE ===== -->
+  <section id="sobre" class="secao-sobre">
+    <h2>Sobre Mim</h2>
+    <p>
+      Eu me chamo <strong>Brendon Phillipe</strong>.  
+      Comecei a escrever desde muito pequeno, com meus 12 anos,  
+      e agora voltei a escrever e quero compartilhar minhas novas produções com vocês.
+    </p>
   </section>
 
+  <!-- ===== SEÇÃO MEUS TEXTOS FAVORITOS ===== -->
+  <section id="textos" class="secao-destaques">
+    <h2>Meus Textos Favoritos</h2>
+
+    <div id="catalogo"></div>
+  </section>
+
+  <!-- ===== SEÇÃO TAGS ===== -->
+  <section id="tags" class="secao-tags">
+    <h2>Tags</h2>
+    <div id="lista-tags"></div>
+  </section>
+
+  <!-- ===== SEÇÃO CONTATO ===== -->
   <section id="contato" class="secao-contato">
-    <h2>📬 Contato</h2>
-    <p>Quer conversar, sugerir algo ou apenas trocar ideias?</p>
+    <h2>Contato</h2>
     <ul>
-      <li>Email: <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></li>
-      <li>GitHub: <a href="https://github.com/MGziin" target="_blank">MGziin</a></li>
+      <li><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></li>
+      <li><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank">https://linktr.ee/mgziin</a></li>
     </ul>
   </section>
 
+  <!-- ===== RODAPÉ ===== -->
   <footer>
-    <p>© 2025 — Feito por Brendon Phillipe</p>
+    <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
   </footer>
+
+  <script src="textos.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
-
