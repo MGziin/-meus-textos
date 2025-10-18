@@ -114,6 +114,50 @@ section {
 .texto-card p {
   white-space: pre-line;
   color: #3a2f0b;
+  max-height: 120px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.texto-card.expanded p {
+  max-height: 1000px;
+}
+
+.btn-ler {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: var(--botao);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 0.85rem;
+}
+
+.btn-ler:hover {
+  background-color: var(--destaque);
+}
+
+/* ===== BOTÃO "LER TODOS OS TEXTOS" ===== */
+.botao-leia-todos {
+  margin-top: 20px;
+}
+
+.btn-todos {
+  display: inline-block;
+  background-color: var(--botao);
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.btn-todos:hover {
+  background-color: var(--destaque);
 }
 
 /* ===== TAGS ===== */
