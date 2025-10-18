@@ -201,7 +201,33 @@ section {
 footer {
   background: #f6e6a8;
   color: #4a3a0d;
+
+/* ===== BOTÃO "LER TODOS OS TEXTOS" ===== */
+.botao-leia-todos {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.btn-todos {
+  display: inline-block;
+  background: var(--botao);
+  color: #3a2f0b;
+  font-weight: 600;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.btn-todos:hover {
+  background: var(--destaque);
+  color: white;
+  transform: scale(1.05);
+}
+
   text-align: center;
   padding: 1rem;
   font-size: 0.9rem;
 }
+
