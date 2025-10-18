@@ -10,8 +10,18 @@ document.addEventListener("DOMContentLoaded", () => {
       <span class="tag">${texto.categoria}</span>
       <h3>${texto.titulo}</h3>
       <p>${texto.conteudo}</p>
+      <button class="btn-ler">Ler mais</button>
     `;
     catalogo.appendChild(card);
+  });
+
+  // Botão Ler Mais / Ler Menos
+  document.querySelectorAll(".btn-ler").forEach(botao => {
+    botao.addEventListener("click", () => {
+      const card = botao.parentElement;
+      card.classList.toggle("expanded");
+      botao.textContent = card.classList.contains("expanded") ? "Ler menos" : "Ler mais";
+    });
   });
 
   // Renderizar tags dinâmicas
