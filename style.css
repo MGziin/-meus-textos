@@ -231,14 +231,17 @@ footer {
   font-size: 0.9rem;
 }
 
-/* ===== CORREÇÃO PARA IMAGEM DE PERFIL ===== */
-.foto-perfil {
-  width: 150px !important;       /* força largura fixa */
-  height: 150px !important;      /* força altura fixa */
-  border-radius: 50% !important; /* deixa redonda */
-  object-fit: cover !important;  /* mantém proporção da imagem */
-  display: block;                /* evita problemas de inline */
-  margin: 0 auto 1rem auto;      /* centraliza e mantém espaçamento abaixo */
+/* ---- ESTILO ESPECÍFICO PARA O SITE "MEUS TEXTOS" ---- */
+.container header .logo {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 10px;
 }
+
+}
+
 
 
