@@ -142,8 +142,8 @@ section {
 
 /* ===== BOTÃO "LER TODOS OS TEXTOS" ===== */
 .botao-leia-todos {
-  margin-top: 20px;
   text-align: center;
+  margin-top: 1.5rem;
 }
 
 .btn-todos {
@@ -210,8 +210,8 @@ footer {
   font-size: 0.9rem;
 }
 
-/* ---- ESTILO ESPECÍFICO PARA O SITE "MEUS TEXTOS" ---- */
-.container header .logo {
+/* ===== ✅ CORREÇÃO DO ERRO DA IMAGEM DO SEGUNDO SITE ===== */
+header .logo {
   width: 130px;
   height: 130px;
   object-fit: cover;
