@@ -1,22 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- ===== NOME DA ABA ===== -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cantinho do Brendon</title>
-
-  <!-- ===== FAVICON ===== -->
-  <link rel="icon" type="image/png" href="favicon.png">
-
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- ===== MENU FIXO ===== -->
   <header class="cabecalho">
-    <h2 class="logo-site">Meu Cantinho ✨</h2>
+    <div class="logo-site">Meu Cantinho ✨</div>
     <nav class="menu-links">
       <a href="#inicio">Início</a>
       <a href="#sobre">Sobre Mim</a>
@@ -26,59 +19,48 @@
     </nav>
   </header>
 
-  <!-- ===== SEÇÃO INÍCIO ===== -->
-  <section id="inicio" class="secao-inicio">
-    <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil">
-    <h1>Bem-vindo ao meu cantinho de palavras</h1>
-    <p class="descricao">
-      Aqui estão alguns dos meus textos, crônicas e poemas.  
-      Fique à vontade para dar uma olhada 🌻
-    </p>
-  </section>
+  <main class="container">
+    <section id="inicio" class="secao-inicio center">
+      <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil" />
+      <h1>Bem-vindo ao meu cantinho de palavras</h1>
+      <p class="descricao">Aqui estão alguns dos meus textos, crônicas e poemas. Fique à vontade para dar uma olhada 🌻</p>
+    </section>
 
-  <!-- ===== SEÇÃO SOBRE ===== -->
-  <section id="sobre" class="secao-sobre">
-    <h2>Sobre Mim</h2>
-    <p>
-      Eu me chamo <strong>Brendon Phillipe</strong>.  
-      Comecei a escrever desde muito pequeno, com meus 12 anos,  
-      e agora voltei a escrever e quero compartilhar minhas novas produções com vocês.
-    </p>
-  </section>
+    <section id="sobre" class="secao-sobre">
+      <h2>Sobre Mim</h2>
+      <p>Eu me chamo <strong>Brendon Phillipe</strong>. Comecei a escrever desde muito pequeno, com meus 12 anos, e agora voltei a escrever e quero compartilhar minhas novas produções com vocês.</p>
+    </section>
 
-  <!-- ===== SEÇÃO MEUS TEXTOS FAVORITOS ===== -->
-  <section id="textos" class="secao-destaques">
-    <h2>Meus Textos Favoritos</h2>
+    <section id="textos" class="secao-destaques">
+      <h2>Meus Textos Favoritos</h2>
+      <div id="catalogo-home"></div>
 
-    <div id="catalogo"></div>
+      <div class="botao-leia-todos">
+        <!-- leva para o site secundário (catalogo completo) -->
+        <a class="btn-todos" href="textos.html">📖 Ler todos os textos</a>
+      </div>
+    </section>
 
-    <!-- ===== BOTÃO LER TODOS OS TEXTOS ===== -->
-    <div class="botao-leia-todos">
-      <a href="textos.html" class="btn-todos">📖 Ler todos os textos</a>
-    </div>
-  </section>
+    <section id="tags" class="secao-tags">
+      <h2>Tags</h2>
+      <div id="tags-home" class="tags-row"></div>
+    </section>
 
-  <!-- ===== SEÇÃO TAGS ===== -->
-  <section id="tags" class="secao-tags">
-    <h2>Tags</h2>
-    <div id="lista-tags"></div>
-  </section>
+    <section id="contato" class="secao-contato">
+      <h2>Contato</h2>
+      <ul style="list-style:none;margin-top:8px">
+        <li><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></li>
+        <li style="margin-top:6px"><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank">linktr.ee/mgziin</a></li>
+      </ul>
+    </section>
 
-  <!-- ===== SEÇÃO CONTATO ===== -->
-  <section id="contato" class="secao-contato">
-    <h2>Contato</h2>
-    <ul>
-      <li><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></li>
-      <li><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank">https://linktr.ee/mgziin</a></li>
-    </ul>
-  </section>
+    <footer class="center">
+      <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
+    </footer>
+  </main>
 
-  <!-- ===== RODAPÉ ===== -->
-  <footer>
-    <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
-  </footer>
-
+  <!-- data + logic -->
   <script src="textos.js"></script>
-  <script src="script.js"></script>
+  <script src="script-home.js"></script>
 </body>
 </html>
