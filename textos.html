@@ -1,35 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meus Textos</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meus Textos ✍️</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <img src="perfil.jpg" alt="Foto de perfil" class="logo">
-      <h1>Meus Textos ✍️</h1>
-      <p class="descricao">Um pouco dos meus textos, poemas e crônicas</p>
-    </header>
+  <header class="cabecalho" style="justify-content:flex-start;gap:12px;padding-left:14px">
+    <!-- hamburguer no canto esquerdo -->
+    <button id="hambBtn" class="hamburguer" aria-label="Abrir menu">
+      <span class="hamb-icon">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
 
-    <div id="categorias">
-      <button class="categoria-btn active" data-categoria="todas">Todos</button>
-      <button class="categoria-btn" data-categoria="Crônica">Crônicas</button>
-      <button class="categoria-btn" data-categoria="Poema">Poemas</button>
+    <div style="display:flex;flex-direction:column;justify-content:center;margin-left:6px">
+      <div style="font-weight:600;color:var(--destaque)">Meus Textos ✍️</div>
+      <small style="color:#6b5a25;font-size:0.85rem">Catálogo completo</small>
     </div>
 
-    <section id="catalogo"></section>
+    <!-- menu panel (inicia hidden) -->
+    <nav id="menuPanel" class="menu-panel" aria-hidden="true">
+      <a id="menu-home" href="https://mgziin.github.io/-meus-textos/">Início</a>
+    </nav>
+  </header>
 
-    <footer>
-      <p>© 2025 — Feito por Brendon Phillipe</p>
-    </footer>
-  </div>
+  <main class="container" style="padding-top:88px;">
+    <section class="secao-destaques">
+      <h2>Todos os Textos</h2>
+
+      <div id="filtros" class="tags-row"></div>
+
+      <div id="catalogo" class="catalogo"></div>
+
+      <footer style="margin-top:30px" class="center">
+        <p>© 2025 — Feito por Brendon Phillipe</p>
+      </footer>
+    </section>
+  </main>
 
   <script src="textos.js"></script>
-  <script src="script.js"></script>
+  <script src="script-textos.js"></script>
 </body>
 </html>
-
-
