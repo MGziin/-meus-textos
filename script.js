@@ -1,40 +1,46 @@
-// script.js — único arquivo que gerencia Home e Textos
-// depende de textos.js (carregado antes)
+// script.js — controla Home e Textos (único arquivo)
+// depende de textos.js carregado antes
 
 document.addEventListener('DOMContentLoaded', () => {
-  // helpers
+  // utils
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
+  const hasEl = sel => !!$(sel);
+  const decode = v => v ? decodeURIComponent(v) : v;
   function qsParam(k){ const u=new URL(window.location.href); return u.searchParams.get(k); }
 
-  // categorias únicas a partir dos dados
-  const categorias = Array.from(new Set((window.textos || []).map(t => t.categoria)));
+  const dados = window.textos || [];
+  const categorias = Array.from(new Set(dados.map(t => t.categoria)));
 
-  /* ================== FUNCIONALIDADES DO HOME ================== */
-  const catalogoHomeEl = document.getElementById('catalogo-home');
-  const tagsHomeEl = document.getElementById('tags-home');
+  /* ---------------- HOME ---------------- */
+  if(hasEl('#catalogo-home') && hasEl('#tags-home')){
+    const catalogoHomeEl = $('#catalogo-home');
+    const tagsHomeEl = $('#tags-home');
 
-  if(catalogoHomeEl && tagsHomeEl){
-    // Render favoritos: mostra os dois primeiros textos (se existirem)
-    const favoritos = (window.textos || []).slice(0, 2);
+    // Favoritos: mostrar os dois primeiros textos do array,
+    // mantendo a ordem do textos.js (o segundo será "A Semente" conforme combinado).
+    const favoritos = dados.slice(0, 2);
+
     favoritos.forEach(t => {
       const card = document.createElement('div');
       card.className = 'texto-card';
-      const excerpt = t.conteudo.split('\n').slice(0,6).join('\n'); // primeiras linhas
+      const excerptLines = t.conteudo.split('\n').filter(Boolean).slice(0,6);
+      const excerpt = excerptLines.join('\n');
       card.innerHTML = `
         <span class="tag">${t.categoria}</span>
         <h3>${t.titulo}</h3>
-        <p class="texto-excerpt">${excerpt.replace(/\n{2,}/g,'\n')}</p>
+        <p class="texto-excerpt">${escapeHtml(excerpt)}</p>
       `;
       const btn = document.createElement('a');
       btn.className = 'btn-ler';
       btn.textContent = 'Ler mais';
+      // envia para textos.html filtrando pela categoria e pedindo para abrir o título
       btn.href = `textos.html?tag=${encodeURIComponent(t.categoria)}&open=${encodeURIComponent(t.titulo)}`;
       card.appendChild(btn);
       catalogoHomeEl.appendChild(card);
     });
 
-    // Render tags dinâmicas no Home (pílulas)
+    // Tags (pílulas) — só texto, sem emoji (opção b)
     categorias.forEach(cat => {
       const a = document.createElement('a');
       a.className = 'tag';
@@ -44,15 +50,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ================== FUNCIONALIDADES DO SITE DE TEXTOS ================== */
-  const catalogoEl = document.getElementById('catalogo');
-  const filtrosEl = document.getElementById('filtros');
-  const menuPanel = document.getElementById('menuPanel');
-  const hambBtn = document.getElementById('hambBtn');
-  const menuCats = document.getElementById('menu-cats');
+  /* ---------------- TEXTOS (CATÁLOGO) ---------------- */
+  if(hasEl('#catalogo') && hasEl('#filtros')){
+    const catalogoEl = $('#catalogo');
+    const filtrosEl = $('#filtros');
+    const menuPanel = $('#menuPanel');
+    const hambBtn = $('#hambBtn');
+    const menuCats = $('#menu-cats');
 
-  if(catalogoEl && filtrosEl){
-    // RENDERIZA FILTROS (tags) no topo dos textos
+    // Render filtros no topo
     categorias.forEach(cat => {
       const a = document.createElement('a');
       a.className = 'tag';
@@ -61,10 +67,20 @@ document.addEventListener('DOMContentLoaded', () => {
       filtrosEl.appendChild(a);
     });
 
-    // RENDERIZA CATALOGO (filtra por ?tag= se houver)
+    // Render menu interno categorias (no painel lateral)
+    if(menuCats){
+      categorias.forEach(cat => {
+        const a = document.createElement('a');
+        a.href = `textos.html?tag=${encodeURIComponent(cat)}`;
+        a.textContent = cat;
+        menuCats.appendChild(a);
+      });
+    }
+
+    // Render catálogo (filtra por ?tag= se existir)
     function renderCatalogo(filterTag){
       catalogoEl.innerHTML = '';
-      const list = filterTag ? window.textos.filter(t => t.categoria === filterTag) : window.textos.slice();
+      const list = filterTag ? dados.filter(t => t.categoria === filterTag) : dados.slice();
       if(list.length === 0){
         catalogoEl.innerHTML = '<div style="grid-column:1/-1" class="center">Nenhum texto encontrado para essa categoria.</div>';
         return;
@@ -75,36 +91,30 @@ document.addEventListener('DOMContentLoaded', () => {
         art.innerHTML = `
           <h3>${t.titulo}</h3>
           <div style="margin-bottom:8px"><span class="tag">${t.categoria}</span></div>
-          <p>${t.conteudo}</p>
+          <p>${escapeHtml(t.conteudo)}</p>
         `;
         catalogoEl.appendChild(art);
       });
 
-      // se veio &open=Titulo, rola para ele
-      const openTitulo = qsParam('open') ? decodeURIComponent(qsParam('open')) : null;
+      // Se veio &open=Titulo, rola até o título
+      const openTitulo = qsParam('open') ? decode(openParamSafe(qsParam('open'))) : null;
       if(openTitulo){
-        // esperar um tick para garantir render
+        // pequena espera para garantir renderização na página
         setTimeout(() => {
           const nodes = Array.from(catalogoEl.querySelectorAll('h3'));
           const node = nodes.find(h => h.textContent.trim() === openTitulo.trim());
           if(node){
             node.scrollIntoView({behavior:'smooth', block:'center'});
+            // destacar brevemente
+            node.style.transition = 'box-shadow .35s ease';
+            node.style.boxShadow = '0 8px 30px rgba(0,0,0,0.12)';
+            setTimeout(()=> node.style.boxShadow = '', 900);
           }
         }, 150);
       }
     }
 
-    // Monta menu interno de categorias (menu lateral)
-    if(menuCats){
-      categorias.forEach(cat => {
-        const a = document.createElement('a');
-        a.href = `textos.html?tag=${encodeURIComponent(cat)}`;
-        a.textContent = cat;
-        menuCats.appendChild(a);
-      });
-    }
-
-    // menu hambúrguer open/close (lateral)
+    // hamburger open/close (painel lateral)
     if(hambBtn && menuPanel){
       hambBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -121,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // fechar com ESC
+      // ESC fecha
       window.addEventListener('keydown', (e) => {
         if(e.key === 'Escape' && menuPanel.classList.contains('open')){
           menuPanel.classList.remove('open');
@@ -130,9 +140,25 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // inicial: pega ?tag
+    // inicial: pega tag da URL
     const tagParam = qsParam('tag');
-    renderCatalogo(tagParam || null);
+    const tagDecoded = tagParam ? decodeURIComponent(tagParam) : null;
+    renderCatalogo(tagDecoded || null);
+  }
+
+  /* ---------------- small utilities ---------------- */
+  function escapeHtml(text){
+    if(!text && text !== '') return '';
+    // preserve line breaks: convert to escaped text and then replace \n with <br>
+    const div = document.createElement('div');
+    // naive escape
+    div.textContent = text;
+    return div.innerHTML.replace(/\n/g, '<br>');
+  }
+
+  function openParamSafe(v){
+    // sometimes %20 etc; decode safely
+    try{ return decodeURIComponent(v); }catch(e){ return v; }
   }
 
 });
