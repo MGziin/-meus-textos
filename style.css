@@ -4,10 +4,10 @@
 :root{
   --fundo: #F4DF9E;
   --card: #f7eab7;
-  --texto: #5A4632;       /* marrom escolhido */
+  --texto: #5A4632;
   --destaque: #4f3a1f;
-  --botao: #F9E9A6;       /* amarelo A2 */
-  --tag-bg: #F9E9A6;      /* amarelo A2 */
+  --botao: #F9E9A6;
+  --tag-bg: #F9E9A6;
   --shadow: rgba(0,0,0,0.08);
 }
 
@@ -20,7 +20,6 @@ body{
   color:var(--texto);
   -webkit-font-smoothing:antialiased;
   line-height:1.5;
-  -webkit-font-smoothing:antialiased;
 }
 
 /* HEADER FIXO */
@@ -38,29 +37,17 @@ body{
   box-shadow:0 2px 6px var(--shadow);
 }
 
-.logo-site{
-  font-weight:600;
-  color:var(--destaque);
-  font-size:1.05rem;
-}
+.logo-site{font-weight:600;color:var(--destaque);font-size:1.05rem}
 
 /* container comum */
-.container{
-  max-width:980px;
-  margin:0 auto;
-  padding:100px 18px 80px;
-}
+.container{max-width:980px;margin:0 auto;padding:100px 18px 80px}
 
-/* tipografia */
+/* typography */
 h1,h2{color:var(--destaque);font-weight:600;margin-bottom:0.6rem;text-align:center}
 p, li{color:var(--texto)}
 
 /* FOTO PERFIL (home) */
-.foto-perfil{
-  width:150px;height:150px;border-radius:50%;
-  object-fit:cover;display:block;margin:0 auto 14px;
-  box-shadow:0 6px 18px var(--shadow);
-}
+.foto-perfil{width:150px;height:150px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 14px;box-shadow:0 6px 18px var(--shadow)}
 
 /* SEÇÕES */
 section{margin-bottom:2rem}
@@ -93,63 +80,35 @@ section{margin-bottom:2rem}
   font-size:0.9rem;font-weight:600;border:1px solid rgba(90,70,50,0.06);
   text-decoration:none;display:inline-block;
 }
+.tag.active{box-shadow:0 6px 12px rgba(0,0,0,0.06);transform:translateY(-3px)}
 .tag:hover{transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,0.06)}
 
 /* BOTÕES (B1) */
 .btn, .btn-ler, .btn-todos {
   background:var(--botao);
   color:var(--texto);
-  border:none;
-  padding:8px 14px;
-  border-radius:6px; /* B1 */
-  font-weight:700;
-  text-decoration:none;
-  display:inline-block;
-  cursor:pointer;
-  transition:all .15s ease;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  border:none;padding:8px 14px;border-radius:6px;font-weight:700;text-decoration:none;
+  display:inline-block;cursor:pointer;transition:all .15s ease;box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
-.btn:hover, .btn-ler:hover, .btn-todos:hover{
-  transform: translateY(-3px);
-  background: #f3d87a;
-  color: #2f2314;
-}
+.btn:hover, .btn-ler:hover, .btn-todos:hover{transform: translateY(-3px);background:#f3d87a;color:#2f2314}
 
 /* BOTÃO LER TODOS (centralizado) */
-.botao-leia-todos{ text-align:center;margin-top:14px; }
+.botao-leia-todos{text-align:center;margin-top:14px}
 
 /* MENU HAMBURGUER (H1) - lateral sliding */
-.hamburguer {
-  width:46px;height:46px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;background:transparent;border:none;padding:4px;
-}
+.hamburguer {width:46px;height:46px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;border:none;padding:4px}
 .hamb-icon{width:18px;height:14px;display:block;position:relative}
-.hamb-icon span{
-  position:absolute;left:0;right:0;height:2px;background:var(--texto);
-  border-radius:2px;transition:all .18s ease;
-}
+.hamb-icon span{position:absolute;left:0;right:0;height:2px;background:var(--texto);border-radius:2px;transition:all .18s ease}
 .hamb-icon span:nth-child(1){top:0}
 .hamb-icon span:nth-child(2){top:6px}
 .hamb-icon span:nth-child(3){top:12px}
 
 /* painel lateral */
 .menu-panel{
-  position:fixed;
-  top:0;
-  left:0;
-  height:100vh;
-  width:260px;
-  transform:translateX(-115%);
-  transition:transform .28s cubic-bezier(.2,.9,.2,1);
-  background:var(--tag-bg);
-  border-radius:0 12px 12px 0;
-  padding:20px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  z-index:1200;
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  transform:translateX(-115%);transition:transform .28s cubic-bezier(.2,.9,.2,1);
+  background:var(--tag-bg);border-radius:0 12px 12px 0;padding:20px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.12);display:flex;flex-direction:column;gap:12px;z-index:1200;
 }
 .menu-panel.open{transform:translateX(0)}
 .menu-panel h4{margin:0;color:var(--destaque);font-weight:700}
