@@ -1,167 +1,61 @@
-/* style.css — paleta A2 (amarelo médio suave) + botões B1 + menu H1 */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cantinho do Brendon</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="logo-site">Meu Cantinho ✨</div>
+    <nav class="menu-links" aria-hidden="true">
+      <!-- navegação simples; a navegação principal está no home -->
+      <a href="#inicio">Início</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#textos">Textos Favoritos</a>
+      <a href="#tags">Tags</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
 
-:root{
-  --fundo: #F4DF9E;
-  --card: #f7eab7;
-  --texto: #5A4632;       /* marrom escolhido */
-  --destaque: #4f3a1f;
-  --botao: #F9E9A6;       /* amarelo A2 */
-  --tag-bg: #F9E9A6;      /* amarelo A2 */
-  --shadow: rgba(0,0,0,0.08);
-}
+  <main class="container">
+    <section id="inicio" class="secao-inicio center">
+      <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil" />
+      <h1>Bem-vindo ao meu cantinho de palavras</h1>
+      <p class="descricao">Aqui estão alguns dos meus textos, crônicas e poemas. Fique à vontade para dar uma olhada 🌻</p>
+    </section>
 
-/* RESET */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{
-  font-family:'Poppins',sans-serif;
-  background:var(--fundo);
-  color:var(--texto);
-  -webkit-font-smoothing:antialiased;
-  line-height:1.5;
-  -webkit-font-smoothing:antialiased;
-}
+    <section id="textos" class="secao-destaques">
+      <h2>Meus Textos Favoritos</h2>
+      <div id="catalogo-home"></div>
 
-/* HEADER FIXO */
-.cabecalho{
-  position:fixed;
-  top:0; left:0; right:0;
-  height:64px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 16px;
-  background: rgba(249,233,166,0.92);
-  backdrop-filter: blur(6px);
-  z-index:1000;
-  box-shadow:0 2px 6px var(--shadow);
-}
+      <div class="botao-leia-todos">
+        <a class="btn-todos" href="textos.html">📖 Ler todos os textos</a>
+      </div>
+    </section>
 
-.logo-site{
-  font-weight:600;
-  color:var(--destaque);
-  font-size:1.05rem;
-}
+    <section id="tags" class="secao-tags">
+      <h2>Tags</h2>
+      <div id="tags-home" class="tags-row"></div>
+    </section>
 
-/* container comum */
-.container{
-  max-width:980px;
-  margin:0 auto;
-  padding:100px 18px 80px;
-}
+    <section id="contato" class="secao-contato">
+      <h2>Contato</h2>
+      <ul style="list-style:none;margin-top:8px">
+        <li><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></li>
+        <li style="margin-top:6px"><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank" rel="noopener">linktr.ee/mgziin</a></li>
+      </ul>
+    </section>
 
-/* tipografia */
-h1,h2{color:var(--destaque);font-weight:600;margin-bottom:0.6rem;text-align:center}
-p, li{color:var(--texto)}
+    <footer class="center">
+      <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
+    </footer>
+  </main>
 
-/* FOTO PERFIL (home) */
-.foto-perfil{
-  width:150px;height:150px;border-radius:50%;
-  object-fit:cover;display:block;margin:0 auto 14px;
-  box-shadow:0 6px 18px var(--shadow);
-}
-
-/* SEÇÕES */
-section{margin-bottom:2rem}
-
-/* CARD - textos (home & textos) */
-.texto-card, .card {
-  background:var(--card);
-  padding:1.2rem;border-radius:12px;
-  box-shadow:0 8px 22px var(--shadow);
-  text-align:left;
-}
-.texto-card h3, .card h3{color:var(--destaque);margin-bottom:0.6rem}
-.texto-excerpt{color:var(--texto);white-space:pre-line;margin-bottom:0.8rem}
-.card p{white-space:pre-line;color:var(--texto)}
-
-/* LAYOUT CATALOG (textos.html) - cards lado a lado */
-.catalogo {
-  display:grid;
-  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
-  gap:1rem;
-  margin-top:1rem;
-}
-
-/* TAGS (pílula) */
-.tags-row{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-top:0.6rem}
-.tag {
-  background:var(--tag-bg);
-  color:var(--texto);
-  padding:0.32rem 0.7rem;border-radius:999px;
-  font-size:0.9rem;font-weight:600;border:1px solid rgba(90,70,50,0.06);
-  text-decoration:none;display:inline-block;
-}
-.tag:hover{transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,0.06)}
-
-/* BOTÕES (B1) */
-.btn, .btn-ler, .btn-todos {
-  background:var(--botao);
-  color:var(--texto);
-  border:none;
-  padding:8px 14px;
-  border-radius:6px; /* B1 */
-  font-weight:700;
-  text-decoration:none;
-  display:inline-block;
-  cursor:pointer;
-  transition:all .15s ease;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-}
-.btn:hover, .btn-ler:hover, .btn-todos:hover{
-  transform: translateY(-3px);
-  background: #f3d87a;
-  color: #2f2314;
-}
-
-/* BOTÃO LER TODOS (centralizado) */
-.botao-leia-todos{ text-align:center;margin-top:14px; }
-
-/* MENU HAMBURGUER (H1) - lateral sliding */
-.hamburguer {
-  width:46px;height:46px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;background:transparent;border:none;padding:4px;
-}
-.hamb-icon{width:18px;height:14px;display:block;position:relative}
-.hamb-icon span{
-  position:absolute;left:0;right:0;height:2px;background:var(--texto);
-  border-radius:2px;transition:all .18s ease;
-}
-.hamb-icon span:nth-child(1){top:0}
-.hamb-icon span:nth-child(2){top:6px}
-.hamb-icon span:nth-child(3){top:12px}
-
-/* painel lateral */
-.menu-panel{
-  position:fixed;
-  top:0;
-  left:0;
-  height:100vh;
-  width:260px;
-  transform:translateX(-115%);
-  transition:transform .28s cubic-bezier(.2,.9,.2,1);
-  background:var(--tag-bg);
-  border-radius:0 12px 12px 0;
-  padding:20px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  z-index:1200;
-}
-.menu-panel.open{transform:translateX(0)}
-.menu-panel h4{margin:0;color:var(--destaque);font-weight:700}
-.menu-panel a{display:block;padding:8px;border-radius:8px;text-decoration:none;color:var(--texto);font-weight:600}
-.menu-panel a:hover{background:var(--botao);color:#2f2314}
-
-/* small screens */
-@media (max-width:720px){
-  .container{padding:86px 14px 80px}
-  .foto-perfil{width:120px;height:120px}
-  .catalogo{grid-template-columns:1fr}
-}
-
-/* util */
-.center{text-align:center}
+  <!-- dados e script -->
+  <script src="textos.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
