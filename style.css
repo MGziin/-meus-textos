@@ -7,7 +7,7 @@
   --texto: #3a2f0b;
   --destaque: #b5892e;
   --botao: #e8c64a;
-  --tag-bg: #f9f0c8; /* amarelo claro */
+  --tag-bg: #FFF4B0; /* amarelo suave escolhido */
 }
 
 /* reset */
@@ -29,7 +29,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 1rem 0 1rem;
+  padding:0 1rem;
   background: rgba(244,223,158,0.92);
   backdrop-filter: blur(6px);
   z-index:1000;
@@ -91,7 +91,7 @@ h1,h2{color:var(--destaque);font-weight:600;margin-bottom:0.6rem;text-align:cent
 }
 .btn-ler:hover{transform:translateY(-3px);background:var(--destaque);color:#fff}
 
-/* tags (home and textos) — paleta amarelo claro + texto marrom */
+/* tags (home and textos) — paleta amarelo suave + texto marrom */
 .tags-row{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-top:0.6rem}
 .tag {
   background:var(--tag-bg);
@@ -99,6 +99,7 @@ h1,h2{color:var(--destaque);font-weight:600;margin-bottom:0.6rem;text-align:cent
   padding:0.32rem 0.7rem;border-radius:999px;
   font-size:0.85rem;font-weight:600;border:1px solid rgba(58,47,11,0.06);
   text-decoration:none;
+  display:inline-block;
 }
 .tag:hover{transform:translateY(-3px);box-shadow:0 6px 12px rgba(0,0,0,0.06)}
 
@@ -124,11 +125,11 @@ h1,h2{color:var(--destaque);font-weight:600;margin-bottom:0.6rem;text-align:cent
 .btn-todos{display:inline-block;background:var(--botao);color:#3a2f0b;padding:10px 18px;border-radius:28px;text-decoration:none;font-weight:700;transition:all .15s}
 .btn-todos:hover{background:var(--destaque);color:#fff;transform:translateY(-3px)}
 
-/* HAMBURGUER (textos.html) - estilo minimalista top-left */
+/* HAMBURGUER (textos.html) - style minimalista top-left */
 .hamburguer {
-  width:44px;height:44px;border-radius:8px;
+  width:46px;height:46px;border-radius:10px;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;background:transparent;border:none;
+  cursor:pointer;background:transparent;border:none; padding:4px;
 }
 .hamb-icon{width:18px;height:14px;display:block;position:relative}
 .hamb-icon span{
@@ -139,13 +140,27 @@ h1,h2{color:var(--destaque);font-weight:600;margin-bottom:0.6rem;text-align:cent
 .hamb-icon span:nth-child(2){top:6px}
 .hamb-icon span:nth-child(3){top:12px}
 
-/* painel do menu */
+/* painel do menu - lateral sliding from left */
 .menu-panel{
-  position:fixed;top:64px;left:12px;width:180px;background:var(--tag-bg);
-  border-radius:10px;padding:8px 8px;box-shadow:0 8px 30px rgba(0,0,0,0.12);
-  display:none;flex-direction:column;gap:6px;z-index:1200;
+  position:fixed;
+  top:0;
+  left:0;
+  height:100vh;
+  width:240px;
+  transform:translateX(-110%);
+  transition:transform .28s cubic-bezier(.2,.9,.2,1);
+  background:var(--tag-bg);
+  border-radius:0 12px 12px 0;
+  padding:18px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  z-index:1200;
 }
-.menu-panel a{display:block;padding:10px;border-radius:8px;text-decoration:none;color:var(--texto);font-weight:600}
+.menu-panel.open{transform:translateX(0)}
+.menu-panel h4{margin:0;color:var(--destaque);font-weight:700}
+.menu-panel a{display:block;padding:8px;border-radius:8px;text-decoration:none;color:var(--texto);font-weight:600}
 .menu-panel a:hover{background:var(--botao);color:#1b1206}
 
 /* small screens tweaks */
@@ -154,7 +169,6 @@ h1,h2{color:var(--destaque);font-weight:600;margin-bottom:0.6rem;text-align:cent
   .container{padding:86px 14px 80px}
   .foto-perfil{width:120px;height:120px}
   .hamb-icon{transform:scale(0.95)}
-  .menu-panel{left:8px}
 }
 
 /* utility */
