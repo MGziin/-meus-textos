@@ -5,12 +5,17 @@
 document.addEventListener('DOMContentLoaded', () => {
   const dados = window.textos || [];
   const categorias = Array.from(new Set(dados.map(t => t.categoria)));
+  // garante que "Todos" esteja presente como primeira opção para o secundário
+  const categoriasComTodos = ['Todos', ...categorias];
 
   // helpers
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
   const isTextosPage = () => window.location.pathname.endsWith('textos.html') || window.location.pathname.includes('/textos.html');
-  const isHomePage = () => window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname === '/';
+  const isHomePage = () => {
+    const p = window.location.pathname;
+    return p.endsWith('index.html') || p === '/' || p === '';
+  };
   function qsParam(k){ const u = new URL(window.location.href); return u.searchParams.get(k); }
   function escapeHtml(text){
     if(text === null || text === undefined) return '';
@@ -24,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const tagsHomeEl = $('#tags-home');
 
   if(catalogoHomeEl && tagsHomeEl){
-    // Favoritos: mostramos os dois primeiros textos na ordem do array
-    const favoritos = dados.slice(0, 2); // já coloque A Semente na 2ª posição em textos.js
+    // Favoritos: mostramos os dois primeiros textos na ordem do array (A Semente deve estar em 2ª posição no textos.js)
+    const favoritos = dados.slice(0, 2);
     favoritos.forEach(t => {
       const card = document.createElement('div');
       card.className = 'texto-card';
@@ -43,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
       catalogoHomeEl.appendChild(card);
     });
 
-    // tags no Home (pílulas)
+    // tags no Home (só as categorias que têm textos)
     categorias.forEach(cat => {
       const a = document.createElement('a');
       a.className = 'tag';
@@ -61,20 +66,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const menuCats = $('#menu-cats');
 
   if(catalogoEl && filtrosEl){
-    // render filtros (topo)
-    categorias.forEach(cat => {
+    // render filtros no topo (Todos + categorias)
+    categoriasComTodos.forEach(cat => {
       const a = document.createElement('a');
       a.className = 'tag';
-      a.href = `textos.html?tag=${encodeURIComponent(cat)}`;
+      a.href = `textos.html?tag=${encodeURIComponent(cat === 'Todos' ? 'Todos' : cat)}`;
       a.textContent = cat;
       filtrosEl.appendChild(a);
     });
 
-    // render menu categorias
+    // render menu categorias no painel lateral
     if(menuCats){
-      categorias.forEach(cat => {
+      categoriasComTodos.forEach(cat => {
         const a = document.createElement('a');
-        a.href = `textos.html?tag=${encodeURIComponent(cat)}`;
+        a.href = `textos.html?tag=${encodeURIComponent(cat === 'Todos' ? 'Todos' : cat)}`;
         a.textContent = cat;
         menuCats.appendChild(a);
       });
@@ -83,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // render catálogo (filtra se houver ?tag=)
     function renderCatalogo(filterTag){
       catalogoEl.innerHTML = '';
-      const list = filterTag ? dados.filter(t => t.categoria === filterTag) : dados.slice();
+      // se filterTag for null ou 'Todos' mostra tudo
+      const list = (!filterTag || filterTag === 'Todos') ? dados.slice() : dados.filter(t => t.categoria === filterTag);
       if(list.length === 0){
         catalogoEl.innerHTML = '<div style="grid-column:1/-1" class="center">Nenhum texto encontrado para essa categoria.</div>';
         return;
@@ -111,6 +117,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // manage active state on filtro buttons
+    function setActiveFilter(tagName){
+      const allTags = Array.from(filtrosEl.querySelectorAll('.tag'));
+      allTags.forEach(el => {
+        el.classList.toggle('active', el.textContent === (tagName || 'Todos'));
+      });
+    }
+
     // menu hambúrguer (lateral) open/close
     if(hambBtn && menuPanel){
       hambBtn.addEventListener('click', (e) => {
@@ -135,11 +149,12 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // aplicar filtro inicial por URL
+    // aplicar filtro inicial por URL ou por padrão (Todos)
     const tagParamRaw = qsParam('tag');
-    const tagDecoded = tagParamRaw ? decodeURIComponent(tagParamRaw) : null;
-    renderCatalogo(tagDecoded || null);
+    const tagDecoded = tagParamRaw ? decodeURIComponent(tagParamRaw) : 'Todos';
+    renderCatalogo(tagDecoded === 'Todos' ? null : tagDecoded);
+    setActiveFilter(tagDecoded === 'Todos' ? 'Todos' : tagDecoded);
   }
 
-  // safety: if neither page shows, do nothing (prevents errors)
+  // fim DOMContentLoaded
 });
