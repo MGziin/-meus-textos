@@ -71,17 +71,25 @@ section{margin-bottom:2rem}
   margin-top:1rem;
 }
 
-/* TAGS (pílula) */
-.tags-row{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-top:0.6rem}
+/* TAGS — ESTILO PADRÃO */
 .tag {
-  background:var(--tag-bg);
-  color:var(--texto);
-  padding:0.32rem 0.7rem;border-radius:999px;
-  font-size:0.9rem;font-weight:600;border:1px solid rgba(90,70,50,0.06);
-  text-decoration:none;display:inline-block;
+  display: inline-block;
+  background: var(--botao);
+  color: var(--texto);
+  padding: 0.35rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.tag.active{box-shadow:0 6px 12px rgba(0,0,0,0.06);transform:translateY(-3px)}
-.tag:hover{transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,0.06)}
+
+.tag:hover {
+  background: var(--destaque);
+  color: white;
+  transform: scale(1.05);
+}
+
 
 /* BOTÕES (B1) */
 .btn, .btn-ler, .btn-todos {
@@ -124,3 +132,4 @@ section{margin-bottom:2rem}
 
 /* util */
 .center{text-align:center}
+
