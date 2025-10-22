@@ -156,5 +156,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setActiveFilter(tagDecoded === 'Todos' ? 'Todos' : tagDecoded);
   }
 
+  // pega categoria se vier pela URL, ex: textos.html?categoria=Crônica
+const urlParams = new URLSearchParams(window.location.search);
+const categoriaSelecionada = urlParams.get("categoria");
+if (categoriaSelecionada) {
+  filtrarPorCategoria(categoriaSelecionada);
+}
+
   // fim DOMContentLoaded
 });
+
