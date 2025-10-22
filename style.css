@@ -133,3 +133,21 @@ section{margin-bottom:2rem}
 /* util */
 .center{text-align:center}
 
+/* BOTÃO INÍCIO NO TOPO DO TEXTOS.HTML */
+.btn-inicio {
+  display: inline-block;
+  margin-bottom: 1.2rem;
+  background: var(--botao);
+  color: var(--texto);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-inicio:hover {
+  background: var(--destaque);
+  color: white;
+}
+
