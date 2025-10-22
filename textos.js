@@ -54,7 +54,7 @@ talvez o tempo seja o que mais dá falta.`
   },
 
   {
-    titulo: "A Semente",
+    titulo: "A Semente🌱",
     categoria: "Fábula",
     conteudo: `Essa é a história de um fazendeiro que tinha um sonho: conseguir uma semente especial. Ele sonhava com ela todos os dias, mas a semente era cara demais para seu bolso.
 Um dia, decidido a realizá-lo, vende todas as sementes que possuía, na esperança de comprar a semente dos sonhos. Mesmo assim, ainda não tinha dinheiro suficiente. Então, vende suas ferramentas de plantio — enxada, pá, regador, adubo — mas ainda assim falta um pouco para alcançar o valor necessário.
@@ -64,4 +64,5 @@ O valor da semente era imenso para ele — sentimental e monetário —, mas, se
 Hum… familiar essa história.`
   }
 ];
+
 
