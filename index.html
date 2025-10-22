@@ -10,7 +10,7 @@
 <body>
   <header class="cabecalho">
     <div class="logo-site">Meu Cantinho ✨</div>
-    <nav class="menu-links" aria-hidden="true">
+    <nav class="menu-links" aria-hidden="false">
       <a href="#inicio">Início</a>
       <a href="#sobre">Sobre</a>
       <a href="#textos">Textos Favoritos</a>
@@ -26,12 +26,20 @@
       <p class="descricao">Aqui estão alguns dos meus textos, crônicas e poemas. Fique à vontade para dar uma olhada 🌻</p>
     </section>
 
+    <section id="sobre" class="secao-sobre">
+      <h2>Sobre Mim</h2>
+      <p class="sobre-texto">
+        Eu me chamo <strong>Brendon Phillipe</strong>. Comecei a escrever desde muito pequeno, com meus 12 anos, e agora voltei a escrever e quero compartilhar minhas novas produções com vocês.
+      </p>
+    </section>
+
     <section id="textos" class="secao-destaques">
       <h2>Meus Textos Favoritos</h2>
-      <div id="catalogo-home"></div>
+
+      <div id="catalogo-home" class="catalogo-home"></div>
 
       <div class="botao-leia-todos">
-        <a class="btn-todos" href="textos.html">📖 Ler todos os textos</a>
+        <a class="btn-todos" href="textos.html?tag=Todos">📖 Ler todos os textos</a>
       </div>
     </section>
 
@@ -53,7 +61,6 @@
     </footer>
   </main>
 
-  <!-- dados + script -->
   <script src="textos.js"></script>
   <script src="script.js"></script>
 </body>
