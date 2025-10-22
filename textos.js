@@ -1,5 +1,5 @@
 /* textos.js — dados dos textos (coloque na mesma pasta) */
-const textos = [
+window.textos = [
   {
     titulo: "📱 Por que é tão difícil ficar sem celular?",
     categoria: "Crônica",
