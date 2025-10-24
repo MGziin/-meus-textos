@@ -1,8 +1,10 @@
-/* textos.js — dados dos textos (coloque na mesma pasta) */
+/* textos.js — base de textos (mantive os textos que você já tinha) */
 window.textos = [
   {
+    id: "porque-e-tao-dificil-ficar-sem-celular",
     titulo: "📱 Por que é tão difícil ficar sem celular?",
     categoria: "Crônica",
+    resumo: "Será que estamos realmente no controle do nosso tempo, ou o celular controla a gente?",
     conteudo: `Fico pensando…
 por que é tão difícil ficar sem celular?
 
@@ -42,8 +44,7 @@ mas porque a gente não faz ideia do que fazer.
 
 E… talvez, no final das contas,
 o que me incomoda nem seja estar sem celular…
-e sim a falta da cortina de fumaça
-que ele jogava por cima desse vazio quieto que é estar sem celular.
+e sim a falta da cortina de fumaça que ele jogava por cima desse vazio quieto que é estar sem celular.
 
 Contraditório, né?
 
@@ -54,8 +55,10 @@ talvez o tempo seja o que mais dá falta.`
   },
 
   {
+    id: "a-semente",
     titulo: "A Semente",
     categoria: "Fábula",
+    resumo: "Essa é a história de um fazendeiro que vendeu tudo por um sonho — e descobriu o preço disso.",
     conteudo: `Essa é a história de um fazendeiro que tinha um sonho: conseguir uma semente especial. Ele sonhava com ela todos os dias, mas a semente era cara demais para seu bolso.
 Um dia, decidido a realizá-lo, vende todas as sementes que possuía, na esperança de comprar a semente dos sonhos. Mesmo assim, ainda não tinha dinheiro suficiente. Então, vende suas ferramentas de plantio — enxada, pá, regador, adubo — mas ainda assim falta um pouco para alcançar o valor necessário.
 Motivado, ele vende suas terras, os campos onde cultivava suas plantações. Agora, finalmente, consegue o dinheiro e vai à loja todo feliz para comprar a semente. Com ela em mãos, volta para casa, mas percebe algo: abriu mão de tudo para conseguir aquele sonho.
