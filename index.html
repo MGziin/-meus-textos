@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cantinho do Brendon</title>
-  <link rel="icon" href="favicon.png" type="image/png" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Cantinho ✨</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="textos.js"></script>
+  <script defer src="script.js"></script>
 </head>
+
 <body>
   <header class="cabecalho">
     <div class="logo-site">Meu Cantinho ✨</div>
-    <nav class="menu-links" aria-hidden="false">
+    <nav class="menu-links">
       <a href="#inicio">Início</a>
       <a href="#sobre">Sobre</a>
       <a href="#textos">Textos Favoritos</a>
@@ -19,48 +21,44 @@
     </nav>
   </header>
 
-  <main class="container">
-    <section id="inicio" class="secao-inicio center">
-      <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil" />
-      <h1>Bem-vindo ao meu cantinho de palavras</h1>
-      <p class="descricao">Aqui estão alguns dos meus textos, crônicas e fábulas. Fique à vontade para dar uma olhada 🌻</p>
-    </section>
+  <section id="inicio" class="secao-inicio">
+    <img src="minha-foto.jpg" alt="Minha foto" class="foto-perfil">
+    <p class="descricao">Bem-vindo ao meu cantinho de textos ✍️</p>
+  </section>
 
-    <section id="sobre" class="secao-sobre">
-      <h2>Sobre Mim</h2>
-      <p class="sobre-texto">
-        Eu me chamo <strong>Brendon Phillipe</strong>. Comecei a escrever desde muito pequeno, com meus 12 anos, e agora voltei a escrever e quero compartilhar minhas novas produções com vocês.
-      </p>
-    </section>
+  <section id="sobre" class="secao-sobre">
+    <h2>Sobre mim</h2>
+    <p>Sou alguém apaixonado por escrever sobre a vida, emoções e reflexões cotidianos.
+       Este espaço é o meu lugar para transformar sentimentos em palavras e pensamentos
+       em histórias ✨</p>
+  </section>
 
-    <section id="textos" class="secao-destaques">
-      <h2>Meus Textos Favoritos</h2>
-      <div id="catalogo-home" class="catalogo-home"></div>
+  <section id="textos" class="secao-destaques">
+    <h2>Textos Favoritos</h2>
+    <div id="lista-favoritos"></div>
+  </section>
 
-      <div class="botao-leia-todos">
-        <a class="btn-todos" href="textos.html?tag=Todos">📖 Ler todos os textos</a>
-      </div>
-    </section>
+  <section id="tags" class="secao-tags">
+    <h2>Tags</h2>
+    <div id="lista-tags"></div>
+  </section>
 
-    <section id="tags" class="secao-tags">
-      <h2>Tags</h2>
-      <div id="tags-home" class="tags-row"></div>
-    </section>
+  <section id="contato" class="secao-contato">
+    <h2>Contato</h2>
+    <p>Me chame no Instagram ou WhatsApp 📩</p>
+  </section>
 
-    <section id="contato" class="secao-contato">
-      <h2>Contato</h2>
-      <ul style="list-style:none;margin-top:8px">
-        <li><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></li>
-        <li style="margin-top:6px"><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank" rel="noopener">linktr.ee/mgziin</a></li>
-      </ul>
-    </section>
+  <footer>
+    <p>© 2025 — Meu Cantinho de Textos ✨</p>
+  </footer>
 
-    <footer class="center">
-      <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
-    </footer>
-  </main>
-
-  <script src="textos.js"></script>
-  <script src="script.js"></script>
+  <!-- MODAL -->
+  <div id="modal-texto" class="modal-overlay">
+    <div class="modal-caixa">
+      <h2 id="modal-titulo"></h2>
+      <p id="modal-conteudo"></p>
+      <button onclick="fecharModal()" class="btn-fechar">Fechar</button>
+    </div>
+  </div>
 </body>
 </html>
