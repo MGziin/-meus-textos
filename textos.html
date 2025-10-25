@@ -1,48 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Meus Textos ✍️</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Textos ✨</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="textos.js"></script>
+  <script defer src="script.js"></script>
 </head>
+
 <body>
-  <header class="cabecalho catalogo-header" style="justify-content:flex-start;gap:12px;padding-left:14px">
-    <button id="hambBtn" class="hamburguer" aria-label="Abrir menu">
-      <span class="hamb-icon"><span></span><span></span><span></span></span>
-    </button>
-
-    <div style="display:flex;flex-direction:column;justify-content:center;margin-left:8px">
-      <div style="font-weight:600;color:var(--destaque)">Meus Textos ✍️</div>
-      <small style="color:#6b5a25;font-size:0.85rem">Catálogo completo</small>
-    </div>
-
-    <nav id="menuPanel" class="menu-panel" aria-hidden="true">
-      <h4>Menu</h4>
-      <a id="menu-home" href="index.html">Início</a>
-      <div style="margin-top:6px;font-weight:700;color:#5b4919">Categorias</div>
-      <div id="menu-cats" style="display:flex;flex-direction:column;gap:6px"></div>
+  <header class="cabecalho">
+    <div class="logo-site">Meu Cantinho ✨</div>
+    <nav class="menu-links">
+      <a href="index.html#inicio">Início</a>
+      <a href="index.html#sobre">Sobre</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="index.html#contato">Contato</a>
     </nav>
   </header>
 
-  <main class="container" style="padding-top:88px;">
-    <section class="secao-destaques">
-      <h2>Todos os Textos</h2>
+  <section id="catalogo" class="secao-catalogo">
+    <h2>Catálogo de Textos</h2>
 
-      <div id="filtros" class="tags-row"></div>
+    <!-- TAGS -->
+    <div class="tags-catalogo">
+      <button class="tag-btn" data-tag="Todos">Todos</button>
+      <button class="tag-btn" data-tag="Crônica">Crônica</button>
+      <button class="tag-btn" data-tag="Fábula">Fábula</button>
+    </div>
 
-      <div id="catalogo" class="catalogo"></div>
+    <!-- LISTA DE TEXTOS -->
+    <div id="lista-catalogo"></div>
+  </section>
 
-      <footer style="margin-top:30px" class="center">
-        <p>© 2025 — Feito por Brendon Phillipe</p>
-      </footer>
-    </section>
-  </main>
+  <footer>
+    <p>© 2025 — Meu Cantinho de Textos ✨</p>
+  </footer>
 
-  <!-- Modal wrapper (renderizado/ativado pelo script.js) -->
-  <div id="overlay-modal" aria-hidden="true"></div>
-
-  <script src="textos.js"></script>
-  <script src="script.js"></script>
+  <!-- MODAL -->
+  <div id="modal-texto" class="modal-overlay">
+    <div class="modal-caixa">
+      <h2 id="modal-titulo"></h2>
+      <p id="modal-conteudo"></p>
+      <button onclick="fecharModal()" class="btn-fechar">Fechar</button>
+    </div>
+  </div>
 </body>
 </html>
