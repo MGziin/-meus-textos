@@ -1,14 +1,14 @@
+/* textos.js — dados dos textos (mantido como window.textos) */
 window.textos = [
   {
     id: 1,
-    titulo: "Por que é tão difícil ficar sem celular?",
+    titulo: "📱 Por que é tão difícil ficar sem celular?",
     categoria: "Crônica",
-    resumo: "Uma reflexão bem-humorada sobre nossa dependência do celular.",
+    resumo: `Fico pensando… por que é tão difícil ficar sem celular?
+Já faz algumas semanas que tô sem o meu, e mesmo tendo telas por todo canto da casa… ainda sinto falta daquela telinha na mão, sabe?`,
     favorito: true,
-    conteudo: `
-     Por que é tão difícil ficar sem celular?
-
-Por que é tão difícil ficar sem celular?
+    conteudo: `Fico pensando…
+por que é tão difícil ficar sem celular?
 
 Já faz algumas semanas que tô sem o meu,
 e mesmo tendo telas por todo canto da casa…
@@ -53,35 +53,33 @@ Contraditório, né?
 E aí você fica olhando pro nada…
 só olhando…
 e pensando que, no fim…
-talvez o tempo seja o que mais dá falta.
-    `
+talvez o tempo seja o que mais dá falta.`
   },
   {
     id: 2,
     titulo: "A Semente",
     categoria: "Fábula",
-    resumo: "Uma história breve sobre paciência, tempo e crescimento.",
+    resumo: `Uma fábula sobre sonhos, escolhas e o custo de abrir mão do que importa.`,
     favorito: false,
-    conteudo: `
-     Essa é a história de um fazendeiro que tinha um sonho: conseguir uma semente 
+    conteudo: `A Semente
+
+Essa é a história de um fazendeiro que tinha um sonho: conseguir uma semente 
 especial.
- Pensava nela todos os dias, mas o preço era alto demais para o seu bolso.
+Pensava nela todos os dias, mas o preço era alto demais para o seu bolso.
 Um dia, decidido a realizá-lo, vende todas as sementes que possuía, na esperança de comprar a tão sonhada semente.
- Mesmo assim, o dinheiro ainda não bastava.
- Então, vende também suas ferramentas — a enxada, a pá, o regador, o adubo.
- Ainda falta um pouco.
+Mesmo assim, o dinheiro ainda não bastava.
+Então, vende também suas ferramentas — a enxada, a pá, o regador, o adubo.
+Ainda falta um pouco.
 Motivado, ele vende as próprias terras — o chão onde cultivava suas plantações.
- Agora, finalmente, tem o suficiente.
- Vai à loja feliz, compra a semente e volta pra casa.
- Mas, ao chegar, percebe algo: abriu mão de tudo para conquistar aquele sonho.
+Agora, finalmente, tem o suficiente.
+Vai à loja feliz, compra a semente e volta pra casa.
+Mas, ao chegar, percebe algo: abriu mão de tudo para conquistar aquele sonho.
 Perdeu o prazer da jardinagem, que o fazia feliz todos os dias.
- Perdeu também sua fonte de alimento, já que vivia do que plantava.
- As terras, fruto de anos de trabalho, agora pertenciam a outros.
+Perdeu também sua fonte de alimento, já que vivia do que plantava.
+As terras, fruto de anos de trabalho, agora pertenciam a outros.
 A semente, que antes representava um sonho, virou lembrança.
- Sem onde plantá-la, acabou apodrecendo com o tempo — até se tornar inútil.
- O fazendeiro, agora sem plantação, sem sementes e sem dinheiro, se vê perdido, tendo que reconstruir do zero tudo o que levou anos pra erguer.
-Hum… familiar essa história.
-    `
+Sem onde plantá-la, acabou apodrecendo com o tempo — até se tornar inútil.
+O fazendeiro, agora sem plantação, sem sementes e sem dinheiro, se vê perdido, tendo que reconstruir do zero tudo o que levou anos pra erguer.
+Hum… familiar essa história.`
   }
 ];
-
