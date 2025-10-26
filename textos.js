@@ -1,10 +1,10 @@
-/* textos.js — dados dos textos (mantido como window.textos) */
+/* textos.js — dados (mantido como window.textos) */
 window.textos = [
   {
     id: 1,
     titulo: "📱 Por que é tão difícil ficar sem celular?",
     categoria: "Crônica",
-    resumo: `Uma breve reflexão sobre o que o celular realmente significa para nós.`,
+    resumo: `Uma breve reflexão sobre o que o celular realmente importa para nós`,
     favorito: true,
     conteudo: `Fico pensando…
 por que é tão difícil ficar sem celular?
@@ -59,7 +59,7 @@ talvez o tempo seja o que mais dá falta.`
     titulo: "A Semente",
     categoria: "Fábula",
     resumo: `Uma fábula sobre sonhos, escolhas e o custo de abrir mão do que importa.`,
-    favorito: false,
+    favorito: true,
     conteudo: `A Semente
 
 Essa é a história de um fazendeiro que tinha um sonho: conseguir uma semente 
@@ -82,4 +82,3 @@ O fazendeiro, agora sem plantação, sem sementes e sem dinheiro, se vê perdido
 Hum… familiar essa história.`
   }
 ];
-
