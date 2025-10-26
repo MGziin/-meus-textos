@@ -1,45 +1,63 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Catálogo de Textos ✨</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
   <script defer src="textos.js"></script>
   <script defer src="script.js"></script>
 </head>
+<body data-lang="pt">
 
-<body>
-  <header class="cabecalho">
-    <div class="logo-site">Meu Cantinho ✨</div>
-    <nav class="menu-links">
-      <a href="index.html#inicio">Início</a>
-      <a href="index.html#sobre">Sobre</a>
-      <a href="#catalogo">Catálogo</a>
-      <a href="index.html#contato">Contato</a>
+  <header class="cabecalho" style="justify-content:flex-start; padding-left:14px;">
+    <button id="hambBtn" class="hamburguer" aria-label="Abrir menu">
+      <span class="hamb-icon"><span></span><span></span><span></span></span>
+    </button>
+
+    <div style="display:flex;flex-direction:column;justify-content:center;margin-left:8px">
+      <div class="logo-site">Meu Cantinho ✨</div>
+      <small style="color:#6b5a25;font-size:0.85rem" data-i18n="cat_sub">Catálogo completo</small>
+    </div>
+
+    <!-- Language toggle -->
+    <div style="position:absolute; right:14px; display:flex; gap:8px; align-items:center;">
+      <button id="lang-pt-2" class="lang-btn" aria-label="Português">PT</button>
+      <button id="lang-en-2" class="lang-btn" aria-label="English">EN</button>
+    </div>
+
+    <nav id="menuPanel" class="menu-panel" aria-hidden="true">
+      <h4 data-i18n="menu_titulo">Menu</h4>
+      <a id="menu-home" href="index.html#inicio">Início</a>
+      <div style="margin-top:6px;font-weight:700;color:#5b4919" data-i18n="menu_cats">Categorias</div>
+      <div id="menu-cats" style="display:flex;flex-direction:column;gap:6px"></div>
+      <div style="margin-top:10px">
+        <a href="index.html#contato" data-i18n="menu_contato">Contato</a>
+      </div>
     </nav>
   </header>
 
-  <section id="catalogo" class="secao-catalogo">
-    <h2>Catálogo de Textos</h2>
+  <main class="container" style="padding-top:88px;">
+    <section class="secao-destaques">
+      <h2 data-i18n="catalogo_titulo">Todos os Textos</h2>
 
-    <!-- TAGS (serão preenchidas pelo JS) -->
-    <div id="tags-catalogo" class="tags-catalogo"></div>
+      <div id="tags-catalogo" class="tags-catalogo"></div>
 
-    <!-- LISTA DE TEXTOS -->
-    <div id="lista-catalogo"></div>
-  </section>
+      <div id="lista-catalogo" class="catalogo"></div>
 
-  <footer>
-    <p>© 2025 — Meu Cantinho de Textos ✨</p>
-  </footer>
+      <footer style="margin-top:30px" class="center">
+        <p>© 2025 — Feito por Brendon Phillipe</p>
+      </footer>
+    </section>
+  </main>
 
-  <!-- MODAL -->
-  <div id="modal-texto" class="modal-overlay">
-    <div class="modal-caixa">
+  <!-- Modal (script garantirá criação se for necessário) -->
+  <div id="modal-texto" class="modal-overlay" style="display:none;">
+    <div class="modal-caixa" role="dialog" aria-modal="true">
       <h2 id="modal-titulo"></h2>
-      <p id="modal-conteudo"></p>
-      <button onclick="fecharModal()" class="btn-fechar">Fechar</button>
+      <div id="modal-conteudo" class="modal-body"></div>
+      <button id="btn-fechar-modal-2" class="btn-fechar">Fechar</button>
     </div>
   </div>
 </body>
