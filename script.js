@@ -1,5 +1,4 @@
-/* script.js — controla home + catálogo + modal
-   Mantive nomes e funções já existentes; adicionei criação do modal caso não exista. */
+/* script.js — controle home + catálogo + modal + i18n */
 
 /* helpers */
 function q(sel){ return document.querySelector(sel); }
@@ -9,25 +8,95 @@ function escapeHtml(str){
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-/* segurança - textos.js deve ter definido window.textos */
-if(typeof window.textos === "undefined") {
-  console.error("ERRO: window.textos não encontrado. Verifique textos.js");
-  window.textos = []; // evita quebrar
+/* ensure textos exists */
+if(typeof window.textos === "undefined") window.textos = [];
+
+/* i18n small map for static labels */
+const i18n = {
+  pt: {
+    nav_inicio: "Início",
+    nav_sobre: "Sobre",
+    nav_textos: "Textos Favoritos",
+    nav_tags: "Tags",
+    nav_contato: "Contato",
+    home_boasvindas: "Bem-vindo ao meu cantinho de textos ✍️",
+    sobre_titulo: "Sobre mim",
+    sobre_texto: "Sou alguém apaixonado por escrever sobre a vida, emoções e reflexões cotidianas. Este espaço é o meu lugar para transformar sentimentos em palavras e pensamentos em histórias ✨",
+    favoritos_titulo: "Textos Favoritos",
+    btn_ler_todos: "📖 Ler todos os textos",
+    tags_titulo: "Tags",
+    contato_titulo: "Contato",
+    catalogo_titulo: "Todos os Textos",
+    menu_titulo: "Menu",
+    menu_cats: "Categorias",
+    menu_contato: "Contato",
+    cat_sub: "Catálogo completo"
+  },
+  en: {
+    nav_inicio: "Home",
+    nav_sobre: "About",
+    nav_textos: "My Favorite Texts",
+    nav_tags: "Tags",
+    nav_contato: "Contact",
+    home_boasvindas: "Welcome to my little corner of words ✍️",
+    sobre_titulo: "About me",
+    sobre_texto: "I love writing about life, emotions and daily reflections. This space is where I turn feelings into words and thoughts into stories ✨",
+    favoritos_titulo: "My Favorite Texts",
+    btn_ler_todos: "📖 Read all texts",
+    tags_titulo: "Tags",
+    contato_titulo: "Contact",
+    catalogo_titulo: "All Texts",
+    menu_titulo: "Menu",
+    menu_cats: "Categories",
+    menu_contato: "Contact",
+    cat_sub: "Full catalog"
+  }
+};
+
+/* apply language to static elements */
+function applyLang(lang){
+  document.documentElement.lang = (lang === 'en' ? 'en' : 'pt-BR');
+  document.body.dataset.lang = lang;
+  Object.keys(i18n[lang]).forEach(key => {
+    const els = document.querySelectorAll(`[data-i18n="${key}"]`);
+    els.forEach(el => el.textContent = i18n[lang][key]);
+  });
 }
 
-/* resumo com preservação de quebras (truncando sem cortar palavras) */
+/* language buttons */
+function setupLanguage(){
+  const btnPt = q("#lang-pt");
+  const btnEn = q("#lang-en");
+  const btnPt2 = q("#lang-pt-2");
+  const btnEn2 = q("#lang-en-2");
+
+  const set = (lang) => {
+    applyLang(lang);
+    // visual active state
+    qAll(".lang-btn").forEach(b => b.style.opacity = b.textContent.trim().toLowerCase() === lang ? "1" : "0.6");
+    // also update any link labels created dynamically
+  };
+
+  if(btnPt) btnPt.addEventListener("click", ()=> set('pt'));
+  if(btnEn) btnEn.addEventListener("click", ()=> set('en'));
+  if(btnPt2) btnPt2.addEventListener("click", ()=> set('pt'));
+  if(btnEn2) btnEn2.addEventListener("click", ()=> set('en'));
+  // initial language from body or default
+  const initial = document.body.dataset.lang || 'pt';
+  applyLang(initial);
+}
+
+/* resumo */
 function resumoTexto(texto, maxChars = 280){
   if(!texto) return "";
-  // normaliza quebras e corta
   const t = texto.trim().replace(/\r/g, "");
   if(t.length <= maxChars) return t;
-  // tenta cortar por palavra
   const corte = t.slice(0, maxChars);
   const ultimoEspaco = corte.lastIndexOf(" ");
   return (ultimoEspaco > 40 ? corte.slice(0, ultimoEspaco) : corte) + "...";
 }
 
-/* cria modal no DOM se não existir (assim funciona tanto no index quanto no textos) */
+/* modal (garante existir e comportamento) */
 function garantirModal(){
   if(q("#modal-texto")) return;
   const overlay = document.createElement("div");
@@ -41,18 +110,12 @@ function garantirModal(){
     </div>
   `;
   document.body.appendChild(overlay);
-
-  // eventos
-  overlay.addEventListener("click", (e) => {
-    if(e.target === overlay) fecharModal();
-  });
-  document.addEventListener("keydown", (e) => {
-    if(e.key === "Escape" && overlay.style.display === "flex") fecharModal();
-  });
+  overlay.addEventListener("click", (e)=> { if(e.target === overlay) fecharModal(); });
+  document.addEventListener("keydown", (e)=> { if(e.key === "Escape") fecharModal(); });
   q("#modal-fechar").addEventListener("click", fecharModal);
 }
 
-/* abrir modal por índice (id pode ser index ou id numérico) */
+/* abrir modal por id (procura por campo id no objeto, senão usa índice) */
 function abrirModalPorId(id){
   garantirModal();
   const overlay = q("#modal-texto");
@@ -60,30 +123,19 @@ function abrirModalPorId(id){
   const conteudoEl = q("#modal-conteudo");
   if(!overlay || !tituloEl || !conteudoEl) return;
 
-  // aceita id numérico ou string com id/index
   const idx = Number(id);
-  // preferir procurar por id (campo id no objeto) — senão usa posição no array
   let textoObj = window.textos.find(t => Number(t.id) === idx);
-  if(!textoObj){
-    // tenta usar índice direto (pos 0/1...)
-    textoObj = window.textos[idx] || window.textos.find(t => t.titulo === id);
-  }
-  if(!textoObj){
+  if(!textoObj) textoObj = window.textos[idx] || window.textos.find(t => t.titulo === id);
+  if(!textoObj) {
     console.warn("Texto não encontrado para abrir modal:", id);
     return;
   }
 
-  // preenche modal (converte quebras em <br>)
   tituloEl.textContent = textoObj.titulo || "";
-  // conteúdo pode conter quebras; escapamos e substituímos quebras por <br>
   let raw = (textoObj.conteudo || "");
-  // se o conteúdo já tiver <p> ou tags, deixamos (simples checagem)
-  const hasHTMLTags = /<\/?[a-z][\s\S]*>/i.test(raw);
-  if(hasHTMLTags){
-    conteudoEl.innerHTML = raw;
-  } else {
-    conteudoEl.innerHTML = escapeHtml(raw).replace(/\n{2,}/g, "\n\n").replace(/\n/g, "<br>");
-  }
+  const hasHTML = /<\/?[a-z][\s\S]*>/i.test(raw);
+  if(hasHTML) conteudoEl.innerHTML = raw;
+  else conteudoEl.innerHTML = escapeHtml(raw).replace(/\n/g, "<br>");
 
   overlay.style.display = "flex";
   document.body.style.overflow = "hidden";
@@ -97,15 +149,14 @@ function fecharModal(){
   document.body.style.overflow = "";
 }
 
-/* monta cards na home (#lista-favoritos) e no catálogo (#lista-catalogo) */
+/* monta cards HOME e CATALOGO */
 function montarCards(){
   // HOME
   const homeContainer = q("#lista-favoritos");
   if(homeContainer){
     homeContainer.innerHTML = "";
-    const favoritos = window.textos.slice(0, 2); // primeiros dois
-    favoritos.forEach((t) => {
-      // busca índice real (posição no array)
+    const favoritos = window.textos.slice(0,2);
+    favoritos.forEach(t => {
       const realIdx = window.textos.indexOf(t);
       const card = document.createElement("div");
       card.className = "card-texto";
@@ -115,7 +166,7 @@ function montarCards(){
         <p>${escapeHtml(resumoTexto(t.resumo || t.conteudo, 240)).replace(/\n/g,"<br>")}</p>
         <div style="display:flex;gap:10px;align-items:center;margin-top:6px">
           <button class="btn-lermais" data-id="${realIdx}">Ler mais</button>
-          <a class="btn-todos" href="textos.html?abrir=${encodeURIComponent(realIdx)}" style="text-decoration:none">Abrir no catálogo</a>
+          <a class="btn-todos" href="textos.html?abrir=${encodeURIComponent(realIdx)}">Abrir no catálogo</a>
         </div>
       `;
       homeContainer.appendChild(card);
@@ -126,7 +177,6 @@ function montarCards(){
   const catalogoContainer = q("#lista-catalogo");
   if(catalogoContainer){
     catalogoContainer.innerHTML = "";
-    // grid layout se existir class catalogo
     window.textos.forEach((t, idx) => {
       const card = document.createElement("div");
       card.className = "card-texto";
@@ -140,41 +190,32 @@ function montarCards(){
     });
   }
 
-  // adiciona listeners aos botões Ler mais (delegação simples)
+  // listeners Ler mais
   qAll(".btn-lermais").forEach(btn => {
     btn.removeEventListener("click", onClickLerMais);
     btn.addEventListener("click", onClickLerMais);
   });
 }
 
-/* clique Ler Mais: se estiver no catálogo -> abre modal; se estiver na home -> abre modal no próprio home (padrão UX escolhido) */
+/* onClick LerMais */
 function onClickLerMais(e){
   const id = e.currentTarget.getAttribute("data-id");
   if(!id) return;
-  // detecta se página atual é textos.html
-  const isCatalog = window.location.pathname.includes("textos.html") || window.location.pathname.includes("catalogo.html");
-  if(isCatalog){
-    abrirModalPorId(id);
-  } else {
-    // se estiver na home, abrir modal inline (não redireciona)
-    abrirModalPorId(id);
-  }
+  abrirModalPorId(id);
 }
 
-/* gera tags dinâmicas tanto na home (#lista-tags) quanto no catálogo (#tags-catalogo) */
+/* gerar tags home e catalogo */
 function gerarTags(){
   const tagsSet = Array.from(new Set(window.textos.map(t => t.categoria).filter(Boolean)));
-  // HOME
+  // home tags
   const listaTagsHome = q("#lista-tags");
   if(listaTagsHome){
     listaTagsHome.innerHTML = "";
-    // adiciona "Todos" link para o catálogo
     const aTodos = document.createElement("a");
     aTodos.className = "tag-item";
     aTodos.href = "textos.html?tag=Todos";
     aTodos.textContent = "Todos";
     listaTagsHome.appendChild(aTodos);
-
     tagsSet.forEach(tag => {
       const a = document.createElement("a");
       a.className = "tag-item";
@@ -183,9 +224,9 @@ function gerarTags(){
       listaTagsHome.appendChild(a);
     });
   }
-
-  // CATALOGO (botões)
+  // catalog tags (buttons)
   const tagsCatalogo = q("#tags-catalogo");
+  const menuCats = q("#menu-cats");
   if(tagsCatalogo){
     tagsCatalogo.innerHTML = "";
     const btnTodos = document.createElement("button");
@@ -204,19 +245,29 @@ function gerarTags(){
       tagsCatalogo.appendChild(b);
     });
   }
+  if(menuCats){
+    menuCats.innerHTML = "";
+    const aTodos = document.createElement("a");
+    aTodos.href = "textos.html?tag=Todos";
+    aTodos.textContent = "Todos";
+    menuCats.appendChild(aTodos);
+    tagsSet.forEach(tag => {
+      const a = document.createElement("a");
+      a.href = `textos.html?tag=${encodeURIComponent(tag)}`;
+      a.textContent = tag;
+      menuCats.appendChild(a);
+    });
+  }
 }
 
-/* filtrar catálogo (re-render) */
+/* filtrar catálogo */
 function filtrarCatalogo(tag){
   const container = q("#lista-catalogo");
   if(!container) return;
   container.innerHTML = "";
   const list = (!tag || tag === "Todos") ? window.textos.slice() : window.textos.filter(t => t.categoria === tag);
-  if(list.length === 0){
-    container.innerHTML = `<div class="card-texto">Nenhum texto encontrado para essa categoria.</div>`;
-    return;
-  }
-  list.forEach((t)=>{
+  if(list.length === 0) { container.innerHTML = `<div class="card-texto">Nenhum texto encontrado para essa categoria.</div>`; return; }
+  list.forEach((t) => {
     const idx = window.textos.indexOf(t);
     const card = document.createElement("div");
     card.className = "card-texto";
@@ -228,39 +279,86 @@ function filtrarCatalogo(tag){
     `;
     container.appendChild(card);
   });
-  // reaplica listeners
   qAll(".btn-lermais").forEach(btn=>{
     btn.removeEventListener("click", onClickLerMais);
     btn.addEventListener("click", onClickLerMais);
   });
 }
 
-/* checa URL params: ?abrir=ID ou ?tag=TagName */
+/* checar query string: ?abrir=ID and ?tag=TagName */
 function checarQuery(){
   const params = new URLSearchParams(window.location.search);
   const abrir = params.get("abrir");
   const tag = params.get("tag");
   if(tag){
-    // se tag informada e estamos na página de catálogo, aplica filtro
     const decoded = decodeURIComponent(tag);
     filtrarCatalogo(decoded === "Todos" ? "Todos" : decoded);
-    // marca visual (se quiser) - opcional
   }
   if(abrir !== null){
-    // abrir modal (pequeno atraso para garantir DOM)
-    setTimeout(()=> abrirModalPorId(abrir), 200);
+    setTimeout(()=> abrirModalPorId(abrir), 220);
   }
 }
 
-/* Inicializa tudo quando DOM estiver pronto */
+/* menu hamburguer (apenas em textos.html) */
+function setupHamburger(){
+  const hambBtn = q("#hambBtn");
+  const menuPanel = q("#menuPanel");
+  if(!hambBtn || !menuPanel) return;
+  hambBtn.addEventListener("click", (e)=>{
+    e.stopPropagation();
+    menuPanel.classList.toggle("open");
+    menuPanel.setAttribute("aria-hidden", menuPanel.classList.contains("open") ? "false" : "true");
+  });
+  window.addEventListener("click", (e)=>{
+    if(!menuPanel) return;
+    if(menuPanel.classList.contains("open") && !menuPanel.contains(e.target) && !hambBtn.contains(e.target)){
+      menuPanel.classList.remove("open");
+      menuPanel.setAttribute("aria-hidden","true");
+    }
+  });
+  window.addEventListener("keydown", (e)=>{
+    if(e.key === 'Escape' && menuPanel.classList.contains("open")){
+      menuPanel.classList.remove("open");
+      menuPanel.setAttribute("aria-hidden","true");
+    }
+  });
+}
+
+/* image fallback (tenta várias versões se a primeira falhar) */
+function setupImageFallback(){
+  const img = q("#foto-perfil");
+  if(!img) return;
+  img.addEventListener("error", function handler(){
+    // tenta lista de possibilidades
+    const tried = [ 'foto-perfil.jpg', 'foto-perfil.png', 'perfil.jpg', 'perfil.png' ];
+    for(let i=0;i<tried.length;i++){
+      if(tried[i] !== img.src.split('/').pop()){
+        img.src = tried[i];
+        return;
+      }
+    }
+    // remove handler se nada funcionar
+    img.removeEventListener('error', handler);
+  });
+}
+
+/* inicialização */
 document.addEventListener("DOMContentLoaded", ()=>{
   try{
+    setupLanguage();
     garantirModal();
     montarCards();
     gerarTags();
+    setupHamburger();
+    setupImageFallback();
     checarQuery();
-    // console
-    console.log("script.js inicializado — cards, tags e modal prontos.");
+
+    // favicon link ensure (if missing)
+    if(!document.querySelector('link[rel="icon"]')){
+      const l = document.createElement('link'); l.rel='icon'; l.href='favicon.png'; document.head.appendChild(l);
+    }
+
+    console.log("script.js inicializado — tudo pronto.");
   }catch(err){
     console.error("Erro inicializando script.js:", err);
   }
