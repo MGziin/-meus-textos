@@ -1,88 +1,122 @@
-// script.js (substituir por completo)
+/* script.js — controla home + catálogo + modal
+   Mantive nomes e funções já existentes; adicionei criação do modal caso não exista. */
 
-// --- helper para segurança
+/* helpers */
 function q(sel){ return document.querySelector(sel); }
 function qAll(sel){ return Array.from(document.querySelectorAll(sel)); }
-
-// --- garante que textos estão disponíveis
-if(typeof window.textos === "undefined"){
-  console.error("ERRO: window.textos não encontrado. Verifique se textos.js foi carregado antes de script.js");
+function escapeHtml(str){
+  if(str == null) return "";
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-// --- Função para criar resumo simples (mantém quebras)
-function resumoTexto(texto, max=200){
-  const clean = (texto || "").trim();
-  if(clean.length <= max) return clean;
-  return clean.slice(0, max).trim() + "...";
+/* segurança - textos.js deve ter definido window.textos */
+if(typeof window.textos === "undefined") {
+  console.error("ERRO: window.textos não encontrado. Verifique textos.js");
+  window.textos = []; // evita quebrar
 }
 
-// --- abrir modal (usa o modal com id modal-texto e modal-conteudo)
+/* resumo com preservação de quebras (truncando sem cortar palavras) */
+function resumoTexto(texto, maxChars = 280){
+  if(!texto) return "";
+  // normaliza quebras e corta
+  const t = texto.trim().replace(/\r/g, "");
+  if(t.length <= maxChars) return t;
+  // tenta cortar por palavra
+  const corte = t.slice(0, maxChars);
+  const ultimoEspaco = corte.lastIndexOf(" ");
+  return (ultimoEspaco > 40 ? corte.slice(0, ultimoEspaco) : corte) + "...";
+}
+
+/* cria modal no DOM se não existir (assim funciona tanto no index quanto no textos) */
+function garantirModal(){
+  if(q("#modal-texto")) return;
+  const overlay = document.createElement("div");
+  overlay.id = "modal-texto";
+  overlay.className = "modal-overlay";
+  overlay.innerHTML = `
+    <div class="modal-caixa" role="dialog" aria-modal="true">
+      <h2 id="modal-titulo"></h2>
+      <div id="modal-conteudo" class="modal-body"></div>
+      <button id="modal-fechar" class="btn-fechar">Fechar</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  // eventos
+  overlay.addEventListener("click", (e) => {
+    if(e.target === overlay) fecharModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape" && overlay.style.display === "flex") fecharModal();
+  });
+  q("#modal-fechar").addEventListener("click", fecharModal);
+}
+
+/* abrir modal por índice (id pode ser index ou id numérico) */
 function abrirModalPorId(id){
-  const modal = q("#modal-texto");
+  garantirModal();
+  const overlay = q("#modal-texto");
+  const tituloEl = q("#modal-titulo");
   const conteudoEl = q("#modal-conteudo");
-  if(!modal || !conteudoEl){
-    console.error("Modal ou conteúdo do modal não encontrados (ids: #modal-texto, #modal-conteudo).");
-    return;
-  }
+  if(!overlay || !tituloEl || !conteudoEl) return;
 
+  // aceita id numérico ou string com id/index
   const idx = Number(id);
-  const textoObj = (window.textos && window.textos[idx]) ? window.textos[idx] : null;
+  // preferir procurar por id (campo id no objeto) — senão usa posição no array
+  let textoObj = window.textos.find(t => Number(t.id) === idx);
   if(!textoObj){
-    console.error("Texto não encontrado para id:", id);
+    // tenta usar índice direto (pos 0/1...)
+    textoObj = window.textos[idx] || window.textos.find(t => t.titulo === id);
+  }
+  if(!textoObj){
+    console.warn("Texto não encontrado para abrir modal:", id);
     return;
   }
 
-  // Se o conteúdo no textos.js estiver em HTML ou em texto, adaptamos:
-  // aqui assumimos que conteudo pode ter quebras \n - transformamos em <br>
-  let html = "";
-  if(typeof textoObj.conteudo === "string"){
-    html = textoObj.conteudo.replace(/\n/g, "<br>");
+  // preenche modal (converte quebras em <br>)
+  tituloEl.textContent = textoObj.titulo || "";
+  // conteúdo pode conter quebras; escapamos e substituímos quebras por <br>
+  let raw = (textoObj.conteudo || "");
+  // se o conteúdo já tiver <p> ou tags, deixamos (simples checagem)
+  const hasHTMLTags = /<\/?[a-z][\s\S]*>/i.test(raw);
+  if(hasHTMLTags){
+    conteudoEl.innerHTML = raw;
   } else {
-    html = String(textoObj.conteudo);
+    conteudoEl.innerHTML = escapeHtml(raw).replace(/\n{2,}/g, "\n\n").replace(/\n/g, "<br>");
   }
 
-  conteudoEl.innerHTML = `<h2>${textoObj.titulo}</h2><div class="modal-body">${html}</div>`;
-  modal.style.display = "flex"; // mostra modal
-  document.body.style.overflow = "hidden"; // trava scroll atrás
-  // acopla listener do botão fechar se houver
-  const btnFechar = q("#fechar-modal");
-  if(btnFechar) btnFechar.onclick = fecharModal;
+  overlay.style.display = "flex";
+  document.body.style.overflow = "hidden";
 }
 
-// --- fechar modal
+/* fechar modal */
 function fecharModal(){
-  const modal = q("#modal-texto");
-  if(!modal) return;
-  modal.style.display = "none";
-  document.body.style.overflow = ""; // libera scroll
+  const overlay = q("#modal-texto");
+  if(!overlay) return;
+  overlay.style.display = "none";
+  document.body.style.overflow = "";
 }
 
-// --- fecha ao clicar fora (overlay)
-document.addEventListener("click", (ev) => {
-  const modal = q("#modal-texto");
-  if(!modal) return;
-  if(ev.target === modal) fecharModal();
-});
-
-// --- monta os cards na home (#lista-favoritos) e no catálogo (#lista-catalogo)
+/* monta cards na home (#lista-favoritos) e no catálogo (#lista-catalogo) */
 function montarCards(){
-  // segurança
-  if(typeof window.textos === "undefined") return;
-
   // HOME
   const homeContainer = q("#lista-favoritos");
   if(homeContainer){
     homeContainer.innerHTML = "";
-    // mostra só os dois primeiros (favoritos) ou todos se preferir
-    const mostra = window.textos.slice(0, 2);
-    mostra.forEach((t, i) => {
-      const realIndex = window.textos.indexOf(t); // índice original
+    const favoritos = window.textos.slice(0, 2); // primeiros dois
+    favoritos.forEach((t) => {
+      // busca índice real (posição no array)
+      const realIdx = window.textos.indexOf(t);
       const card = document.createElement("div");
       card.className = "card-texto";
       card.innerHTML = `
-        <h3>${t.titulo}</h3>
-        <p>${resumoTexto(typeof t.resumo !== "undefined" ? t.resumo : t.conteudo, 240)}</p>
-        <button class="btn-lermais" data-id="${realIndex}">Ler mais</button>
+        <h3>${escapeHtml(t.titulo)}</h3>
+        <div class="tag-item">${escapeHtml(t.categoria || "")}</div>
+        <p>${escapeHtml(resumoTexto(t.resumo || t.conteudo, 240)).replace(/\n/g,"<br>")}</p>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:6px">
+          <button class="btn-lermais" data-id="${realIdx}">Ler mais</button>
+          <a class="btn-todos" href="textos.html?abrir=${encodeURIComponent(realIdx)}" style="text-decoration:none">Abrir no catálogo</a>
+        </div>
       `;
       homeContainer.appendChild(card);
     });
@@ -92,128 +126,142 @@ function montarCards(){
   const catalogoContainer = q("#lista-catalogo");
   if(catalogoContainer){
     catalogoContainer.innerHTML = "";
+    // grid layout se existir class catalogo
     window.textos.forEach((t, idx) => {
       const card = document.createElement("div");
       card.className = "card-texto";
       card.innerHTML = `
-        <h3>${t.titulo}</h3>
-        <div class="tag-item">${t.categoria || "Sem categoria"}</div>
-        <p>${resumoTexto(typeof t.resumo !== "undefined" ? t.resumo : t.conteudo, 300)}</p>
-        <button class="btn-lermais" data-id="${idx}">Ler mais</button>
+        <h3>${escapeHtml(t.titulo)}</h3>
+        <div class="tag-item">${escapeHtml(t.categoria || "")}</div>
+        <p>${escapeHtml(resumoTexto(t.resumo || t.conteudo, 340)).replace(/\n/g,"<br>")}</p>
+        <div style="margin-top:8px"><button class="btn-lermais" data-id="${idx}">Ler mais</button></div>
       `;
       catalogoContainer.appendChild(card);
     });
   }
 
-  // Anexa eventos aos botões (global)
-  qAll(".btn-lermais").forEach(btn => {
-    btn.removeEventListener("click", onClickLerMais); // remove se já tiver
-    btn.addEventListener("click", onClickLerMais);
-  });
-}
-
-// --- manipulador do clique Ler Mais
-function onClickLerMais(e){
-  const id = e.currentTarget.getAttribute("data-id");
-  // se estivermos na home, queremos ir pro catálogo abrindo o modal
-  const thisPath = window.location.pathname;
-  const isCatalog = thisPath.endsWith("textos.html") || thisPath.endsWith("catalogo.html");
-  if(isCatalog){
-    abrirModalPorId(id);
-    // scroll até o modal (ele já apareceu)
-  } else {
-    // redireciona para o catálogo e pede para abrir o modal (param ?abrir=ID)
-    // usamos textos.html como rota do catálogo (pode ser catalogo.html dependendo do seu arquivo)
-    const target = (location.pathname.includes("textos.html") || location.pathname.includes("catalogo.html"))
-      ? location.pathname
-      : "textos.html";
-    window.location.href = `${target}?abrir=${encodeURIComponent(id)}`;
-  }
-}
-
-// --- gera as tags dinâmicas no home (#lista-tags) e no catalogo (#tags-catalogo)
-function gerarTags(){
-  if(typeof window.textos === "undefined") return;
-  const tagsSet = Array.from(new Set(window.textos.map(t => t.categoria)));
-  const listaTags = q("#lista-tags");
-  if(listaTags){
-    listaTags.innerHTML = "";
-    tagsSet.forEach(tag => {
-      const a = document.createElement("a");
-      a.className = "tag-item";
-      a.href = `textos.html?tag=${encodeURIComponent(tag)}`;
-      a.textContent = tag;
-      listaTags.appendChild(a);
-    });
-  }
-
-  const tagsCatalogo = q("#tags-catalogo");
-  if(tagsCatalogo){
-    tagsCatalogo.innerHTML = "";
-    const btnTodos = document.createElement("button");
-    btnTodos.className = "tag-btn";
-    btnTodos.textContent = "Todos";
-    btnTodos.addEventListener("click", () => filtrarCatalogo("Todos"));
-    tagsCatalogo.appendChild(btnTodos);
-
-    tagsSet.forEach(tag => {
-      const btn = document.createElement("button");
-      btn.className = "tag-btn";
-      btn.textContent = tag;
-      btn.addEventListener("click", () => filtrarCatalogo(tag));
-      tagsCatalogo.appendChild(btn);
-    });
-  }
-}
-
-// --- filtra catálogo (apenas re-renderiza com filtro)
-function filtrarCatalogo(tag){
-  const container = q("#lista-catalogo");
-  if(!container) return;
-  container.innerHTML = "";
-  const lista = (tag === "Todos" || !tag) ? window.textos : window.textos.filter(t => t.categoria === tag);
-  lista.forEach((t, idx) => {
-    const realIdx = window.textos.indexOf(t);
-    const card = document.createElement("div");
-    card.className = "card-texto";
-    card.innerHTML = `
-      <h3>${t.titulo}</h3>
-      <div class="tag-item">${t.categoria || ""}</div>
-      <p>${resumoTexto(typeof t.resumo !== "undefined" ? t.resumo : t.conteudo, 300)}</p>
-      <button class="btn-lermais" data-id="${realIdx}">Ler mais</button>
-    `;
-    container.appendChild(card);
-  });
-  // reaplica listeners
+  // adiciona listeners aos botões Ler mais (delegação simples)
   qAll(".btn-lermais").forEach(btn => {
     btn.removeEventListener("click", onClickLerMais);
     btn.addEventListener("click", onClickLerMais);
   });
 }
 
-// --- se a página chegou com ?abrir=ID então abrimos o modal (útil vindo da home)
-function checarAbrirNaURL(){
+/* clique Ler Mais: se estiver no catálogo -> abre modal; se estiver na home -> abre modal no próprio home (padrão UX escolhido) */
+function onClickLerMais(e){
+  const id = e.currentTarget.getAttribute("data-id");
+  if(!id) return;
+  // detecta se página atual é textos.html
+  const isCatalog = window.location.pathname.includes("textos.html") || window.location.pathname.includes("catalogo.html");
+  if(isCatalog){
+    abrirModalPorId(id);
+  } else {
+    // se estiver na home, abrir modal inline (não redireciona)
+    abrirModalPorId(id);
+  }
+}
+
+/* gera tags dinâmicas tanto na home (#lista-tags) quanto no catálogo (#tags-catalogo) */
+function gerarTags(){
+  const tagsSet = Array.from(new Set(window.textos.map(t => t.categoria).filter(Boolean)));
+  // HOME
+  const listaTagsHome = q("#lista-tags");
+  if(listaTagsHome){
+    listaTagsHome.innerHTML = "";
+    // adiciona "Todos" link para o catálogo
+    const aTodos = document.createElement("a");
+    aTodos.className = "tag-item";
+    aTodos.href = "textos.html?tag=Todos";
+    aTodos.textContent = "Todos";
+    listaTagsHome.appendChild(aTodos);
+
+    tagsSet.forEach(tag => {
+      const a = document.createElement("a");
+      a.className = "tag-item";
+      a.href = `textos.html?tag=${encodeURIComponent(tag)}`;
+      a.textContent = tag;
+      listaTagsHome.appendChild(a);
+    });
+  }
+
+  // CATALOGO (botões)
+  const tagsCatalogo = q("#tags-catalogo");
+  if(tagsCatalogo){
+    tagsCatalogo.innerHTML = "";
+    const btnTodos = document.createElement("button");
+    btnTodos.className = "tag-btn";
+    btnTodos.textContent = "Todos";
+    btnTodos.dataset.tag = "Todos";
+    btnTodos.addEventListener("click", ()=> filtrarCatalogo("Todos"));
+    tagsCatalogo.appendChild(btnTodos);
+
+    tagsSet.forEach(tag => {
+      const b = document.createElement("button");
+      b.className = "tag-btn";
+      b.textContent = tag;
+      b.dataset.tag = tag;
+      b.addEventListener("click", ()=> filtrarCatalogo(tag));
+      tagsCatalogo.appendChild(b);
+    });
+  }
+}
+
+/* filtrar catálogo (re-render) */
+function filtrarCatalogo(tag){
+  const container = q("#lista-catalogo");
+  if(!container) return;
+  container.innerHTML = "";
+  const list = (!tag || tag === "Todos") ? window.textos.slice() : window.textos.filter(t => t.categoria === tag);
+  if(list.length === 0){
+    container.innerHTML = `<div class="card-texto">Nenhum texto encontrado para essa categoria.</div>`;
+    return;
+  }
+  list.forEach((t)=>{
+    const idx = window.textos.indexOf(t);
+    const card = document.createElement("div");
+    card.className = "card-texto";
+    card.innerHTML = `
+      <h3>${escapeHtml(t.titulo)}</h3>
+      <div class="tag-item">${escapeHtml(t.categoria || "")}</div>
+      <p>${escapeHtml(resumoTexto(t.resumo || t.conteudo, 340)).replace(/\n/g,"<br>")}</p>
+      <div style="margin-top:8px"><button class="btn-lermais" data-id="${idx}">Ler mais</button></div>
+    `;
+    container.appendChild(card);
+  });
+  // reaplica listeners
+  qAll(".btn-lermais").forEach(btn=>{
+    btn.removeEventListener("click", onClickLerMais);
+    btn.addEventListener("click", onClickLerMais);
+  });
+}
+
+/* checa URL params: ?abrir=ID ou ?tag=TagName */
+function checarQuery(){
   const params = new URLSearchParams(window.location.search);
   const abrir = params.get("abrir");
   const tag = params.get("tag");
   if(tag){
-    // aplica filtro no catálogo (se houver)
-    filtrarCatalogo(decodeURIComponent(tag));
+    // se tag informada e estamos na página de catálogo, aplica filtro
+    const decoded = decodeURIComponent(tag);
+    filtrarCatalogo(decoded === "Todos" ? "Todos" : decoded);
+    // marca visual (se quiser) - opcional
   }
   if(abrir !== null){
-    // aguarda um pouco para garantir que DOM foi montado
-    setTimeout(() => abrirModalPorId(abrir), 180);
+    // abrir modal (pequeno atraso para garantir DOM)
+    setTimeout(()=> abrirModalPorId(abrir), 200);
   }
 }
 
-// --- inicialização
-document.addEventListener("DOMContentLoaded", () => {
+/* Inicializa tudo quando DOM estiver pronto */
+document.addEventListener("DOMContentLoaded", ()=>{
   try{
+    garantirModal();
     montarCards();
     gerarTags();
-    checarAbrirNaURL();
+    checarQuery();
+    // console
     console.log("script.js inicializado — cards, tags e modal prontos.");
   }catch(err){
-    console.error("Erro ao inicializar script.js:", err);
+    console.error("Erro inicializando script.js:", err);
   }
 });
