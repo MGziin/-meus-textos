@@ -1,55 +1,87 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Meu Cantinho ✨</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
   <script defer src="textos.js"></script>
   <script defer src="script.js"></script>
 </head>
+<body data-lang="pt">
 
-<body>
+  <!-- HEADER (centrado) -->
   <header class="cabecalho">
     <div class="logo-site">Meu Cantinho ✨</div>
-    <nav class="menu-links">
-      <a href="#inicio">Início</a>
-      <a href="#sobre">Sobre</a>
-      <a href="textos.html">Textos Favoritos</a>
-      <a href="textos.html#tags">Tags</a>
-      <a href="#contato">Contato</a>
+
+    <!-- Language toggle -->
+    <div style="position:absolute; right:14px; display:flex; gap:8px; align-items:center;">
+      <button id="lang-pt" class="lang-btn" aria-label="Português">PT</button>
+      <button id="lang-en" class="lang-btn" aria-label="English">EN</button>
+    </div>
+
+    <nav class="menu-links" aria-label="menu principal">
+      <a href="#inicio" data-i18n="nav_inicio">Início</a>
+      <a href="#sobre" data-i18n="nav_sobre">Sobre</a>
+      <a href="textos.html" data-i18n="nav_textos">Textos Favoritos</a>
+      <a href="textos.html#tags" data-i18n="nav_tags">Tags</a>
+      <a href="#contato" data-i18n="nav_contato">Contato</a>
     </nav>
   </header>
 
-  <section id="inicio" class="secao-inicio">
-    <img src="minha-foto.jpg" alt="Minha foto" class="foto-perfil">
-    <p class="descricao">Bem-vindo ao meu cantinho de textos ✍️</p>
-  </section>
+  <!-- HOME -->
+  <main class="container">
+    <section id="inicio" class="secao-inicio">
+      <!-- imagem com fallback -->
+      <img id="foto-perfil" class="foto-perfil" src="foto-perfil.jpg" alt="Foto de perfil"
+           onerror="this.onerror=null;this.src='foto-perfil.png'">
+      <p class="descricao" data-i18n="home_boasvindas">Bem-vindo ao meu cantinho de textos ✍️</p>
+    </section>
 
-  <section id="sobre" class="secao-sobre">
-    <h2>Sobre mim</h2>
-    <p>Sou alguém apaixonado por escrever sobre a vida, emoções e reflexões cotidianas.
-       Este espaço é o meu lugar para transformar sentimentos em palavras e pensamentos
-       em histórias ✨</p>
-  </section>
+    <!-- SOBRE -->
+    <section id="sobre" class="secao-sobre">
+      <h2 data-i18n="sobre_titulo">Sobre mim</h2>
+      <p data-i18n="sobre_texto">Sou alguém apaixonado por escrever sobre a vida, emoções e reflexões cotidianas. Este espaço é o meu lugar para transformar sentimentos em palavras e pensamentos em histórias ✨</p>
+    </section>
 
-  <section id="textos" class="secao-destaques">
-    <h2>Textos Favoritos</h2>
-    <div id="lista-favoritos"></div>
-  </section>
+    <!-- TEXTOS FAVORITOS (cards preenchidos por script.js) -->
+    <section id="textos" class="secao-destaques">
+      <h2 data-i18n="favoritos_titulo">Textos Favoritos</h2>
+      <div id="lista-favoritos"></div>
+      <div class="botao-leia-todos">
+        <a class="btn-todos" id="abrir-todos" href="textos.html" data-i18n="btn_ler_todos">📖 Ler todos os textos</a>
+      </div>
+    </section>
 
-  <section id="tags" class="secao-tags">
-    <h2>Tags</h2>
-    <div id="lista-tags"></div>
-  </section>
+    <!-- TAGS -->
+    <section id="tags" class="secao-tags">
+      <h2 data-i18n="tags_titulo">Tags</h2>
+      <div id="lista-tags"></div>
+    </section>
 
-  <section id="contato" class="secao-contato">
-    <h2>Contato</h2>
-    <p>Me chame no Instagram ou WhatsApp 📩</p>
-  </section>
+    <!-- CONTATO -->
+    <section id="contato" class="secao-contato">
+      <h2 data-i18n="contato_titulo">Contato</h2>
+      <ul style="list-style:none;margin-top:8px">
+        <li><strong>Email:</strong> <a id="contato-email" href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></li>
+        <li style="margin-top:6px"><strong>Linktree:</strong> <a id="contato-linktree" href="https://linktr.ee/mgziin?fbclid=PAZXh0bgNhZW0CMTEAAaeVuXrG-XZTi7AQpqnrp-o_vGQuFrw3ppI6QlnFegjTnrKSlZm-IdjvJzF64g_aem_xThcOrwcsDiig0HVq5iy-A" target="_blank" rel="noopener">https://linktr.ee/mgziin</a></li>
+      </ul>
+    </section>
 
-  <footer>
-    <p>© 2025 — Meu Cantinho de Textos ✨</p>
-  </footer>
+    <footer>
+      <p>© 2025 — Meu Cantinho de Textos ✨</p>
+    </footer>
+  </main>
+
+  <!-- Modal: o script garante criação caso não exista, mas deixei um container leve para SEO/compat -->
+  <div id="modal-texto" class="modal-overlay" style="display:none;">
+    <div class="modal-caixa" role="dialog" aria-modal="true">
+      <h2 id="modal-titulo"></h2>
+      <div id="modal-conteudo" class="modal-body"></div>
+      <button id="btn-fechar-modal" class="btn-fechar">Fechar</button>
+    </div>
+  </div>
+
 </body>
 </html>
