@@ -4,8 +4,7 @@ window.textos = [
     id: 1,
     titulo: "📱 Por que é tão difícil ficar sem celular?",
     categoria: "Crônica",
-    resumo: `Fico pensando… por que é tão difícil ficar sem celular?
-Já faz algumas semanas que tô sem o meu, e mesmo tendo telas por todo canto da casa… ainda sinto falta daquela telinha na mão, sabe?`,
+    resumo: `Uma breve reflexão sobre o que o celular realmente significa para nós.`,
     favorito: true,
     conteudo: `Fico pensando…
 por que é tão difícil ficar sem celular?
@@ -83,3 +82,4 @@ O fazendeiro, agora sem plantação, sem sementes e sem dinheiro, se vê perdido
 Hum… familiar essa história.`
   }
 ];
+
