@@ -1,37 +1,57 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Completo</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catálogo de Textos ✨</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
+
 <body>
     <header>
-        <h1>Catálogo Completo</h1>
-        <button class="burger">☰</button>
-        <nav id="menu">
-            <a href="index.html">🏠 Início</a>
-            <a href="#tags">🏷️ Tags</a>
+        <div class="topo-site">
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+            <h1>Meu Cantinho ✨</h1>
+            <p>Catálogo completo</p>
+        </div>
+
+        <nav id="menu" class="menu">
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="categorias.html">Categorias</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
         </nav>
+
+        <div class="idiomas">
+            <button>PT</button>
+            <button>EN</button>
+        </div>
     </header>
 
-    <section class="tags" id="tags">
-        <h3>Filtrar por tags</h3>
-        <div id="lista-tags"></div>
-    </section>
-
-    <section class="catalogo">
-        <h3>Todos os textos</h3>
-        <div id="lista-textos"></div>
-    </section>
+    <main>
+        <section class="conteudo">
+            <h2>Todos os Textos</h2>
+            <div id="lista-textos" class="lista-textos">
+                <!-- Os textos serão carregados automaticamente via JS -->
+            </div>
+        </section>
+    </main>
 
     <footer>
-        <p>© 2025 - Meu Cantinho ✨</p>
+        <p>© 2025 — Feito por Brendon Phillipe</p>
     </footer>
 
-    <script src="textos.js"></script>
-    <script src="script.js"></script>
+    <!-- Carregamento dos scripts -->
+    <script src="textos.js" defer></script>
+    <script>
+        // Controle do menu hamburguer
+        const toggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('ativo');
+        });
+    </script>
 </body>
 </html>
