@@ -1,37 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Catálogo de Textos ✨</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>Catálogo de Textos ✨</h1>
-    <button class="burger">☰</button>
-    <nav id="menu">
-      <a href="index.html">🏠 Início</a>
-      <a href="#tags">🏷️ Tags</a>
+  <header class="cabecalho">
+    <div class="logo-site">Meu Cantinho ✨</div>
+
+    <button class="burger" aria-label="Abrir menu">☰</button>
+
+    <nav id="menu" class="menu">
+      <a href="index.html#inicio">Início</a>
+      <a href="index.html#sobre">Sobre</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="index.html#contato">Contato</a>
     </nav>
   </header>
 
-  <section class="tags" id="tags">
-    <h3>Filtrar por tags</h3>
-    <div id="lista-tags"></div>
-  </section>
+  <main>
+    <section id="catalogo" class="secao">
+      <h2>Catálogo de Textos</h2>
 
-  <section class="catalogo">
-    <h3>Todos os Textos</h3>
-    <div id="lista-textos"></div>
-  </section>
+      <div id="filtros" class="tags-row" aria-label="Filtros por tag"></div>
+
+      <div id="lista-textos" class="catalogo"></div>
+    </section>
+  </main>
 
   <footer>
-    <p>© 2025 — Feito por Brendon Phillipe</p>
+    <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
   </footer>
 
-  <script src="textos.js"></script>
-  <script src="script.js"></script>
+  <!-- modal -->
+  <div id="modal-texto" class="modal-overlay" aria-hidden="true">
+    <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+      <div id="modal-titulo" class="modal-titulo"></div>
+      <div id="modal-conteudo" class="modal-body"></div>
+      <button id="modal-fechar" class="btn-fechar">Fechar</button>
+    </div>
+  </div>
+
+  <script defer src="textos.js"></script>
+  <script defer src="script.js"></script>
 </body>
 </html>
