@@ -1,12 +1,12 @@
 window.textos = [
   {
-    id: 1,
+    id: 0,
     titulo: "📱 Por que é tão difícil ficar sem celular?",
     categoria: "Crônica",
-    resumo: "Uma breve reflexão sobre o que o celular realmente importa para nós",
-    tags: ["crônica"],
-    conteudo: `Fico pensando…
-por que é tão difícil ficar sem celular?
+    tags: ["Crônica"],
+    resumo: `Fico pensando… por que é tão difícil ficar sem celular? (trecho)`,
+    favorito: true,
+    conteudo: `Por que é tão difícil ficar sem celular?
 
 Já faz algumas semanas que tô sem o meu,
 e mesmo tendo telas por todo canto da casa…
@@ -53,13 +53,17 @@ só olhando…
 e pensando que, no fim…
 talvez o tempo seja o que mais dá falta.`
   },
+
   {
-    id: 2,
-    titulo: "A Semente🌱",
+    id: 1,
+    titulo: "A Semente",
     categoria: "Fábula",
-    resumo: "Uma fábula sobre sonhos, escolhas e o custo de abrir mão do que importa.",
-    tags: ["fábula"],
-    conteudo: `Essa é a história de um fazendeiro que tinha um sonho: conseguir uma semente especial.
+    tags: ["Fábula"],
+    resumo: `Uma fábula sobre sonhos, escolhas e o custo de abrir mão do que importa.`,
+    favorito: false,
+    conteudo: `A Semente
+
+Essa é a história de um fazendeiro que tinha um sonho: conseguir uma semente especial.
 Pensava nela todos os dias, mas o preço era alto demais para o seu bolso.
 Um dia, decidido a realizá-lo, vende todas as sementes que possuía, na esperança de comprar a tão sonhada semente.
 Mesmo assim, o dinheiro ainda não bastava.
@@ -78,4 +82,3 @@ O fazendeiro, agora sem plantação, sem sementes e sem dinheiro, se vê perdido
 Hum… familiar essa história.`
   }
 ];
-
