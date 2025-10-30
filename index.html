@@ -1,38 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Meu Cantinho ✨</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>Meu Cantinho ✨</h1>
-    <button class="burger">☰</button>
-    <nav id="menu">
-      <a href="index.html">Início</a>
-      <a href="textos.html">Catálogo</a>
+  <header class="cabecalho">
+    <div class="logo-site">Meu Cantinho ✨</div>
+
+    <button class="burger" aria-label="Abrir menu">☰</button>
+
+    <nav id="menu" class="menu">
+      <a href="#inicio">Início</a>
+      <a href="#sobre">Sobre</a>
+      <a href="textos.html">Textos Favoritos</a>
+      <a href="textos.html#tags">Tags</a>
+      <a href="#contato">Contato</a>
     </nav>
   </header>
 
-  <section class="perfil">
-    <img src="foto-perfil.jpg" alt="Foto de Brendon" class="foto-perfil">
-    <h2>Olá! Eu sou o Brendon 😊</h2>
-    <p>Bem-vindo ao meu cantinho! Aqui você encontra meus textos, crônicas e reflexões.</p>
-  </section>
+  <main>
+    <section id="inicio" class="secao secao-inicio">
+      <img id="foto-perfil" src="foto-perfil.jpg" alt="Foto de Brendon" class="foto-perfil">
+      <h1 class="titulo-principal">Bem-vindo ao meu cantinho de palavras</h1>
+      <p class="descricao">Aqui estão alguns dos meus textos, crônicas e fábulas. Fique à vontade 🌻</p>
+    </section>
 
-  <section class="contatos">
-    <h3>Contato</h3>
-    <p><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></p>
-    <p><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank">Clique aqui</a></p>
-  </section>
+    <section id="sobre" class="secao secao-sobre">
+      <h2>Sobre Mim</h2>
+      <p>Eu me chamo <strong>Brendon Phillipe</strong>. Comecei a escrever desde muito pequeno, com 12 anos, e agora voltei a escrever e quero compartilhar minhas novas produções com vocês.</p>
+    </section>
+
+    <section id="textos" class="secao secao-textos">
+      <h2>Meus Textos Favoritos</h2>
+      <div id="lista-favoritos" class="lista-cards"></div>
+
+      <div class="botao-leia-todos">
+        <a class="btn-todos" href="textos.html">📖 Ler todos os textos</a>
+      </div>
+    </section>
+
+    <section id="tags" class="secao secao-tags">
+      <h2>Tags</h2>
+      <div id="lista-tags" class="tags-row"></div>
+    </section>
+
+    <section id="contato" class="secao secao-contato">
+      <h2>Contato</h2>
+      <ul class="contato-lista">
+        <li><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></li>
+        <li><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank" rel="noopener">linktr.ee/mgziin</a></li>
+      </ul>
+    </section>
+  </main>
 
   <footer>
-    <p>© 2025 — Feito por Brendon Phillipe</p>
+    <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- modal (requerido tanto na home quanto no catálogo) -->
+  <div id="modal-texto" class="modal-overlay" aria-hidden="true">
+    <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+      <div id="modal-titulo" class="modal-titulo"></div>
+      <div id="modal-conteudo" class="modal-body"></div>
+      <button id="modal-fechar" class="btn-fechar">Fechar</button>
+    </div>
+  </div>
+
+  <script defer src="textos.js"></script>
+  <script defer src="script.js"></script>
 </body>
 </html>
