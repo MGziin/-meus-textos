@@ -5,7 +5,7 @@ window.textos = [
     titulo: "📱 Por que é tão difícil ficar sem celular?",
     categoria: "Crônica",
     resumo: "Uma reflexão bem-humorada sobre nossa dependência do celular.",
-    favorito: true,
+    favorito: false,
     conteudo: `Fico pensando…
 por que é tão difícil ficar sem celular?
 
@@ -61,7 +61,7 @@ talvez o tempo seja o que mais dá falta.`
     titulo: "A Semente",
     categoria: "Fábula",
     resumo: "Uma história breve sobre paciência, tempo e crescimento.",
-    favorito: false,
+    favorito: true,
     conteudo: `A Semente
 
 Essa é a história de um fazendeiro que tinha um sonho: conseguir uma semente especial.
@@ -138,3 +138,4 @@ Talvez um dia eu consiga partir de vez.
  Mas até lá, sigo aqui, entre as muralhas falsas, alimentando o sonho de um castelo meu — simples, pequeno, mas verdadeiro.`
   }
 ];
+
