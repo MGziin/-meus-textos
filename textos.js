@@ -6,7 +6,7 @@ window.textos = [
   {
     // índice 0
     id: 1,
-    titulo: "📱 Por que é tão difícil ficar sem celular?",
+    titulo: "Por que é tão difícil ficar sem celular?",
     categoria: "Crônica",
     resumo: "Uma reflexão sobre nossa dependência do celular",
     favorito: false,
@@ -85,13 +85,50 @@ Hum… familiar essa história.`
     favorito: true,
     conteudo: `Eu odeio os muros falsos que aqui existem.
  Essa sensação ilusória de segurança, esses muros gigantes que, vistos de fora, lembram um castelo imponente, mas que, por dentro, não passam de uma cabana abandonada.
- [texto completo conforme você me enviou...]
- 
- Eis-me novamente dentro do castelo, cercado pelas mesmas paredes que aprendi a decifrar.
+ Às vezes, minha vontade é de quebrar essas paredes e expor ao mundo — e a eles mesmos — o que realmente são.
+ Mas, no fundo, o que eu mais quero é paz.
+ Quero pavimentar meu próprio caminho para fora dessa fortaleza enganosa, sem ter alguém, de tempos em tempos, destruindo tudo o que tento construir.
+
+E como todo castelo, seja ele verdadeiro ou falso, há sempre seus moradores: figuras que se esforçam para parecer superiores, sábias e inatingíveis.
+ Admito que, nesse aspecto, cumprem bem o papel que lhes cabe.
+ Mas como toda família real, também possuem deveres — deveres que a própria plebe lhes confia, na esperança de que ajam com discernimento e justiça.
+ Infelizmente, quando a realeza é apenas uma imitação, o resultado é previsível: pessoas cheias de esperanças sendo amargamente decepcionadas, percebendo tarde demais que até um cão abandonado tomaria decisões mais sensatas.
+Falo agora sobre o Rei, figura que deveria inspirar respeito e confiança, mas que, em verdade, mais se assemelha a uma criança desorientada.
+ Usa a coroa como um adorno de brincadeira e fala com a solenidade de quem acredita possuir autoridade, quando, na realidade, ninguém o leva a sério.
+ Suas palavras são ocas; sua presença, frágil; seu reinado, mera formalidade.
+Cada decisão que toma parece fruto de um capricho, não de sabedoria.
+ Quer parecer firme, mas tropeça em suas próprias certezas.
+ Deseja ser ouvido, mas sua voz ecoa em vão pelos corredores do castelo.
+ E assim, o que deveria ser o alicerce da realeza se torna apenas um lembrete de que o trono, por si só, não faz um rei — principalmente quando quem o ocupa ainda não aprendeu a ser homem.
+A Rainha, matriarca do castelo, deveria ser o farol da razão, a mediadora dos conflitos, a guardiã da serenidade.
+ Entretanto, o que se encontra sob a coroa é uma alma em constante tormenta, presa a um passado que não cessa de feri-la.
+ Sua bondade existe, sim, mas é abafada por uma moral deturpada, que crê que os fins justificam os meios — mesmo quando esses meios corroem os próprios valores que ela julga proteger.
+É difícil confiar-lhe o leme da embarcação, pois sua mente é terreno de batalhas invisíveis.
+ Quer transmitir paz, mas espalha desordem; quer ensinar sabedoria, mas repete enganos.
+ E, ainda assim, há algo de triste em julgá-la, pois dentro dela vive o desejo sincero de acertar, sufocado apenas pela falta de direção.
+ É uma rainha que jamais aprendeu a reinar sobre si mesma.
+Chego, então, aos herdeiros deste trono fraturado: os príncipes, destinados a perpetuar o legado da família, mas moldados pelos mesmos erros que os antecederam.
+Lady Glinda, a primogênita, reflete o espelho da matriarca — com suas virtudes distorcidas e sua paz sempre interrompida.
+ Deveria ser a segunda lâmina da espada da razão, mas tornou-se o eco das mesmas falhas: transmite caos onde deveria haver ordem, e incerteza onde se esperava clareza.
+ Repete, sem perceber, o ciclo que um dia a feriu.
+O príncipe Lockwoody, por outro lado, é um ser engolido pela própria amargura.
+ Faltou-lhe afeto, sobrou-lhe desatenção.
+ E assim aprendeu a usar a raiva como norte, a insegurança como conselheira.
+ É o resultado vivo de uma família que o abandonou à própria sorte, mesmo estando presente.
+ Agora, sem rei de verdade para guiá-lo, veste o manto do comando — não por vocação, mas por desespero.
+ E, nesse papel forçado, se perde entre o dever e o vazio.
+E por fim, restou a mim, o observador silencioso desta dinastia de ilusões.
+ Aquele que compreendeu, tarde, que tentar reparar o que já nasceu rachado é um esforço vão.
+ Entendi que a verdadeira grandeza está na simplicidade, e que o amor genuíno não precisa de tronos, apenas de espaço para florescer.
+Eis-me novamente dentro do castelo, cercado pelas mesmas paredes que aprendi a decifrar.
  Por um tempo, estive fora — livre, ainda que sem rumo — e foi lá, entre a incerteza e a solidão, que encontrei respostas que jamais teria descoberto aqui dentro.
  Percebi o valor da calma, da rotina simples, do afeto sem pretensão.
  Aprendi que a paz não nasce de grandes muros, mas da leveza de poder existir sem precisar provar nada a ninguém.
- ... (continua o texto completo que você forneceu)
- `
-  }
-];
+Mas o destino, por ora, obrigou-me a retornar.
+ E aqui estou, ciente do que quero, mas ainda preso ao que me cerca.
+ Trago comigo a esperança de um novo lar — um lar que não precise se parecer com este, que não herde seus vícios nem suas vaidades.
+ Quero construir algo do zero, onde cada membro saiba o seu lugar, o seu valor e o seu propósito, sem precisar de coroas ou brasões para ser digno de amor.
+Talvez um dia eu consiga partir de vez.
+ Mas até lá, sigo aqui, entre as muralhas falsas, alimentando o sonho de um castelo meu — simples, pequeno, mas verdadeiro´
+
+
