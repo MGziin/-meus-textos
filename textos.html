@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Catálogo de Textos ✨</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <title>Meus Textos ✍️</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
+  <script defer src="textos.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
   <header class="cabecalho">
-    <div class="logo-site">Meu Cantinho ✨</div>
+    <div class="cab-left">
+      <div class="logo-site">Meu Cantinho ✨</div>
+    </div>
 
-    <button class="burger" aria-label="Abrir menu">☰</button>
-
-    <nav id="menu" class="menu">
+    <nav class="cab-center" aria-label="Navegação catálogo">
       <a href="index.html#inicio">Início</a>
       <a href="index.html#sobre">Sobre</a>
       <a href="#catalogo">Catálogo</a>
       <a href="index.html#contato">Contato</a>
     </nav>
+
+    <div class="cab-right">
+      <button class="hamburguer" id="hamb-catalog" aria-label="Abrir menu">☰</button>
+    </div>
   </header>
 
-  <main>
-    <section id="catalogo" class="secao">
-      <h2>Catálogo de Textos</h2>
+  <main class="container">
+    <section id="catalogo" class="secao secao-catalogo">
+      <h2>Todos os textos</h2>
 
-      <div id="filtros" class="tags-row" aria-label="Filtros por tag"></div>
+      <div id="filtros" class="tags-row"></div>
 
-      <div id="lista-textos" class="catalogo"></div>
+      <div id="catalogo-list" class="catalogo"></div>
     </section>
+
+    <footer class="rodape">
+      <p>© 2025 — Feito por Brendon Phillipe</p>
+    </footer>
   </main>
 
-  <footer>
-    <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
-  </footer>
-
-  <!-- modal -->
-  <div id="modal-texto" class="modal-overlay" aria-hidden="true">
-    <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
-      <div id="modal-titulo" class="modal-titulo"></div>
-      <div id="modal-conteudo" class="modal-body"></div>
-      <button id="modal-fechar" class="btn-fechar">Fechar</button>
+  <!-- Modal (um único modal usado em ambas as páginas) -->
+  <div id="modal-overlay" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button id="modal-close" class="modal-close" aria-label="Fechar">✕</button>
+      <div id="modal-body" class="modal-body"></div>
     </div>
   </div>
-
-  <script defer src="textos.js"></script>
-  <script defer src="script.js"></script>
 </body>
 </html>
