@@ -4,18 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Meus Textos ✍️</title>
-  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="style.css" />
-  <script defer src="textos.js"></script>
-  <script defer src="script.js"></script>
 </head>
 <body>
-  <header class="cabecalho">
+  <header class="cabecalho catalogo-header">
     <div class="cab-left">
-      <div class="logo-site">Meu Cantinho ✨</div>
+      <div class="logo-site">Meus Textos ✍️</div>
     </div>
 
-    <nav class="cab-center" aria-label="Navegação catálogo">
+    <nav class="cab-center menu-links">
       <a href="index.html#inicio">Início</a>
       <a href="index.html#sobre">Sobre</a>
       <a href="#catalogo">Catálogo</a>
@@ -23,30 +21,37 @@
     </nav>
 
     <div class="cab-right">
-      <button class="hamburguer" id="hamb-catalog" aria-label="Abrir menu">☰</button>
+      <button id="hamb-catalog" class="hamburguer" aria-label="abrir menu">☰</button>
     </div>
   </header>
 
-  <main class="container">
+  <main class="container" style="padding-top:110px">
     <section id="catalogo" class="secao secao-catalogo">
-      <h2>Todos os textos</h2>
+      <h2>Catálogo de Textos</h2>
 
-      <div id="filtros" class="tags-row"></div>
+      <div id="filtros" class="tags-row filtros-top"></div>
 
-      <div id="catalogo-list" class="catalogo"></div>
+      <div id="catalogo-list" class="catalogo-grid"></div>
     </section>
 
-    <footer class="rodape">
+    <footer>
       <p>© 2025 — Feito por Brendon Phillipe</p>
     </footer>
   </main>
 
-  <!-- Modal (um único modal usado em ambas as páginas) -->
-  <div id="modal-overlay" class="modal-overlay" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true">
-      <button id="modal-close" class="modal-close" aria-label="Fechar">✕</button>
-      <div id="modal-body" class="modal-body"></div>
+  <!-- Modal (reaproveitado) -->
+  <div id="modal-texto" class="modal-overlay" aria-hidden="true">
+    <div class="modal-caixa" role="dialog" aria-modal="true">
+      <div id="modal-inner">
+        <h3 id="modal-titulo"></h3>
+        <div id="modal-conteudo" class="modal-conteudo"></div>
+        <button id="fechar-modal" class="btn-fechar">Fechar</button>
+      </div>
     </div>
   </div>
+
+  <script src="textos.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
+  
