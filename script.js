@@ -1,214 +1,258 @@
-/* script.js — unificado para home + catálogo */
+/* script.js — único script para index.html e textos.html
+   Requisitos:
+   - textos.js deve ser carregado antes deste (definindo window.textos)
+*/
 
-/* helpers */
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
-const isCatalogPage = () => location.pathname.includes('textos.html');
-const qs = k => new URLSearchParams(location.search).get(k);
+(() => {
+  // Helpers
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
+  function escapeHtml(s){ return (s||"").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function nl2br(s){ return escapeHtml(s).replace(/\n/g,"<br>"); }
+  function qsParam(k){ return new URLSearchParams(window.location.search).get(k); }
 
-/* MENU BURGER */
-function initMenu(){
-  const burger = $('.burger');
-  const menu = $('#menu');
-  if(!burger || !menu) return;
-  burger.addEventListener('click', e=>{
-    e.stopPropagation();
-    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-  });
-  // fechar ao clicar fora (mobile)
-  window.addEventListener('click', (ev)=>{
-    if(!menu) return;
-    if(menu.style.display === 'flex' && !menu.contains(ev.target) && !$('.burger').contains(ev.target)){
-      menu.style.display = 'none';
-    }
-  });
-  // fechar no resize quando desktop
-  window.addEventListener('resize', ()=> {
-    if(window.innerWidth >= 768) menu.style.display = 'flex';
-    else if(menu) menu.style.display = 'none';
-  });
-}
+  // Modal
+  const modalOverlay = document.getElementById('modal-overlay');
+  const modalBody = document.getElementById('modal-body');
+  const modalCloseBtn = document.getElementById('modal-close');
 
-/* Modal */
-function abrirModal(idx){
-  const modal = $('#modal-texto');
-  const tituloEl = $('#modal-titulo');
-  const conteudoEl = $('#modal-conteudo');
-  if(!modal || !tituloEl || !conteudoEl) return;
+  function openModal(htmlContent){
+    if(!modalOverlay || !modalBody) return;
+    modalBody.innerHTML = htmlContent;
+    modalOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    modalOverlay.setAttribute('aria-hidden','false');
+  }
+  function closeModal(){
+    if(!modalOverlay) return;
+    modalOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    modalOverlay.setAttribute('aria-hidden','true');
+  }
 
-  const t = window.textos && window.textos[idx];
-  if(!t) return;
+  if(modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+  if(modalOverlay){
+    modalOverlay.addEventListener('click', (e) => {
+      if(e.target === modalOverlay) closeModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') closeModal();
+    });
+  }
 
-  tituloEl.textContent = t.titulo;
-  conteudoEl.textContent = t.conteudo;
-  modal.style.display = 'flex';
-  modal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
-}
-function fecharModal(){
-  const modal = $('#modal-texto');
-  if(!modal) return;
-  modal.style.display = 'none';
-  modal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
-}
-function initModalEvents(){
-  const modal = $('#modal-texto');
-  if(!modal) return;
-  $('#modal-fechar')?.addEventListener('click', fecharModal);
-  modal.addEventListener('click', (e)=>{
-    if(e.target === modal) fecharModal();
-  });
-  window.addEventListener('keydown', (e) => { if(e.key === 'Escape') fecharModal(); });
-}
+  // render excerpt (max chars)
+  function excerpt(text, max=260){
+    const t = (text||"").trim().replace(/\n+/g,' ');
+    if(t.length <= max) return t;
+    return t.slice(0,max).trim() + '...';
+  }
 
-/* fallback foto (escolhe um arquivo disponível) */
-function setFotoPerfilFallback(){
-  const foto = $('#foto-perfil');
-  if(!foto) return;
-  const candidates = ['foto-perfil.jpg','foto-perfil.png','perfil.jpg','perfil.png','minha-foto.jpg'];
-  // tenta carregar o primeiro que existir
-  (async ()=>{
-    for(const c of candidates){
-      try{
-        const resp = await fetch(c, {method:'HEAD'});
-        if(resp.ok){
-          foto.src = c;
-          return;
-        }
-      }catch(e){}
-    }
-    // se não encontrou nenhum, usa placeholder (data URL ou deixa vazio)
-    foto.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><rect width="100%" height="100%" fill="%23efe1bf"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%235a4632" font-size="18">Sem Foto</text></svg>';
-  })();
-}
+  // Render Home (index.html)
+  function renderHome(){
+    const favContainer = $('#lista-favoritos');
+    const tagsHome = $('#tags-home');
+    if(!window.textos) return console.error('textos não carregados (window.textos)');
+    // Favoritos: pegar primeiros 2 marcados favorito=true, se menos, pegar primeiros do array
+    const favoritos = window.textos.filter(t => t.favorito).slice(0,2);
+    const fallback = window.textos.slice(0,2);
+    const mostrar = favoritos.length ? favoritos : fallback;
 
-/* render na home (favoritos + tags) */
-function renderHome(){
-  const favContainer = $('#lista-favoritos');
-  const tagsContainer = $('#lista-tags');
-  if(!window.textos) return;
-  if(favContainer){
-    favContainer.innerHTML = '';
-    // escolhe os primeiros dois ou os marcados favorite
-    let favoritos = window.textos.filter(t=>t.favorito).slice(0,2);
-    if(favoritos.length === 0) favoritos = window.textos.slice(0,2);
-    favoritos.forEach(t=>{
-      const idx = window.textos.indexOf(t);
-      const card = document.createElement('div');
-      card.className = 'texto-card';
-      card.innerHTML = `<h4>${t.titulo}</h4><p>${(t.resumo || t.conteudo).slice(0,240)}${(t.resumo || t.conteudo).length>240 ? '...' : ''}</p>`;
-      const btn = document.createElement('button');
-      btn.className = 'btn-ler';
-      btn.textContent = 'Ler mais';
-      btn.addEventListener('click', ()=> {
-        // abrir o catálogo e solicitar abrir o modal
-        const url = `textos.html?abrir=${idx}`;
-        window.location.href = url;
+    if(favContainer){
+      favContainer.innerHTML = '';
+      mostrar.forEach(t => {
+        const idx = window.textos.indexOf(t);
+        const card = document.createElement('div');
+        card.className = 'card-home';
+        card.innerHTML = `
+          <h3>${t.titulo}</h3>
+          <p>${excerpt(t.conteudo, 280)}</p>
+          <div style="display:flex;gap:10px;margin-top:8px">
+            <a class="btn-ler" href="textos.html?abrir=${encodeURIComponent(idx)}">Ler mais</a>
+            <span class="tag" style="align-self:center">${t.categoria || ''}</span>
+          </div>
+        `;
+        favContainer.appendChild(card);
       });
-      card.appendChild(btn);
-      favContainer.appendChild(card);
-    });
-  }
-
-  if(tagsContainer){
-    tagsContainer.innerHTML = '';
-    const tags = Array.from(new Set(window.textos.flatMap(t => t.tags || [t.categoria]).filter(Boolean)));
-    tags.unshift('Todos');
-    tags.forEach(tag=>{
-      const a = document.createElement('a');
-      a.className = 'tag';
-      a.href = `textos.html?tag=${encodeURIComponent(tag)}`;
-      a.textContent = tag;
-      tagsContainer.appendChild(a);
-    });
-  }
-}
-
-/* render no catálogo (lista + filtros) */
-function renderCatalogo(){
-  const lista = $('#lista-textos');
-  const filtros = $('#filtros');
-  if(!window.textos || !lista) return;
-
-  // constrói filtros
-  const tagsSet = Array.from(new Set(window.textos.flatMap(t => t.tags || [t.categoria]).filter(Boolean)));
-  const allTags = ['Todos', ...tagsSet];
-  if(filtros){
-    filtros.innerHTML = '';
-    allTags.forEach(tag=>{
-      const btn = document.createElement('button');
-      btn.className = 'tag-btn';
-      btn.textContent = tag;
-      btn.addEventListener('click', ()=> {
-        applyFilter(tag === 'Todos' ? null : tag);
-      });
-      filtros.appendChild(btn);
-    });
-  }
-
-  function applyFilter(tag){
-    lista.innerHTML = '';
-    const list = !tag ? window.textos.slice() : window.textos.filter(t => (t.tags || [t.categoria]).includes(tag));
-    if(list.length === 0){
-      lista.innerHTML = `<div class="texto-card">Nenhum texto encontrado para essa categoria.</div>`;
-      return;
     }
-    list.forEach(t=>{
-      const idx = window.textos.indexOf(t);
-      const card = document.createElement('article');
-      card.className = 'texto-card';
-      const excerpt = (t.resumo || t.conteudo).slice(0,350);
-      card.innerHTML = `<h4>${t.titulo}</h4><div style="margin-bottom:10px"><span class="tag">${t.categoria || (t.tags||[])[0] || ''}</span></div><p>${excerpt}${(t.conteudo.length>350)?'...':''}</p>`;
-      const btn = document.createElement('button');
-      btn.className = 'btn-ler';
-      btn.textContent = 'Ler mais';
-      btn.addEventListener('click', ()=> abrirModal(idx));
-      card.appendChild(btn);
-      lista.appendChild(card);
-    });
+
+    // Tags home (dinâmicas: incluir "Todos" + categorias presentes)
+    if(tagsHome){
+      tagsHome.innerHTML = '';
+      const categorias = Array.from(new Set(window.textos.map(x => x.categoria))).filter(Boolean);
+      const todosA = document.createElement('a');
+      todosA.className = 'tag';
+      todosA.href = 'textos.html?tag=Todos';
+      todosA.textContent = 'Todos';
+      tagsHome.appendChild(todosA);
+      categorias.forEach(cat => {
+        const a = document.createElement('a');
+        a.className = 'tag';
+        a.href = `textos.html?tag=${encodeURIComponent(cat)}`;
+        a.textContent = cat;
+        tagsHome.appendChild(a);
+      });
+    }
   }
 
-  // aplica filtro vindo na URL se houver
-  const tagParam = qs('tag');
-  applyFilter(tagParam ? decodeURIComponent(tagParam) : null);
-}
+  // Render Textos page (catalog)
+  function renderCatalog(filterTag){
+    const catalogEl = document.getElementById('catalogo-list');
+    const filtrosEl = document.getElementById('filtros');
+    if(!window.textos) return;
+    // filtros
+    if(filtrosEl){
+      filtrosEl.innerHTML = '';
+      const categorias = Array.from(new Set(window.textos.map(x => x.categoria))).filter(Boolean);
+      const allBtn = document.createElement('button');
+      allBtn.className = 'tag';
+      allBtn.textContent = 'Todos';
+      allBtn.onclick = () => {
+        history.replaceState(null,'', 'textos.html');
+        renderCatalog(null);
+      };
+      filtrosEl.appendChild(allBtn);
+      categorias.forEach(cat => {
+        const b = document.createElement('button');
+        b.className = 'tag';
+        b.textContent = cat;
+        b.onclick = () => {
+          history.replaceState(null,'', `textos.html?tag=${encodeURIComponent(cat)}`);
+          renderCatalog(cat);
+        };
+        filtrosEl.appendChild(b);
+      });
+    }
 
-/* abrir modal se ?abrir=INDEX estiver na URL (vindo da home) */
-function checkOpenFromURL(){
-  const abrir = qs('abrir');
-  if(abrir !== null && abrir !== undefined){
-    const idx = Number(abrir);
-    if(!Number.isNaN(idx)) {
-      // se estamos no catálogo, abrir direto
-      if(isCatalogPage()){
-        setTimeout(()=> abrirModal(idx), 200);
-      } else {
-        // se estamos na home, navegar pra catálogo
-        location.href = `textos.html?abrir=${idx}`;
+    // conteúdo (filtrar)
+    const list = (!filterTag || filterTag === 'Todos') ? window.textos.slice() : window.textos.filter(t => t.categoria === filterTag);
+    if(catalogEl){
+      catalogEl.innerHTML = '';
+      if(list.length === 0){
+        catalogEl.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:18px;color:#5b4526">Nenhum texto encontrado para essa categoria.</div>`;
+        return;
+      }
+      list.forEach((t, idx) => {
+        const realIdx = window.textos.indexOf(t);
+        const art = document.createElement('article');
+        art.className = 'card-texto';
+        art.innerHTML = `
+          <h3>${t.titulo}</h3>
+          <div style="margin-bottom:8px"><span class="tag">${t.categoria || ''}</span></div>
+          <p>${excerpt(t.conteudo, 380)}</p>
+          <div style="margin-top:8px"><button class="btn-ler" data-id="${realIdx}">Ler mais</button></div>
+        `;
+        catalogEl.appendChild(art);
+      });
+
+      // attach listeners
+      $$('.btn-ler').forEach(btn => {
+        btn.onclick = (e) => {
+          const id = btn.getAttribute('data-id');
+          const item = window.textos[id];
+          if(!item) return;
+          const html = `<h2>${escapeHtml(item.titulo)}</h2><div style="margin-top:8px">${nl2br(item.conteudo)}</div>`;
+          openModal(html);
+        };
+      });
+    }
+  }
+
+  // open modal if ?abrir=ID present
+  function handleOpenFromURL(){
+    const abrir = qsParam('abrir');
+    const tag = qsParam('tag');
+    if(tag){
+      // render catalog with tag
+      renderCatalog(decodeURIComponent(tag));
+    }
+    if(abrir !== null && abrir !== undefined){
+      const id = Number(abrir);
+      if(!isNaN(id) && window.textos && window.textos[id]){
+        const item = window.textos[id];
+        const html = `<h2>${escapeHtml(item.titulo)}</h2><div style="margin-top:8px">${nl2br(item.conteudo)}</div>`;
+        // ensure catalog rendered before opening
+        setTimeout(() => openModal(html), 200);
       }
     }
   }
-}
 
-/* inicialização */
-document.addEventListener('DOMContentLoaded', ()=>{
-  initMenu();
-  initModalEvents();
-  setFotoPerfilFallback();
+  // header/hamburger toggles (small screens)
+  function setupHeader(){
+    // simple toggle for mobile: show/hide central nav by copying it into an accessible menu
+    const hambHome = $('#hamb-home') || $('#hamb-catalog') || $('.hamburguer');
+    const cabCenter = document.querySelector('.cab-center');
+    if(!hambHome) return;
+    hambHome.addEventListener('click', () => {
+      // toggle a simple mobile menu (we'll create an overlay menu)
+      let mobileMenu = document.querySelector('.mobile-menu');
+      if(!mobileMenu){
+        mobileMenu = document.createElement('div');
+        mobileMenu.className = 'mobile-menu';
+        mobileMenu.innerHTML = `<div class="mobile-menu-inner"></div>`;
+        document.body.appendChild(mobileMenu);
+      }
+      const inner = mobileMenu.querySelector('.mobile-menu-inner');
+      if(inner.children.length === 0 && cabCenter){
+        // clone links
+        Array.from(cabCenter.children).forEach(a => {
+          const node = a.cloneNode(true);
+          node.addEventListener('click', () => mobileMenu.remove());
+          inner.appendChild(node);
+        });
+      }
+      mobileMenu.classList.toggle('open');
+    });
 
-  if(typeof window.textos === 'undefined'){
-    console.error('window.textos não encontrado — verifique textos.js');
-    return;
+    // close mobile menu on outside click
+    document.addEventListener('click', (e) => {
+      const mm = document.querySelector('.mobile-menu.open');
+      if(!mm) return;
+      if(!mm.contains(e.target) && !e.target.classList.contains('hamburguer')) mm.remove();
+    });
+
+    // style mobile menu basic (injected)
+    if(!document.getElementById('mobile-menu-style')){
+      const s = document.createElement('style');
+      s.id = 'mobile-menu-style';
+      s.innerHTML = `
+      .mobile-menu{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:flex;justify-content:flex-end;z-index:1500}
+      .mobile-menu-inner{width:260px;background:var(--header);padding:18px;display:flex;flex-direction:column;gap:10px}
+      .mobile-menu-inner a{color:var(--texto);text-decoration:none;font-weight:700;padding:8px;border-radius:8px}
+      .mobile-menu.open{}
+      `;
+      document.head.appendChild(s);
+    }
   }
 
-  if(isCatalogPage()){
-    renderCatalogo();
-  } else {
-    renderHome();
-  }
+  // main init
+  document.addEventListener('DOMContentLoaded', () => {
+    if(typeof window.textos === 'undefined'){
+      console.error('textos não definido (carregue textos.js antes de script.js)');
+      return;
+    }
 
-  checkOpenFromURL();
-  // console log pra diagnósticos
-  console.log('script.js inicializado — página:', isCatalogPage() ? 'catalogo' : 'home');
-});
+    // determine page
+    const path = window.location.pathname;
+    const isCatalog = path.endsWith('textos.html') || path.includes('/textos.html');
+    const isHome = path.endsWith('index.html') || path.endsWith('/') || path.endsWith('/index.html');
+
+    // setup header toggles
+    setupHeader();
+
+    // render home tags/cards if on index
+    if(isHome || window.location.href.includes('index.html')){
+      try{ renderHome(); }catch(err){ console.error('erro renderHome',err); }
+    }
+
+    // render catalog if on textos
+    if(isCatalog || window.location.href.includes('textos.html')){
+      try{
+        const tagParam = qsParam('tag');
+        renderCatalog(tagParam ? decodeURIComponent(tagParam) : null);
+      }catch(err){ console.error('erro renderCatalog',err); }
+    }
+
+    // handle abrir param (works on textos page)
+    handleOpenFromURL();
+  });
+})();
