@@ -129,6 +129,7 @@ Mas o destino, por ora, obrigou-me a retornar.
  Trago comigo a esperança de um novo lar — um lar que não precise se parecer com este, que não herde seus vícios nem suas vaidades.
  Quero construir algo do zero, onde cada membro saiba o seu lugar, o seu valor e o seu propósito, sem precisar de coroas ou brasões para ser digno de amor.
 Talvez um dia eu consiga partir de vez.
- Mas até lá, sigo aqui, entre as muralhas falsas, alimentando o sonho de um castelo meu — simples, pequeno, mas verdadeiro´
+ Mas até lá, sigo aqui, entre as muralhas falsas, alimentando o sonho de um castelo meu — simples, pequeno, mas verdadeiro`
+
 
 
