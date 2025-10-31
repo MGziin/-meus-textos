@@ -1,42 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Meu Cantinho ✨</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
+  <script defer src="textos.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
   <header class="cabecalho">
-    <div class="logo-site">Meu Cantinho ✨</div>
+    <div class="cab-left">
+      <div class="logo-site">Meu Cantinho ✨</div>
+    </div>
 
-    <button class="burger" aria-label="Abrir menu">☰</button>
-
-    <nav id="menu" class="menu">
+    <nav class="cab-center" aria-label="Navegação principal">
       <a href="#inicio">Início</a>
       <a href="#sobre">Sobre</a>
-      <a href="textos.html">Textos Favoritos</a>
-      <a href="textos.html#tags">Tags</a>
+      <a href="#textos">Textos Favoritos</a>
+      <a href="#tags">Tags</a>
       <a href="#contato">Contato</a>
     </nav>
+
+    <div class="cab-right">
+      <button class="hamburguer" id="hamb-home" aria-label="Abrir menu">☰</button>
+    </div>
   </header>
 
-  <main>
+  <main class="container">
     <section id="inicio" class="secao secao-inicio">
-      <img id="foto-perfil" src="foto-perfil.jpg" alt="Foto de Brendon" class="foto-perfil">
-      <h1 class="titulo-principal">Bem-vindo ao meu cantinho de palavras</h1>
-      <p class="descricao">Aqui estão alguns dos meus textos, crônicas e fábulas. Fique à vontade 🌻</p>
+      <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil">
+      <h1>Bem-vindo ao meu cantinho de palavras</h1>
+      <p class="descricao">Aqui estão alguns dos meus textos, crônicas e poemas. Fique à vontade para dar uma olhada 🌻</p>
     </section>
 
     <section id="sobre" class="secao secao-sobre">
-      <h2>Sobre Mim</h2>
-      <p>Eu me chamo <strong>Brendon Phillipe</strong>. Comecei a escrever desde muito pequeno, com 12 anos, e agora voltei a escrever e quero compartilhar minhas novas produções com vocês.</p>
+      <h2>Sobre mim</h2>
+      <p>Eu me chamo <strong>Brendon Phillipe</strong>. Comecei a escrever desde muito pequeno e agora voltei a produzir e compartilhar meus textos por aqui.</p>
     </section>
 
-    <section id="textos" class="secao secao-textos">
+    <section id="textos" class="secao secao-destaques">
       <h2>Meus Textos Favoritos</h2>
-      <div id="lista-favoritos" class="lista-cards"></div>
+      <div id="lista-favoritos" class="cards-home"></div>
 
       <div class="botao-leia-todos">
         <a class="btn-todos" href="textos.html">📖 Ler todos os textos</a>
@@ -45,32 +51,20 @@
 
     <section id="tags" class="secao secao-tags">
       <h2>Tags</h2>
-      <div id="lista-tags" class="tags-row"></div>
+      <div id="tags-home" class="tags-row"></div>
     </section>
 
     <section id="contato" class="secao secao-contato">
       <h2>Contato</h2>
-      <ul class="contato-lista">
+      <ul class="contato-list">
         <li><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></li>
         <li><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank" rel="noopener">linktr.ee/mgziin</a></li>
       </ul>
     </section>
+
+    <footer class="rodape">
+      <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
+    </footer>
   </main>
-
-  <footer>
-    <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
-  </footer>
-
-  <!-- modal (requerido tanto na home quanto no catálogo) -->
-  <div id="modal-texto" class="modal-overlay" aria-hidden="true">
-    <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
-      <div id="modal-titulo" class="modal-titulo"></div>
-      <div id="modal-conteudo" class="modal-body"></div>
-      <button id="modal-fechar" class="btn-fechar">Fechar</button>
-    </div>
-  </div>
-
-  <script defer src="textos.js"></script>
-  <script defer src="script.js"></script>
 </body>
 </html>
