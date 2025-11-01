@@ -1,88 +1,138 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Meu Cantinho ✨</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meus Textos ✍️</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --amarelo-claro: #fff7d1;
+      --amarelo-medio: #ffeb8a;
+      --amarelo-escuro: #d6b73d;
+      --texto: #3a2f00;
+    }
+    body {
+      background-color: var(--amarelo-claro);
+      color: var(--texto);
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--amarelo-medio);
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .titulo-site {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .atalhos {
+      display: flex;
+      gap: 20px;
+    }
+    .atalhos a {
+      text-decoration: none;
+      color: var(--texto);
+      font-weight: 600;
+    }
+    main {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    section {
+      margin-bottom: 80px;
+    }
+    h2 {
+      color: var(--amarelo-escuro);
+    }
+    .texto-card {
+      background: #fffce2;
+      border-left: 6px solid var(--amarelo-escuro);
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .texto-card.favorito {
+      border-left: 6px solid #ffb703;
+      background-color: #fff2b5;
+    }
+    .texto-card h3 {
+      margin: 0 0 10px;
+    }
+    .resumo {
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: var(--amarelo-escuro);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      background: var(--amarelo-medio);
+      margin-top: 60px;
+    }
+  </style>
 </head>
 <body>
-
-  <header class="cabecalho">
-    <div class="cab-left">
-      <div class="logo-site">Meu Cantinho ✨</div>
-    </div>
-
-    <nav class="cab-center menu-links" aria-label="Links principais">
-      <a href="#inicio">Início</a>
-      <a href="#sobre">Sobre</a>
-      <a href="textos.html">Textos Favoritos</a>
+  <header>
+    <div class="titulo-site">Meu Cantinho ✍️</div>
+    <nav class="atalhos">
+      <a href="#favoritos">Textos Favoritos</a>
       <a href="#tags">Tags</a>
-      <a href="#contato">Contato</a>
+      <a href="#sobre">Sobre</a>
     </nav>
-
-    <div class="cab-right">
-      <button id="hamb-home" class="hamburguer" aria-label="abrir menu">☰</button>
-    </div>
   </header>
 
-  <main class="container">
-    <!-- INÍCIO -->
-    <section id="inicio" class="secao secao-inicio">
-      <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil">
-      <h1>Bem-vindo ao meu cantinho de palavras</h1>
-      <p class="descricao">Aqui estão alguns dos meus textos, crônicas e poemas. Fique à vontade para dar uma olhada 🌻</p>
-    </section>
+  <main>
+    <section id="favoritos">
+      <h2>⭐ Textos Favoritos</h2>
 
-    <!-- SOBRE -->
-    <section id="sobre" class="secao secao-sobre">
-      <h2>Sobre Mim</h2>
-      <p>Eu me chamo <strong>Brendon Phillipe</strong>. Comecei a escrever desde os 12 anos e agora volto a compartilhar minhas novas produções com vocês.</p>
-    </section>
+      <div class="texto-card favorito">
+        <h3>Muros Falsos</h3>
+        <p class="resumo">Sobre problemas familiares e o desejo de paz.</p>
+        <button onclick="window.location.href='textos.html?abrir=2'">Ler mais</button>
+      </div>
 
-    <!-- TEXTOS FAVORITOS -->
-    <section id="textos" class="secao secao-destaques">
-      <h2>Textos Favoritos</h2>
-      <div id="lista-favoritos" class="lista-cards"></div>
-
-      <div class="botao-leia-todos">
-        <a class="btn-todos" href="textos.html">📖 Ler todos os textos</a>
+      <div class="texto-card favorito">
+        <h3>A Semente</h3>
+        <p class="resumo">Uma breve história sobre paciência e amadurecimento.</p>
+        <button onclick="window.location.href='textos.html?abrir=1'">Ler mais</button>
       </div>
     </section>
 
-    <!-- TAGS -->
-    <section id="tags" class="secao secao-tags">
-      <h2>Tags</h2>
-      <div id="lista-tags" class="tags-row"></div>
+    <section id="tags">
+      <h2>🏷️ Tags</h2>
+      <div>
+        <button onclick="window.location.href='textos.html?tag=todos'">Todos</button>
+        <button onclick="window.location.href='textos.html?tag=crônica'">Crônicas</button>
+        <button onclick="window.location.href='textos.html?tag=fábulas'">Fábulas</button>
+      </div>
     </section>
 
-    <!-- CONTATO -->
-    <section id="contato" class="secao secao-contato">
-      <h2>Contato</h2>
-      <ul class="contato-list">
-        <li><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></li>
-        <li><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank" rel="noopener">linktr.ee/mgziin</a></li>
-      </ul>
+    <section id="sobre">
+      <h2>📖 Sobre</h2>
+      <p>Bem-vindo ao meu cantinho de textos! Aqui compartilho histórias, reflexões e crônicas que nascem entre silêncios e devaneios.</p>
     </section>
-
-    <footer>
-      <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
-    </footer>
   </main>
 
-  <!-- Modal (reutilizado pelo catálogo) -->
-  <div id="modal-texto" class="modal-overlay" aria-hidden="true">
-    <div class="modal-caixa" role="dialog" aria-modal="true">
-      <div id="modal-inner">
-        <h3 id="modal-titulo"></h3>
-        <div id="modal-conteudo" class="modal-conteudo"></div>
-        <button id="fechar-modal" class="btn-fechar">Fechar</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="textos.js"></script>
-  <script src="script.js"></script>
+  <footer>
+    © 2025 — Feito por Brendon Phillipe
+  </footer>
 </body>
 </html>
