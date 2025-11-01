@@ -1,138 +1,156 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meus Textos ✍️</title>
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    :root {
-      --amarelo-claro: #fff7d1;
-      --amarelo-medio: #ffeb8a;
-      --amarelo-escuro: #d6b73d;
-      --texto: #3a2f00;
-    }
-    body {
-      background-color: var(--amarelo-claro);
-      color: var(--texto);
-      font-family: "Segoe UI", sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: var(--amarelo-medio);
-      padding: 10px 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .titulo-site {
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-    .atalhos {
-      display: flex;
-      gap: 20px;
-    }
-    .atalhos a {
-      text-decoration: none;
-      color: var(--texto);
-      font-weight: 600;
-    }
-    main {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    section {
-      margin-bottom: 80px;
-    }
-    h2 {
-      color: var(--amarelo-escuro);
-    }
-    .texto-card {
-      background: #fffce2;
-      border-left: 6px solid var(--amarelo-escuro);
-      border-radius: 12px;
-      padding: 15px 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    }
-    .texto-card.favorito {
-      border-left: 6px solid #ffb703;
-      background-color: #fff2b5;
-    }
-    .texto-card h3 {
-      margin: 0 0 10px;
-    }
-    .resumo {
-      font-style: italic;
-      margin-bottom: 10px;
-    }
-    button {
-      background-color: var(--amarelo-escuro);
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    footer {
-      text-align: center;
-      padding: 30px 0;
-      background: var(--amarelo-medio);
-      margin-top: 60px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Cantinho ✨</title>
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background-color: #fffbea;
+  color: #2c2c2c;
+}
+
+header {
+  background-color: #f5d86e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.6em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #2c2c2c;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #a67800;
+}
+
+section {
+  padding: 60px 30px;
+  border-bottom: 2px solid #f5e4a6;
+}
+
+section h2 {
+  text-align: center;
+  color: #a67800;
+}
+
+.texto {
+  background-color: #fff8d1;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.texto h3 {
+  margin-top: 0;
+}
+
+.resumo {
+  font-style: italic;
+  color: #5a4b00;
+  margin-bottom: 10px;
+}
+
+.favorito {
+  border: 2px solid #a67800;
+  background-color: #fff4b8;
+}
+
+button {
+  background-color: #a67800;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #8b5f00;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #f5d86e;
+  color: #2c2c2c;
+}
+</style>
 </head>
 <body>
-  <header>
-    <div class="titulo-site">Meu Cantinho ✍️</div>
-    <nav class="atalhos">
-      <a href="#favoritos">Textos Favoritos</a>
-      <a href="#tags">Tags</a>
-      <a href="#sobre">Sobre</a>
-    </nav>
-  </header>
 
-  <main>
-    <section id="favoritos">
-      <h2>⭐ Textos Favoritos</h2>
+<header>
+  <h1>Meu Cantinho ✨</h1>
+  <nav class="nav-links">
+    <a href="#favoritos">Favoritos</a>
+    <a href="#tags">Tags</a>
+  </nav>
+</header>
 
-      <div class="texto-card favorito">
-        <h3>Muros Falsos</h3>
-        <p class="resumo">Sobre problemas familiares e o desejo de paz.</p>
-        <button onclick="window.location.href='textos.html?abrir=2'">Ler mais</button>
-      </div>
+<section id="favoritos">
+  <h2>Textos Favoritos</h2>
 
-      <div class="texto-card favorito">
-        <h3>A Semente</h3>
-        <p class="resumo">Uma breve história sobre paciência e amadurecimento.</p>
-        <button onclick="window.location.href='textos.html?abrir=1'">Ler mais</button>
-      </div>
-    </section>
+  <div class="texto favorito">
+    <h3>Muros Falsos</h3>
+    <p class="resumo">Sobre problemas familiares e o desejo de paz.</p>
+    <p>O eu lírico observa o castelo falso onde mora com sua família e reflete sobre a ilusão de conforto e a falta de afeto. Ele entende que precisa de simplicidade e quer construir uma nova vida fora daquele ambiente. Ao sair, sente a dureza do mundo, mas também aprende sobre si mesmo...</p>
+    <a href="catalogo.html#muros-falsos"><button>Ler mais</button></a>
+  </div>
 
-    <section id="tags">
-      <h2>🏷️ Tags</h2>
-      <div>
-        <button onclick="window.location.href='textos.html?tag=todos'">Todos</button>
-        <button onclick="window.location.href='textos.html?tag=crônica'">Crônicas</button>
-        <button onclick="window.location.href='textos.html?tag=fábulas'">Fábulas</button>
-      </div>
-    </section>
+  <div class="texto favorito">
+    <h3>A Semente</h3>
+    <p class="resumo">Uma breve história sobre paciência e amadurecimento.</p>
+    <p>Em um campo árido, uma pequena semente se recusa a germinar rapidamente, mesmo vendo outras florescerem antes dela. Com o tempo, aprende que o amadurecimento vem da espera e da compreensão do próprio ritmo...</p>
+    <a href="catalogo.html#a-semente"><button>Ler mais</button></a>
+  </div>
+</section>
 
-    <section id="sobre">
-      <h2>📖 Sobre</h2>
-      <p>Bem-vindo ao meu cantinho de textos! Aqui compartilho histórias, reflexões e crônicas que nascem entre silêncios e devaneios.</p>
-    </section>
-  </main>
+<section id="tags">
+  <h2>Tags</h2>
+  <div class="texto">
+    <h3>Crônicas</h3>
+    <p class="resumo">Textos leves e reflexivos sobre o cotidiano e sentimentos.</p>
+    <a href="catalogo.html?tag=cronica"><button>Ver crônicas</button></a>
+  </div>
 
-  <footer>
-    © 2025 — Feito por Brendon Phillipe
-  </footer>
+  <div class="texto">
+    <h3>Fábulas</h3>
+    <p class="resumo">Histórias com lições e metáforas sobre a vida.</p>
+    <a href="catalogo.html?tag=fabula"><button>Ver fábulas</button></a>
+  </div>
+
+  <div class="texto">
+    <h3>Todos</h3>
+    <p class="resumo">Veja todo o catálogo de textos.</p>
+    <a href="catalogo.html?tag=todos"><button>Ver todos</button></a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Meu Cantinho ✨ — Todos os direitos reservados.</p>
+</footer>
+
 </body>
 </html>
