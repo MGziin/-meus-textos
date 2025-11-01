@@ -1,132 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo Completo</title>
-<style>
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background-color: #fffbea;
-  color: #2c2c2c;
-}
-
-header {
-  background-color: #f5d86e;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 25px;
-  position: sticky;
-  top: 0;
-}
-
-header h1 {
-  margin: 0;
-}
-
-.menu {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.menu div {
-  width: 25px;
-  height: 3px;
-  background-color: #2c2c2c;
-  margin: 4px 0;
-}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #2c2c2c;
-  font-weight: 600;
-}
-
-.texto {
-  background-color: #fff8d1;
-  border-radius: 12px;
-  padding: 20px;
-  margin: 30px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.favorito {
-  border: 2px solid #a67800;
-  background-color: #fff4b8;
-}
-
-button {
-  background-color: #a67800;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-@media (max-width: 700px) {
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    background-color: #f5d86e;
-    width: 100%;
-    position: absolute;
-    top: 60px;
-    left: 0;
-  }
-  .nav-links.active {
-    display: flex;
-  }
-  .menu {
-    display: flex;
-  }
-}
-</style>
-<script>
-function toggleMenu() {
-  document.querySelector('.nav-links').classList.toggle('active');
-}
-</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Catálogo de Textos ✨</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="textos.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
+  <header class="topo catalogo-topo">
+    <div class="topo-left">
+      <div class="logo-site">Catálogo de Textos</div>
+    </div>
 
-<header>
-  <h1>Catálogo Completo</h1>
-  <div class="menu" onclick="toggleMenu()">
-    <div></div><div></div><div></div>
+    <div class="topo-right">
+      <button id="hambBtn" class="hamburguer" aria-label="Abrir menu">
+        <span class="hamb-icon"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+
+    <!-- painel hamburger (aparece só no catálogo) -->
+    <nav id="menuPanel" class="menu-panel" aria-hidden="true">
+      <a href="index.html#inicio">Início</a>
+      <a href="index.html#textos">Textos Favoritos</a>
+      <a href="index.html#tags">Tags</a>
+      <a href="index.html#sobre">Sobre Mim</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="filtros" class="secao">
+      <h2>Filtrar por tags</h2>
+      <div id="filtros-topo" class="tags-row"></div>
+    </section>
+
+    <section id="catalogo" class="secao">
+      <h2>Todos os Textos</h2>
+      <div id="catalogo-todos" class="catalogo"></div>
+    </section>
+
+    <footer class="rodape">
+      <p>© 2025 — Feito por Brendon Phillipe</p>
+    </footer>
+  </main>
+
+  <!-- Modal (overlay) -->
+  <div id="modal-texto" class="modal-overlay" aria-hidden="true">
+    <div class="modal-caixa" role="dialog" aria-modal="true">
+      <button id="modal-close" class="modal-close" aria-label="Fechar">✕</button>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
   </div>
-  <nav class="nav-links">
-    <a href="index.html">Início</a>
-    <a href="#cronicas">Crônicas</a>
-    <a href="#fabulas">Fábulas</a>
-  </nav>
-</header>
-
-<main>
-  <div class="texto favorito" id="muros-falsos">
-    <h3>Muros Falsos</h3>
-    <p>O eu lírico observa o castelo falso onde mora com sua família e reflete sobre a ilusão de conforto e a falta de afeto...</p>
-  </div>
-
-  <div class="texto favorito" id="a-semente">
-    <h3>A Semente</h3>
-    <p>Em um campo árido, uma pequena semente se recusa a germinar rapidamente, mesmo vendo outras florescerem antes dela...</p>
-  </div>
-
-  <div class="texto" id="celular">
-    <h3>Por que é tão difícil ficar sem celular?</h3>
-    <p>Uma reflexão sobre nossa dependência do celular e como ele molda nossas relações e percepções do mundo ao redor...</p>
-  </div>
-</main>
-
 </body>
 </html>
-
