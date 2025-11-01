@@ -1,57 +1,212 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Meus Textos ✍️</title>
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo — Meus Textos ✍️</title>
+  <style>
+    :root {
+      --amarelo-claro: #fff7d1;
+      --amarelo-medio: #ffeb8a;
+      --amarelo-escuro: #d6b73d;
+      --texto: #3a2f00;
+    }
+    body {
+      background-color: var(--amarelo-claro);
+      color: var(--texto);
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: var(--amarelo-medio);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .menu {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .menu div {
+      width: 25px;
+      height: 3px;
+      background-color: var(--texto);
+      margin: 4px 0;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: var(--texto);
+      font-weight: 600;
+    }
+    @media (max-width: 768px) {
+      .menu { display: flex; }
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background: var(--amarelo-medio);
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        border-radius: 10px;
+        padding: 10px;
+      }
+      nav ul.show { display: flex; }
+    }
+
+    main { max-width: 900px; margin: auto; padding: 40px 20px; }
+    .texto-card {
+      background: #fffce2;
+      border-left: 6px solid var(--amarelo-escuro);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .texto-card.favorito {
+      border-left: 6px solid #ffb703;
+      background-color: #fff2b5;
+    }
+    h3 { margin-top: 0; color: var(--amarelo-escuro); }
+    button {
+      background-color: var(--amarelo-escuro);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    footer { text-align: center; padding: 30px 0; background: var(--amarelo-medio); margin-top: 60px; }
+    #modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+    }
+    #modal .content {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 <body>
-  <header class="cabecalho catalogo-header">
-    <div class="cab-left">
-      <div class="logo-site">Meus Textos ✍️</div>
+  <header>
+    <h1>Catálogo ✍️</h1>
+    <div class="menu" onclick="document.querySelector('nav ul').classList.toggle('show')">
+      <div></div><div></div><div></div>
     </div>
-
-    <nav class="cab-center menu-links">
-      <a href="index.html#inicio">Início</a>
-      <a href="index.html#sobre">Sobre</a>
-      <a href="#catalogo">Catálogo</a>
-      <a href="index.html#contato">Contato</a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="index.html#tags">Tags</a></li>
+        <li><a href="index.html#favoritos">Favoritos</a></li>
+      </ul>
     </nav>
-
-    <div class="cab-right">
-      <button id="hamb-catalog" class="hamburguer" aria-label="abrir menu">☰</button>
-    </div>
   </header>
 
-  <main class="container" style="padding-top:110px">
-    <section id="catalogo" class="secao secao-catalogo">
-      <h2>Catálogo de Textos</h2>
+  <main id="catalogo"></main>
 
-      <div id="filtros" class="tags-row filtros-top"></div>
-
-      <div id="catalogo-list" class="catalogo-grid"></div>
-    </section>
-
-    <footer>
-      <p>© 2025 — Feito por Brendon Phillipe</p>
-    </footer>
-  </main>
-
-  <!-- Modal (reaproveitado) -->
-  <div id="modal-texto" class="modal-overlay" aria-hidden="true">
-    <div class="modal-caixa" role="dialog" aria-modal="true">
-      <div id="modal-inner">
-        <h3 id="modal-titulo"></h3>
-        <div id="modal-conteudo" class="modal-conteudo"></div>
-        <button id="fechar-modal" class="btn-fechar">Fechar</button>
-      </div>
+  <div id="modal">
+    <div class="content">
+      <h3 id="modal-titulo"></h3>
+      <p id="modal-texto"></p>
+      <button onclick="fecharModal()">Fechar</button>
     </div>
   </div>
 
-  <script src="textos.js"></script>
-  <script src="script.js"></script>
+  <footer>© 2025 — Feito por Brendon Phillipe</footer>
+
+  <script>
+    const textos = [
+      {
+        id: 1,
+        titulo: "A Semente",
+        tag: "fábulas",
+        resumo: "Uma breve história sobre paciência e amadurecimento.",
+        favorito: true,
+        conteudo: `Era uma vez uma semente... (seu texto completo aqui)`
+      },
+      {
+        id: 2,
+        titulo: "Muros Falsos",
+        tag: "crônica",
+        resumo: "Sobre problemas familiares e o desejo de paz.",
+        favorito: true,
+        conteudo: `Eu odeio os muros falsos que aqui existem.
+Essa sensação ilusória de segurança, esses muros gigantes que, vistos de fora, lembram um castelo imponente, mas que, por dentro, não passam de uma cabana abandonada.
+Às vezes, minha vontade é de quebrar essas paredes e expor ao mundo — e a eles mesmos — o que realmente são.
+Mas, no fundo, o que eu mais quero é paz.
+Quero pavimentar meu próprio caminho para fora dessa fortaleza enganosa, sem ter alguém, de tempos em tempos, destruindo tudo o que tento construir.
+
+E como todo castelo, seja ele verdadeiro ou falso, há sempre seus moradores: figuras que se esforçam para parecer superiores, sábias e inatingíveis.
+Admito que, nesse aspecto, cumprem bem o papel que lhes cabe.
+Mas como toda família real, também possuem deveres — deveres que a própria plebe lhes confia, na esperança de que ajam com discernimento e justiça.
+Infelizmente, quando a realeza é apenas uma imitação, o resultado é previsível: pessoas cheias de esperanças sendo amargamente decepcionadas, percebendo tarde demais que até um cão abandonado tomaria decisões mais sensatas.
+
+Falo agora sobre o Rei, figura que deveria inspirar respeito e confiança, mas que, em verdade, mais se assemelha a uma criança desorientada...
+(segue todo o texto completo como você enviou)`
+      },
+      {
+        id: 3,
+        titulo: "Por que é tão difícil ficar sem celular?",
+        tag: "crônica",
+        resumo: "Uma reflexão sobre nossa dependência do celular.",
+        favorito: false,
+        conteudo: `Vivemos conectados... (seu texto completo aqui)`
+      }
+    ];
+
+    const params = new URLSearchParams(window.location.search);
+    const tag = params.get("tag");
+    const abrir = parseInt(params.get("abrir"));
+
+    const catalogo = document.getElementById("catalogo");
+
+    function renderTextos() {
+      let lista = textos;
+      if (tag && tag !== "todos") lista = lista.filter(t => t.tag === tag);
+      if (abrir) abrirTexto(abrir);
+      if (lista.length === 0) {
+        catalogo.innerHTML = "<p>Nenhum texto encontrado para essa categoria.</p>";
+        return;
+      }
+      catalogo.innerHTML = lista.map(t => `
+        <div class="texto-card ${t.favorito ? "favorito" : ""}">
+          <h3>${t.titulo}</h3>
+          <p><em>${t.resumo}</em></p>
+          <button onclick="abrirTexto(${t.id})">Ler mais</button>
+        </div>
+      `).join("");
+    }
+
+    function abrirTexto(id) {
+      const texto = textos.find(t => t.id === id);
+      if (!texto) return;
+      document.getElementById("modal-titulo").innerText = texto.titulo;
+      document.getElementById("modal-texto").innerText = texto.conteudo;
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    function fecharModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    renderTextos();
+  </script>
 </body>
 </html>
-  
