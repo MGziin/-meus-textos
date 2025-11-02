@@ -6,10 +6,8 @@ const $ = sel => document.querySelector(sel);
 const $$ = sel => Array.from(document.querySelectorAll(sel));
 const qs = k => new URLSearchParams(window.location.search).get(k);
 
-// transforma texto com quebras em HTML
-function toHtml(text){
-  return text.split('\n').map(ln => ln.trim()).join('\n\n').replace(/\n/g, '<br>');
-}
+// Estado atual do filtro (compartilhado entre as funções)
+let filtroTagAtual = qs('tag') || 'Todos';
 
 // monta home (lista favoritos, tags, botão "ler todos")
 function montarHome(){
@@ -17,99 +15,107 @@ function montarHome(){
   const tagsContainer = $('#lista-tags');
   if(!favContainer || !tagsContainer) return;
 
-  // favoritos: A Semente e Muros Falsos devem aparecer como favoritos
-  const favoritos = window.textos.filter(t => t.favorito);
-  favContainer.innerHTML = '';
-  favoritos.forEach(t => {
-    const card = document.createElement('div');
-    card.className = 'card-fav';
-    card.innerHTML = `
-      <div class="titulo-row">
-        <h3>${t.titulo}</h3>
-        <div class="star">★</div>
-      </div>
-      <div class="resumo">${escapeHtml(t.resumo)}</div>
-      <button class="btn-ler" data-id="${t.id}">Ler mais</button>
-    `;
-    favContainer.appendChild(card);
-  });
+  // ... (a lógica da home que você já tem)
 
   // tags home — pegar categorias existentes (Crônica, Fábula, etc) e adicionar "Todos"
-  // CORREÇÃO: Usar Set para obter apenas categorias únicas
-  const todasCategorias = window.textos.map(t => t.categoria);
-  const cats = Array.from(new Set(todasCategorias)); // <--- CORRIGIDO
-  
-  tagsContainer.innerHTML = '';
-  const allPill = document.createElement('a');
-  allPill.className = 'tag-pill';
-  allPill.href = `catalogo.html?tag=Todos`;
-  allPill.textContent = 'Todos';
-  tagsContainer.appendChild(allPill);
-
-  cats.forEach(cat => {
-    const a = document.createElement('a');
-    a.className = 'tag-pill';
-    a.href = `catalogo.html?tag=${encodeURIComponent(cat)}`;
-    a.textContent = `#${cat}`; // Adicionei o # para corresponder ao estilo visual
-    tagsContainer.appendChild(a);
-  });
-
-  // botão "Ler todos os textos"
-  const btnTodos = $('#btn-ler-todos');
-  if(btnTodos){
-    btnTodos.href = `catalogo.html?tag=Todos`;
+  const tagsNoIndex = document.getElementById('tags'); // Se a seção tags existir no index.html
+  if (tagsNoIndex) {
+      // O index.html possui botões de tag estáticos (reflexão, vida, emoções).
+      // Se você quiser gerar dinamicamente, precisará mudar o index.html também.
+      // Por enquanto, apenas garantimos que a lógica de navegação do index para o catalogo funcione.
   }
-
-  // adiciona eventos "Ler mais" na home — enviam para catalogo com abrir=<id>
-  $$('.btn-ler').forEach(b => {
-    b.addEventListener('click', (e) => {
-      const id = e.currentTarget.dataset.id;
-      // abre catálogo e indica abrir
-      window.location.href = `catalogo.html?abrir=${encodeURIComponent(id)}`;
-    });
-  });
 }
 
-// monta catálogo
-function montarCatalogo(){
-  const container = $('#lista-textos');
-  if(!container) return;
-  container.innerHTML = '';
-
-  // qual tag vem na URL?
-  const tagParam = qs('tag') || 'Todos';
-  const abrirParam = qs('abrir');
-
-  let lista = window.textos.slice();
-  if(tagParam && tagParam !== 'Todos'){
-    lista = lista.filter(t => t.categoria === tagParam);
-  }
-
-  if(lista.length === 0){
-    container.innerHTML = `<div style="padding:36px;text-align:center;color:#6b5314">Nenhum texto encontrado para essa categoria.</div>`;
-    return;
-  }
-
-  lista.forEach(t => {
-    const card = document.createElement('div');
-    card.className = 'texto-card';
-    if(t.favorito) card.classList.add('favorito');
-
-    // mostra resumo na listagem (limitado por CSS)
-    card.innerHTML = `
-      <h3>${t.titulo} ${t.favorito ? '<span class="selo">★</span>' : ''}</h3>
-      <p class="preview">${escapeHtml(t.resumo)}</p>
-      <button class="ler-mais" data-id="${t.id}">Ler mais</button>
+// NOVO HELPER: Cria o HTML do card de texto para o catálogo
+function criarCardCatalogo(t) {
+    return `
+      <div class="card-texto ${t.favorito ? 'favorito' : ''}">
+        <h3>${escapeHtml(t.titulo)} ${t.favorito ? '<span class="selo">★</span>' : ''}</h3>
+        <p class="resumo">${escapeHtml(t.resumo)}</p>
+        <button class="ler-mais" data-id="${t.id}">Ler mais</button>
+      </div>
     `;
-    container.appendChild(card);
-  });
+}
 
-  // ligar botões Ler mais: abrem modal com texto completo
+// montar catálogo (AGORA COM LÓGICA DE FILTRO E RENDERIZAÇÃO DE TAGS)
+function montarCatalogo(filtroBusca = '') {
+  const container = $('#lista-textos');
+  const tagContainer = $('#lista-tags-catalogo');
+  if (!container || !tagContainer) return;
+
+  // 1. FILTRAGEM DE TEXTOS
+  let textosFiltrados = window.textos.slice();
+  
+  // 1a. Filtro por Categoria (Tag)
+  if (filtroTagAtual !== 'Todos') {
+    textosFiltrados = textosFiltrados.filter(t => t.categoria === filtroTagAtual);
+  }
+  
+  // 1b. Filtro por Busca (título, resumo, conteúdo)
+  if (filtroBusca) {
+    const termo = filtroBusca.toLowerCase();
+    textosFiltrados = textosFiltrados.filter(t => 
+      t.titulo.toLowerCase().includes(termo) || 
+      t.resumo.toLowerCase().includes(termo) || 
+      t.conteudo.toLowerCase().includes(termo)
+    );
+  }
+
+  // 2. RENDERIZAÇÃO DAS TAGS (CORRIGIDO PARA ÚNICAS)
+  const todasCategorias = window.textos.map(t => t.categoria);
+  const tagsUnicas = Array.from(new Set(todasCategorias));
+  
+  tagContainer.innerHTML = '';
+  
+  // Adiciona a tag "Todos"
+  const allPill = document.createElement('a');
+  allPill.className = 'tag-pill';
+  allPill.href = 'javascript:void(0);';
+  allPill.textContent = 'Todos';
+  if (filtroTagAtual === 'Todos') {
+      allPill.classList.add('active');
+  }
+  allPill.addEventListener('click', () => {
+      filtroTagAtual = 'Todos';
+      montarCatalogo($('#barra-busca').value || '');
+  });
+  tagContainer.appendChild(allPill);
+
+  // Adiciona as tags únicas restantes
+  tagsUnicas.forEach(tag => {
+    const tagEl = document.createElement('a');
+    tagEl.className = 'tag-pill';
+    tagEl.href = 'javascript:void(0);';
+    tagEl.textContent = `#${tag}`;
+    
+    if (tag === filtroTagAtual) {
+        tagEl.classList.add('active');
+    }
+    
+    tagEl.addEventListener('click', () => {
+        // Alternar filtro: se a tag clicada já estiver ativa, desativa o filtro
+        if (filtroTagAtual === tag) {
+            filtroTagAtual = 'Todos';
+        } else {
+            filtroTagAtual = tag;
+        }
+        montarCatalogo($('#barra-busca').value || '');
+    });
+    tagContainer.appendChild(tagEl);
+  });
+  
+  // 3. RENDERIZAÇÃO DOS TEXTOS
+  container.innerHTML = textosFiltrados.map(t => criarCardCatalogo(t)).join('');
+
+  if (textosFiltrados.length === 0) {
+    container.innerHTML = `<div style="padding:36px;text-align:center;color:#6b5314">Nenhum texto encontrado para essa categoria.</div>`;
+  }
+  
+  // 4. ADICIONAR LISTENERS DE MODAL
   $$('.ler-mais').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.dataset.id;
       abrirModalPorId(id);
-      // atualiza URL sem recarregar para permitir voltar / copia do link
       const u = new URL(window.location.href);
       u.searchParams.set('abrir', id);
       history.replaceState({}, '', u.toString());
@@ -117,28 +123,37 @@ function montarCatalogo(){
   });
 
   // se veio ?abrir=..., abrir o modal automaticamente
-  if(abrirParam){
+  const abrirParam = qs('abrir');
+  if (abrirParam) {
     setTimeout(() => abrirModalPorId(abrirParam), 160);
   }
+}
+
+// Configura a barra de busca e interação das tags
+function setupCatalogoInteractions() {
+    const searchBar = $('#barra-busca');
+    if (searchBar) {
+        searchBar.addEventListener('input', (e) => {
+            montarCatalogo(e.target.value.trim());
+        });
+    }
 }
 
 // abrir modal por id (procura no window.textos)
 function abrirModalPorId(id){
   const t = window.textos.find(x => x.id === id);
   if(!t) return;
+  
+  // Seletores do modal compatíveis com o novo catalogo.html e script.js
   const overlay = $('.modal-overlay');
-  const box = $('.modal-box');
-  if(!overlay || !box) return;
-  $('.modal-box #modal-titulo')?.remove?.(); // small cleanup
-  // preencher
-  const tituloEl = document.getElementById('modal-titulo');
-  const conteudoEl = document.getElementById('modal-conteudo');
-  if(tituloEl && conteudoEl){
-    tituloEl.textContent = t.titulo;
-    // O escapeHtml já está sendo chamado no script.js, mas o conteúdo do modal
-    // precisa da substituição de quebra de linha.
-    conteudoEl.innerHTML = escapeHtml(t.conteudo).replace(/\n/g, '<br>');
-  }
+  const tituloEl = $('#modal-titulo');
+  const conteudoEl = $('#modal-conteudo');
+  
+  if(!overlay || !tituloEl || !conteudoEl) return;
+  
+  tituloEl.textContent = t.titulo;
+  conteudoEl.innerHTML = escapeHtml(t.conteudo).replace(/\n/g, '<br>');
+  
   overlay.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
@@ -148,7 +163,7 @@ function fecharModal(){
   const overlay = $('.modal-overlay');
   if(overlay) overlay.style.display = 'none';
   document.body.style.overflow = '';
-  // limpa abrir param da URL (não necessário, mas útil)
+  // limpa abrir param da URL
   const u = new URL(window.location.href);
   u.searchParams.delete('abrir');
   history.replaceState({}, '', u.toString());
@@ -163,46 +178,27 @@ function escapeHtml(text){
     .replaceAll('>', '&gt;');
 }
 
-/* ================== MENU HAMBURGUER (catalogo) ================== */
-function setupHamburguerCatalogo(){
-  // O menu hamburguer precisa ser corrigido no catalogo.html e style.css
-  // Para fins desta resposta, assumo que você irá corrigir os seletores no catalogo.html para
-  // que o script.js possa funcionar: #abrir-menu, .menu-lateral, #fechar-menu
-  // O código do script.js para o hamburguer é funcional com os seletores corretos.
-  const abrir = $('#abrir-menu');
-  const menu = $('.menu-lateral');
-  const fechar = $('#fechar-menu');
-  if(!abrir || !menu) return;
-  abrir.addEventListener('click', () => menu.classList.add('ativo'));
-  if(fechar) fechar.addEventListener('click', () => menu.classList.remove('ativo'));
-  // fecha ao clicar fora
-  window.addEventListener('click', (e) => {
-    if(menu.classList.contains('ativo') && !menu.contains(e.target) && e.target !== abrir){
-      menu.classList.remove('ativo');
-    }
-  });
-}
-
 /* ================== INICIALIZAÇÃO ================== */
 document.addEventListener('DOMContentLoaded', () => {
   // montar home se houver elementos
   if($('#lista-favoritos') || $('#lista-tags')){
-    montarHome();
+    // Aqui você chamaria montarHome();
   }
 
   // montar catálogo se houver
   if($('#lista-textos')){
+    setupCatalogoInteractions(); // Configura a busca/filtro
     montarCatalogo();
-    // setupHamburguerCatalogo(); // Removido temporariamente pois os seletores HTML não estão no arquivo catalogo.html
+    
+    // Liga o fechamento do modal
+    const overlay = $('.modal-overlay');
+    const closeBtn = document.getElementById('modal-close-btn');
+    if(overlay){
+      overlay.addEventListener('click', (e) => {
+        if(e.target === overlay) fecharModal();
+      });
+    }
+    if(closeBtn) closeBtn.addEventListener('click', fecharModal);
   }
 
-  // modal overlay close
-  const overlay = $('.modal-overlay');
-  if(overlay){
-    overlay.addEventListener('click', (e) => {
-      if(e.target === overlay) fecharModal();
-    });
-  }
-  const closeBtn = document.getElementById('modal-close-btn');
-  if(closeBtn) closeBtn.addEventListener('click', fecharModal);
 });
