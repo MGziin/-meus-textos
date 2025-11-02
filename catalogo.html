@@ -7,12 +7,14 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="catalogo-body">
+
   <header class="header-catalogo">
-    <button id="menu-toggle" class="menu-hamburguer">☰</button>
+    <button id="abrir-menu" class="menu-hamburguer">☰</button>
     <h1 class="titulo-catalogo">Catálogo de Textos</h1>
   </header>
 
-  <nav id="menu" class="menu">
+  <nav id="menu" class="menu-lateral">
+    <a href="javascript:void(0)" id="fechar-menu" class="fechar-menu-btn">&times; Fechar</a>
     <a href="index.html#inicio">Início</a>
     <a href="index.html#favoritos">Textos Favoritos</a>
     <a href="index.html#tags">Tags</a>
@@ -20,63 +22,18 @@
     <a href="index.html#contato">Contato</a>
   </nav>
 
-  <main id="catalogo-container" class="catalogo-container"></main>
+  <main id="lista-textos" class="catalogo-container"></main>
 
-  <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span id="close-modal" class="close">&times;</span>
-      <h2 id="modal-title"></h2>
-      <p id="modal-text"></p>
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <span id="modal-close-btn" class="close">&times;</span>
+      <h2 id="modal-titulo"></h2>
+      <div id="modal-conteudo"></div>
     </div>
   </div>
 
   <script src="textos.js"></script>
-  <script>
-    // Menu hamburguer
-    const menuToggle = document.getElementById("menu-toggle");
-    const menu = document.getElementById("menu");
-    menuToggle.addEventListener("click", () => {
-      menu.classList.toggle("open");
-    });
+  <script src="script.js"></script>
 
-    // Renderização dos textos
-    const container = document.getElementById("catalogo-container");
-    const favoritos = ["A Semente", "Muros Falsos"];
-
-    textos.forEach(texto => {
-      const card = document.createElement("div");
-      card.className = "card-texto";
-      if (favoritos.includes(texto.titulo)) card.classList.add("favorito");
-
-      card.innerHTML = `
-        <h3>${texto.titulo}</h3>
-        <p>${texto.resumo}</p>
-        <button class="ler-mais" data-titulo="${texto.titulo}">Ler mais</button>
-      `;
-      container.appendChild(card);
-    });
-
-    // Modal
-    const modal = document.getElementById("modal");
-    const modalTitle = document.getElementById("modal-title");
-    const modalText = document.getElementById("modal-text");
-    const closeModal = document.getElementById("close-modal");
-
-    document.querySelectorAll(".ler-mais").forEach(botao => {
-      botao.addEventListener("click", () => {
-        const titulo = botao.getAttribute("data-titulo");
-        const textoSelecionado = textos.find(t => t.titulo === titulo);
-        modalTitle.textContent = textoSelecionado.titulo;
-        modalText.textContent = textoSelecionado.textoCompleto;
-        modal.style.display = "block";
-      });
-    });
-
-    closeModal.addEventListener("click", () => modal.style.display = "none");
-    window.addEventListener("click", e => {
-      if (e.target === modal) modal.style.display = "none";
-    });
-  </script>
 </body>
 </html>
