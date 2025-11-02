@@ -9,11 +9,6 @@ const qs = k => new URLSearchParams(window.location.search).get(k);
 // Estado atual do filtro (para uso em busca e tag)
 let filtroTagAtual = qs('tag') || 'Todos';
 
-// transforma texto com quebras em HTML
-function toHtml(text){
-  return text.split('\n').map(ln => ln.trim()).join('\n\n').replace(/\n/g, '<br>');
-}
-
 // small util
 function escapeHtml(text){
   if(text === null || text === undefined) return '';
@@ -23,14 +18,13 @@ function escapeHtml(text){
     .replaceAll('>', '&gt;');
 }
 
-
-// monta home (lista favoritos, tags, botão "ler todos")
+// monta home (função antiga, mantida)
 function montarHome(){
   const favContainer = $('#lista-favoritos');
   const tagsContainer = $('#lista-tags');
   if(!favContainer || !tagsContainer) return;
 
-  // favoritos: A Semente e Muros Falsos devem aparecer como favoritos
+  // ... (lógica da home)
   const favoritos = window.textos.filter(t => t.favorito);
   favContainer.innerHTML = '';
   favoritos.forEach(t => {
@@ -47,7 +41,6 @@ function montarHome(){
     favContainer.appendChild(card);
   });
 
-  // tags home — (corrigido para tags únicas)
   const cats = Array.from(new Set(window.textos.map(t => t.categoria)));
   tagsContainer.innerHTML = '';
   const allPill = document.createElement('a');
@@ -60,17 +53,15 @@ function montarHome(){
     const a = document.createElement('a');
     a.className = 'tag-pill';
     a.href = `catalogo.html?tag=${encodeURIComponent(cat)}`;
-    a.textContent = `#${cat}`; // Adicionei o # para corresponder ao estilo visual
+    a.textContent = `#${cat}`;
     tagsContainer.appendChild(a);
   });
 
-  // botão "Ler todos os textos"
   const btnTodos = $('#btn-ler-todos');
   if(btnTodos){
     btnTodos.href = `catalogo.html?tag=Todos`;
   }
 
-  // adiciona eventos "Ler mais" na home — enviam para catalogo com abrir=<id>
   $$('.btn-ler').forEach(b => {
     b.addEventListener('click', (e) => {
       const id = e.currentTarget.dataset.id;
@@ -79,9 +70,8 @@ function montarHome(){
   });
 }
 
-// NOVO HELPER: Cria o HTML do card de texto para o catálogo
+// HELPER: Cria o HTML do card de texto para o catálogo
 function criarCardCatalogo(t) {
-    // Note que o HTML da home e do catalogo são um pouco diferentes (card-fav vs texto-card)
     return `
       <div class="card-texto ${t.favorito ? 'favorito' : ''}">
         <h3>${escapeHtml(t.titulo)} ${t.favorito ? '<span class="selo">★</span>' : ''}</h3>
@@ -95,7 +85,6 @@ function criarCardCatalogo(t) {
 function montarCatalogo(filtroBusca = '') {
   const container = $('#lista-textos');
   const tagContainer = $('#lista-tags-catalogo');
-  // Se estiver na página de catálogo, mas sem os elementos, retorna (o que acontecia antes)
   if (!container || !tagContainer) return;
 
   // 1. FILTRAGEM DE TEXTOS
@@ -132,7 +121,7 @@ function montarCatalogo(filtroBusca = '') {
   }
   allPill.addEventListener('click', () => {
       filtroTagAtual = 'Todos';
-      montarCatalogo($('#barra-busca').value || '');
+      montarCatalogo($('#barra-busca')?.value || '');
   });
   tagContainer.appendChild(allPill);
 
@@ -148,13 +137,12 @@ function montarCatalogo(filtroBusca = '') {
     }
     
     tagEl.addEventListener('click', () => {
-        // Alternar filtro: se a tag clicada já estiver ativa, desativa o filtro
         if (filtroTagAtual === tag) {
             filtroTagAtual = 'Todos';
         } else {
             filtroTagAtual = tag;
         }
-        montarCatalogo($('#barra-busca').value || '');
+        montarCatalogo($('#barra-busca')?.value || '');
     });
     tagContainer.appendChild(tagEl);
   });
@@ -163,10 +151,10 @@ function montarCatalogo(filtroBusca = '') {
   container.innerHTML = textosFiltrados.map(t => criarCardCatalogo(t)).join('');
 
   if (textosFiltrados.length === 0) {
-    container.innerHTML = `<div style="padding:36px;text-align:center;color:#6b5314">Nenhum texto encontrado para a busca ou categoria.</div>`;
+    container.innerHTML = `<div style="padding:36px;text-align:center;color:#6b5314">Nenhum texto encontrado para essa categoria.</div>`;
   }
   
-  // 4. LIGAR LISTENERS DE MODAL (com a nova classe .ler-mais)
+  // 4. LIGAR LISTENERS DE MODAL
   $$('.ler-mais').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.dataset.id;
@@ -189,18 +177,16 @@ function setupCatalogoInteractions() {
     const searchBar = $('#barra-busca');
     if (searchBar) {
         searchBar.addEventListener('input', (e) => {
-            // Re-renderiza o catálogo com o termo de busca atualizado
             montarCatalogo(e.target.value.trim());
         });
     }
 }
 
-
 // abrir modal por id (procura no window.textos)
 function abrirModalPorId(id){
   const t = window.textos.find(x => x.id === id);
   if(!t) return;
-  // Seletores do modal: .modal-overlay, .modal-box
+  // Seletores do modal compatíveis com o HTML: .modal-overlay, #modal-titulo, #modal-conteudo
   const overlay = $('.modal-overlay');
   const tituloEl = $('#modal-titulo');
   const conteudoEl = $('#modal-conteudo');
@@ -208,7 +194,7 @@ function abrirModalPorId(id){
   if(!overlay || !tituloEl || !conteudoEl) return;
   
   tituloEl.textContent = t.titulo;
-  // **CORREÇÃO PRINCIPAL** Aqui a função usa t.conteudo (do textos.js) e aplica a formatação
+  // CORREÇÃO: Usa t.conteudo e substitui \n por <br>
   conteudoEl.innerHTML = escapeHtml(t.conteudo).replace(/\n/g, '<br>');
   
   overlay.style.display = 'flex';
@@ -220,12 +206,10 @@ function fecharModal(){
   const overlay = $('.modal-overlay');
   if(overlay) overlay.style.display = 'none';
   document.body.style.overflow = '';
-  // limpa abrir param da URL
   const u = new URL(window.location.href);
   u.searchParams.delete('abrir');
   history.replaceState({}, '', u.toString());
 }
-
 
 /* ================== INICIALIZAÇÃO ================== */
 document.addEventListener('DOMContentLoaded', () => {
@@ -238,7 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if($('#lista-textos')){
     setupCatalogoInteractions(); // Configura a busca/filtro
     montarCatalogo();
-    // A função setupHamburguerCatalogo foi removida daqui, pois a navegação está no HTML
   }
 
   // Ligar fechamento do modal
@@ -257,12 +240,11 @@ document.addEventListener('DOMContentLoaded', () => {
           window.location.href = `catalogo.html?tag=Todos`;
       } else {
           // No index.html, os botões 'ver-mais' usavam o título.
-          // Precisamos encontrar o ID do texto para abrir o modal.
           const texto = window.textos.find(t => t.titulo === parametro);
           if (texto) {
               window.location.href = `catalogo.html?abrir=${encodeURIComponent(texto.id)}`;
           } else {
-              // Se for uma tag (reflexão, vida, emoções)
+              // Se for uma tag
               window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
           }
       }
