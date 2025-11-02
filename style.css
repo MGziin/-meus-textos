@@ -43,82 +43,63 @@ a:hover {
 
 .titulo-site {
   font-size: 1.6rem;
-  font-weight: bold;
-  color: #b38b00;
 }
 
 .atalhos a {
-  margin: 0 10px;
-  font-weight: bold;
-  font-size: 0.95rem;
+  margin-left: 15px;
+  font-weight: 500;
 }
 
-.atalhos a:hover {
-  color: #ffcc00;
+/* ===== LAYOUT DO CONTEÚDO (Home) ===== */
+.conteudo {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-/* ===== SEÇÕES ===== */
 .secao {
-  padding: 40px 20px;
-  border-bottom: 2px solid #ffeb99;
-  text-align: center;
+  padding: 40px 0;
+  border-bottom: 1px solid #ffdb4d;
+}
+
+.secao:last-child {
+  border-bottom: none;
 }
 
 .secao h2 {
-  margin-bottom: 10px;
-  font-size: 1.4rem;
+  border-left: 5px solid #ffdb4d;
+  padding-left: 10px;
+  margin-bottom: 20px;
 }
 
-/* ===== TEXTOS FAVORITOS ===== */
+/* ===== TEXTOS FAVORITOS E TAGS (Antigas) ===== 
 .card-texto {
-  background: #fffdf4;
-  border: 2px solid #ffeb99;
-  border-radius: 15px;
-  padding: 18px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-  max-width: 500px;
-  margin: 20px auto;
-  text-align: left;
+  background-color: #fff7cc;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.card-texto.favorito {
-  border: 2px solid gold;
-  position: relative;
-  background-color: #fff8d1;
+.card-texto h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
 }
 
-.card-texto.favorito::after {
-  content: "★";
-  color: gold;
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 1.3em;
-}
-
-.ver-mais, .botao-catalogo {
+.ver-mais {
   background-color: #ffdb4d;
   border: none;
-  color: #3b3b3b;
-  font-weight: bold;
-  padding: 10px 18px;
-  border-radius: 8px;
+  padding: 8px 15px;
+  border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
   margin-top: 10px;
-  transition: background-color 0.2s;
 }
 
-.ver-mais:hover, .botao-catalogo:hover {
-  background-color: #ffcc00;
-}
-
-/* ===== TAGS ===== */
 .tags-container {
   display: flex;
-  justify-content: center;
-  gap: 10px;
   flex-wrap: wrap;
-  margin-top: 10px;
+  gap: 10px;
 }
 
 .tag {
@@ -134,7 +115,7 @@ a:hover {
 
 .tag:hover {
   background-color: #ffdb4d;
-}
+} */
 
 /* ===== CONTATO ===== */
 #contato a {
@@ -160,75 +141,37 @@ a:hover {
   border: none;
   cursor: pointer;
   color: #b38b00;
+  z-index: 11; /* Acima do menu lateral para cliques */
 }
 
-.menu {
-  display: none;
-  flex-direction: column;
-  background: #fff7cc;
-  padding: 10px;
-  border-bottom: 2px solid #ffdb4d;
-}
-
-.menu.open {
+.catalogo-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
   display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.menu a {
-  color: #b38b00;
-  text-decoration: none;
-  margin: 6px 0;
-  font-weight: bold;
-}
+/* ======================================================== */
+/* ======== CORREÇÕES E ADIÇÕES CRUCIAIS PARA O SITE ======== */
+/* ======================================================== */
 
-.menu a:hover {
-  text-decoration: underline;
-}
-
-/* ===== MODAL REUSO ===== */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0,0,0,0.55);
-  z-index: 20;
-}
-
-.modal-content {
-  background-color: #fffef2;
-  margin: 10% auto;
-  padding: 25px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 650px;
-  border: 2px solid #ffdb4d;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.close {
-  float: right;
-  font-size: 1.8rem;
-  cursor: pointer;
-  color: #b38b00;
-}
-
-/* ======== ADIÇÕES PARA UNIFICAÇÃO (Cole no final do style.css) ======== */
-
-/* --- Estilo da Foto de Perfil (Solução do Problema 1) --- */
+/* --- Estilo da Foto de Perfil (Solução da Proporção) --- */
 .foto-perfil {
-  width: 150px;           /* Largura fixa */
-  height: 150px;          /* Altura IGUAL à largura */
-  border-radius: 50%;       /* Deixa 100% redondo */
-  object-fit: cover;        /* Garante que a foto não distorça */
+  width: 150px;           
+  height: 150px;          
+  border-radius: 50%;       
+  object-fit: cover;        /* A MÁGICA: Não distorce, apenas "corta" para caber no círculo */
   border: 3px solid #b38b00; 
   margin-bottom: 15px;
 }
 
-/* --- Estilos do Menu Lateral (que script.js espera) --- */
+/* --- Estilos do Menu Lateral (usado no catalogo.html) --- */
 .menu-lateral {
   position: fixed;
   top: 0;
-  left: -300px; /* Começa escondido fora da tela */
+  left: -300px; /* Começa escondido */
   width: 250px;
   height: 100%;
   background-color: #fff7cc;
@@ -242,7 +185,7 @@ a:hover {
 }
 
 .menu-lateral.ativo {
-  left: 0; /* Mostra o menu */
+  left: 0; /* Move para a tela */
 }
 
 .menu-lateral a {
@@ -265,7 +208,7 @@ a:hover {
   margin-bottom: 10px;
 }
 
-/* --- Estilos do Modal (que script.js espera) --- */
+/* --- Estilos do Modal (para o script.js) --- */
 .modal-overlay {
   display: none; /* Começa escondido */
   position: fixed;
@@ -274,7 +217,7 @@ a:hover {
   z-index: 20;
   align-items: center;
   justify-content: center;
-  overflow-y: auto; /* Permite rolar se o texto for grande */
+  overflow-y: auto; 
 }
 
 .modal-box {
@@ -285,8 +228,8 @@ a:hover {
   max-width: 650px;
   border: 2px solid #ffdb4d;
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  position: relative; /* Para o botão fechar */
-  margin: 5% auto; /* Margem para não colar no topo */
+  position: relative; 
+  margin: 5% auto; 
 }
 
 #modal-titulo {
@@ -299,23 +242,41 @@ a:hover {
   font-size: 1rem;
   line-height: 1.6;
   color: #3b3b3b;
-  white-space: pre-line; /* Respeita as quebras de linha do seu texto! */
-  max-height: 60vh; /* Altura máxima */
-  overflow-y: auto; /* Adiciona scroll SÓ no texto se ele for longo */
-  padding-right: 10px; /* Espaço para a barra de rolagem */
+  /* ESSENCIAL: Respeita as quebras de linha do seu texto.js */
+  white-space: pre-line; 
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 
-/* --- Estilos dos Cards (que script.js gera) --- */
-.card-fav {
+.close {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #b38b00;
+  cursor: pointer;
+}
+.close:hover {
+  color: #3b3b3b;
+}
+
+
+/* --- Estilos dos Cards (gerados pelo script.js) --- */
+.card-fav, .card-texto {
   background: #fff8d1;
   border: 2px solid gold;
   border-radius: 15px;
   padding: 18px;
   box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-  max-width: 500px;
   margin: 20px auto;
   text-align: left;
   position: relative;
+  max-width: 100%;
+}
+.card-fav {
+  max-width: 500px;
 }
 
 .card-fav .titulo-row {
@@ -328,7 +289,13 @@ a:hover {
   font-size: 1.3em;
 }
 
-.btn-ler, .ler-mais {
+.meta-info {
+  font-size: 0.85rem;
+  color: #6d6d6d;
+  margin-bottom: 10px;
+}
+
+.btn-ler, .botao-catalogo {
   background-color: #ffdb4d;
   border: none;
   color: #3b3b3b;
@@ -338,13 +305,15 @@ a:hover {
   cursor: pointer;
   margin-top: 10px;
   transition: background-color 0.2s;
+  display: inline-block;
+  text-decoration: none;
 }
 
-.btn-ler:hover, .ler-mais:hover {
+.btn-ler:hover, .botao-catalogo:hover {
   background-color: #ffcc00;
 }
 
-/* Tags geradas pelo script */
+/* Tags geradas pelo script.js */
 .tag-pill {
   background-color: #fff7cc;
   border: 2px solid #ffdb4d;
