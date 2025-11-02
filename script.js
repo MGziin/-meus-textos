@@ -7,7 +7,6 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
 const qs = k => new URLSearchParams(window.location.search).get(k);
 
 // Estado atual do filtro (para uso em busca e tag)
-// Se houver um parâmetro 'tag' na URL, usa ele, senão, 'Todos'.
 let filtroTagAtual = qs('tag') || 'Todos';
 
 // small util: Escapa HTML (segurança)
@@ -248,15 +247,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeBtn = document.getElementById('modal-close-btn');
   if(closeBtn) closeBtn.addEventListener('click', fecharModal);
 
-  // Home: Função global para links antigos funcionarem
+  // Home: Função global para links antigos funcionarem (apenas para manter compatibilidade)
   if (typeof window.abrirCatalogo === 'undefined') {
       window.abrirCatalogo = (parametro) => {
-          // Se for uma tag (ex: 'reflexão'), vai para o catálogo com a tag
-          if(parametro !== 'todos') {
-               window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
-          } else {
-              // Se for 'todos', vai para o catálogo geral
+          if (parametro === 'todos') {
               window.location.href = `catalogo.html?tag=Todos`;
+          } else {
+              // assume que o parâmetro é uma tag
+              window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
           }
       };
   }
