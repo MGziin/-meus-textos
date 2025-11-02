@@ -28,13 +28,23 @@ a:hover {
   text-decoration: underline;
 }
 
-/* NOVO CSS: Garante que imagens não sejam maiores que o contêiner (CORREÇÃO DA FOTO GRANDE) */
+/* CORREÇÃO DA FOTO GIGANTE: Garante que imagens e backgrounds grandes se ajustem */
 .img-full-width, img {
     max-width: 100%;
     height: auto;
     display: block;
     margin: 0 auto;
 }
+
+/* Se a imagem na seção "Sobre Mim" for um background: */
+#sobre {
+    /* Garante que a seção Sobre Mim não tenha altura desproporcional por causa do background */
+    min-height: auto; 
+    background-size: contain; /* Ou 'cover', dependendo do efeito desejado */
+    background-repeat: no-repeat;
+    background-position: center;
+}
+/* FIM CORREÇÃO DA FOTO GIGANTE */
 
 /* ===== HEADER HOME ===== */
 .header-home {
@@ -78,7 +88,7 @@ a:hover {
 }
 
 /* ===== TEXTOS FAVORITOS E CATÁLOGO CARDS ===== */
-.card-texto {
+.card-texto, .card-fav { /* .card-fav é o card da Home */
   background: #fffdf4;
   border: 2px solid #ffeb99;
   border-radius: 15px;
@@ -89,13 +99,13 @@ a:hover {
   text-align: left;
 }
 
-.card-texto.favorito {
+.card-texto.favorito, .card-fav.favorito {
   border: 2px solid gold;
   position: relative;
   background-color: #fff8d1;
 }
 
-.card-texto.favorito::after {
+.card-texto.favorito::after, .card-fav.favorito::after {
   content: "★";
   color: gold;
   position: absolute;
@@ -104,7 +114,7 @@ a:hover {
   font-size: 1.3em;
 }
 
-/* CORREÇÃO: Adicionado .ler-mais para estilizar o botão do catálogo */
+/* CORREÇÃO: Estiliza todos os botões de ação com o amarelo */
 .ver-mais, .botao-catalogo, .ler-mais, .btn-ler {
   background-color: #ffdb4d;
   border: none;
@@ -130,22 +140,6 @@ a:hover {
   margin-top: 10px;
 }
 
-/* Estilo para as tags na Home */
-.tag {
-  background-color: #fff7cc;
-  border: 2px solid #ffdb4d;
-  border-radius: 20px;
-  padding: 8px 16px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #3b3b3b;
-  transition: all 0.2s;
-}
-
-.tag:hover {
-  background-color: #ffdb4d;
-}
-
 /* Estilo para as tags de filtro no Catálogo (tag-pill) */
 .tag-pill {
   background-color: #fff7cc;
@@ -156,7 +150,7 @@ a:hover {
   cursor: pointer;
   color: #3b3b3b;
   transition: all 0.2s;
-  text-decoration: none; /* Garante que links de tags não tenham sublinhado */
+  text-decoration: none;
 }
 
 .tag-pill:hover, .tag-pill.active {
@@ -175,14 +169,13 @@ a:hover {
 .header-catalogo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Melhor espaçamento para hamburguer e idioma */
   background-color: #fff3b3;
   padding: 12px 20px;
   border-bottom: 3px solid #ffdb4d;
 }
 
 .titulo-catalogo {
-  /* Centraliza o título */
   flex-grow: 1;
   text-align: center;
   margin: 0;
@@ -190,7 +183,6 @@ a:hover {
 }
 
 .menu-hamburguer {
-  /* Manteve a posição na esquerda */
   font-size: 1.6rem;
   background: none;
   border: none;
@@ -203,6 +195,7 @@ a:hover {
   font-size: 0.9rem;
   color: #3b3b3b;
   font-weight: 500;
+  /* Espaço para o seletor de idioma (se for um select) */
 }
 
 .menu {
@@ -257,7 +250,7 @@ a:hover {
     color: #3b3b3b;
 }
 
-/* ===== MODAL REUSO ===== */
+/* ===== MODAL REUSO (Ajustado para o seu JS) ===== */
 
 /* O modal-overlay é o fundo escuro */
 .modal-overlay {
