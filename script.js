@@ -65,9 +65,8 @@ function fecharModal() {
 
 // Gerar o HTML de um Card de Texto
 function criarCardHtml(t) {
-  // Concatena as tags para exibição
-  const tagsList = t.tags ? t.tags.map(tag => `#${escapeHtml(tag)}`).join(' ') : '';
-
+  // ATUALIZAÇÃO: Removido o display das tags temáticas. O foco agora é na Categoria/Estilo.
+  
   return `
     <div class="card-texto ${t.favorito ? 'favorito' : ''}">
       <h3>${escapeHtml(t.titulo)}</h3>
@@ -77,7 +76,6 @@ function criarCardHtml(t) {
         ${t.favorito ? '<span class="star">★ Favorito</span>' : ''}
       </div>
       <p class="resumo">${escapeHtml(t.resumo)}</p>
-      <div class="tags-list">${tagsList}</div>
       <button class="btn-ler" data-id="${t.id}">Ler mais</button>
     </div>
   `;
@@ -93,10 +91,10 @@ function montarCatalogo() {
   
   let textosFiltrados = window.textos;
 
-  // 1. Filtragem por Tag
+  // 1. Filtragem por Categoria (o novo estilo de "Tag" de acordo com o usuário)
   if (tagFiltro && tagFiltro !== 'todos') {
     textosFiltrados = window.textos.filter(t => 
-      t.tags && t.tags.some(tag => tag.toLowerCase() === tagFiltro.toLowerCase())
+      t.categoria && t.categoria.toLowerCase() === tagFiltro.toLowerCase()
     );
     document.title = `Catálogo - #${tagFiltro}`; 
   }
@@ -157,7 +155,7 @@ function montarHome() {
   const tagsContainer = $('#lista-tags');
   if (!favContainer || !tagsContainer) return;
 
-  // 1. Montar Favoritos
+  // 1. Montar Favoritos (sem alteração)
   const favoritos = window.textos.filter(t => t.favorito);
   favContainer.innerHTML = '';
   favoritos.forEach(t => {
@@ -180,20 +178,24 @@ function montarHome() {
     });
   });
 
-  // 2. Montar Tags Dinamicamente
-  const todasAsTags = window.textos.flatMap(t => t.tags || []);
-  const tagsUnicas = [...new Set(todasAsTags.map(t => t.toLowerCase()))].sort(); 
+  // 2. Montar Tags (Estilos) Dinamicamente
+  // ATUALIZAÇÃO: Usando o campo 'categoria' (o estilo do texto) para gerar as tags/filtros.
+  const todasAsCategorias = window.textos.map(t => t.categoria).filter(Boolean);
+  // Coloca todas em minúsculas para remover duplicatas (ex: "Conto" e "conto")
+  const tagsUnicas = [...new Set(todasAsCategorias.map(t => t.toLowerCase()))].sort(); 
   
   tagsContainer.innerHTML = '';
   tagsUnicas.forEach(tag => {
     const tagEl = document.createElement('a');
     tagEl.className = 'tag-pill';
+    // O filtro na URL é sempre minúsculo
     tagEl.href = `catalogo.html?tag=${encodeURIComponent(tag)}`;
-    tagEl.textContent = `#${tag}`;
+    // Exibe com a primeira letra maiúscula para melhor aparência
+    tagEl.textContent = `#${tag.charAt(0).toUpperCase() + tag.slice(1)}`;
     tagsContainer.appendChild(tagEl);
   });
   
-  // 3. Listener no botão "Ver todos os textos"
+  // 3. Listener no botão "Ver todos os textos" (sem alteração)
   const btnLerTodos = $('#btn-ler-todos');
   if(btnLerTodos){
     btnLerTodos.addEventListener('click', (e) => {
