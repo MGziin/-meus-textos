@@ -1,41 +1,60 @@
-body {
+/* ======= PALETA DE CORES =======
+   Fundo principal: #fff9e6 (amarelo claro)
+   Destaques e botões: #ffdb4d (amarelo intenso)
+   Textos: #3b3b3b
+   Bordas e detalhes: #b38b00
+================================== */
+
+body.catalogo-body {
   font-family: "Poppins", sans-serif;
   background-color: #fff9e6;
   color: #3b3b3b;
   margin: 0;
+  padding: 0;
 }
 
+/* ===== Header ===== */
 .header-catalogo {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff1b3;
-  padding: 10px;
+  background-color: #fff3b3;
+  padding: 12px;
   position: sticky;
   top: 0;
   z-index: 10;
+  border-bottom: 3px solid #ffdb4d;
 }
 
-.header-catalogo h1 {
+.header-catalogo h1.titulo-catalogo {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  color: #b38b00;
 }
 
+/* ===== Menu hamburguer ===== */
 .menu-hamburguer {
   position: absolute;
   left: 15px;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   background: none;
   border: none;
   cursor: pointer;
   color: #b38b00;
+  transition: transform 0.2s;
 }
 
+.menu-hamburguer:hover {
+  transform: scale(1.1);
+}
+
+/* ===== Menu lateral ===== */
 .menu {
   display: none;
   flex-direction: column;
   background: #fff7cc;
   padding: 10px;
+  border-bottom: 2px solid #ffdb4d;
 }
 
 .menu.open {
@@ -45,32 +64,52 @@ body {
 .menu a {
   color: #b38b00;
   text-decoration: none;
-  margin: 5px 0;
+  margin: 6px 0;
   font-weight: bold;
+  font-size: 1rem;
 }
 
+.menu a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Container dos textos ===== */
 .catalogo-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  gap: 24px;
   padding: 20px;
 }
 
+/* ===== Cartões dos textos ===== */
 .card-texto {
   background: #fffdf4;
-  border: 2px solid #fff1b3;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  border: 2px solid #ffeb99;
+  border-radius: 15px;
+  padding: 18px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-texto:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.12);
 }
 
 .card-texto h3 {
   color: #b38b00;
+  margin-top: 0;
 }
 
+.card-texto p {
+  color: #4a4a4a;
+}
+
+/* ===== Destaque dos favoritos ===== */
 .card-texto.favorito {
   border: 2px solid gold;
   position: relative;
+  background-color: #fff8d1;
 }
 
 .card-texto.favorito::after {
@@ -82,36 +121,50 @@ body {
   font-size: 1.3em;
 }
 
+/* ===== Botão Ler Mais ===== */
 .ler-mais {
   background-color: #ffdb4d;
   border: none;
   color: #3b3b3b;
   font-weight: bold;
-  padding: 8px 14px;
-  border-radius: 6px;
+  padding: 10px 16px;
+  border-radius: 8px;
   cursor: pointer;
   margin-top: 10px;
+  transition: background-color 0.2s;
 }
 
+.ler-mais:hover {
+  background-color: #ffcc00;
+}
+
+/* ===== Modal ===== */
 .modal {
   display: none;
   position: fixed;
   inset: 0;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.55);
+  z-index: 20;
 }
 
 .modal-content {
-  background-color: #fffdf4;
+  background-color: #fffef2;
   margin: 10% auto;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 25px;
+  border-radius: 15px;
   width: 90%;
-  max-width: 600px;
+  max-width: 650px;
+  border: 2px solid #ffdb4d;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .close {
   float: right;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   cursor: pointer;
   color: #b38b00;
+}
+
+.close:hover {
+  color: #ffcc00;
 }
