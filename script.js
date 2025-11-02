@@ -19,7 +19,7 @@ function escapeHtml(text) {
     '"': '&quot;',
     "'": '&#039;'
   };
-  return text.replace(/[&<>"']/g, (m) => map[m]);
+  return String(text).replace(/[&<>"']/g, (m) => map[m]);
 }
 
 /* ================== FUNÇÕES DO MODAL ================== */
@@ -41,8 +41,9 @@ function abrirModalPorId(id) {
   
   if (tituloEl && conteudoEl) {
     tituloEl.textContent = t.titulo;
-    // Usamos textContent para que o CSS (white-space: pre-line)
-    // formate as quebras de linha corretamente.
+    
+    // CORREÇÃO FINAL: Usamos textContent para que o CSS (white-space: pre-line)
+    // formate as quebras de linha do texto (campo 'conteudo') corretamente.
     conteudoEl.textContent = t.conteudo;
   }
 
@@ -64,15 +65,19 @@ function fecharModal() {
 
 // Gerar o HTML de um Card de Texto
 function criarCardHtml(t) {
+  // Concatena as tags para exibição
+  const tagsList = t.tags ? t.tags.map(tag => `#${escapeHtml(tag)}`).join(' ') : '';
+
   return `
     <div class="card-texto ${t.favorito ? 'favorito' : ''}">
-      <h3>${t.titulo}</h3>
+      <h3>${escapeHtml(t.titulo)}</h3>
       <div class="meta-info">
         <span class="categoria">${escapeHtml(t.categoria)}</span> | 
         <span class="data">${escapeHtml(t.data)}</span>
         ${t.favorito ? '<span class="star">★ Favorito</span>' : ''}
       </div>
       <p class="resumo">${escapeHtml(t.resumo)}</p>
+      <div class="tags-list">${tagsList}</div>
       <button class="btn-ler" data-id="${t.id}">Ler mais</button>
     </div>
   `;
@@ -93,10 +98,14 @@ function montarCatalogo() {
     textosFiltrados = window.textos.filter(t => 
       t.tags && t.tags.some(tag => tag.toLowerCase() === tagFiltro.toLowerCase())
     );
+    // Opcional: Mostrar qual tag está sendo filtrada no título da página
+    document.title = `Catálogo - #${tagFiltro}`; 
   }
 
   // 2. Renderização
-  container.innerHTML = textosFiltrados.map(t => criarCardHtml(t)).join('');
+  // Renderiza do mais novo para o mais antigo (baseado na ordem no textos.js)
+  const textosParaMostrar = textosFiltrados.slice().reverse(); 
+  container.innerHTML = textosParaMostrar.map(t => criarCardHtml(t)).join('');
 
   // 3. Adicionar Event Listeners aos botões "Ler mais"
   $$('.btn-ler').forEach(btn => {
@@ -110,7 +119,7 @@ function montarCatalogo() {
   if (abrirId) {
     abrirModalPorId(abrirId);
     // Limpar o parâmetro da URL para não reabrir o modal em um refresh
-    history.replaceState(null, '', location.pathname);
+    history.replaceState(null, '', location.pathname + (tagFiltro ? `?tag=${tagFiltro}` : ''));
   }
 }
 
@@ -124,7 +133,7 @@ function setupHamburguerCatalogo() {
   abrir.addEventListener('click', () => menu.classList.add('ativo'));
   if (fechar) fechar.addEventListener('click', () => menu.classList.remove('ativo'));
   
-  // Fecha ao clicar fora
+  // Fecha ao clicar fora ou ao redimensionar
   window.addEventListener('click', (e) => {
     if (menu.classList.contains('ativo') && !menu.contains(e.target) && e.target !== abrir) {
       menu.classList.remove('ativo');
@@ -142,9 +151,11 @@ function abrirCatalogo(parametro, tipo = 'tag') {
     // Para abrir um texto específico direto do catálogo (ex: favoritos da home)
     window.location.href = `catalogo.html?abrir=${encodeURIComponent(parametro)}`;
   } else {
-    window.location.href = `catalogo.html`;
+    // Para "Ver todos os textos"
+    window.location.href = `catalogo.html`; 
   }
 }
+window.abrirCatalogo = abrirCatalogo; // Torna global para uso em HTMLs antigos ou debug (não é mais necessário no novo HTML)
 
 // Montar a seção de Favoritos e Tags na Home
 function montarHome() {
@@ -160,7 +171,7 @@ function montarHome() {
     card.className = 'card-fav';
     card.innerHTML = `
       <div class="titulo-row">
-        <h3>${t.titulo}</h3>
+        <h3>${escapeHtml(t.titulo)}</h3>
         <div class="star">★</div>
       </div>
       <div class="resumo">${escapeHtml(t.resumo)}</div>
@@ -170,7 +181,7 @@ function montarHome() {
 
     // Event Listener: botão "Ler mais" na HOME
     card.querySelector('.btn-ler').addEventListener('click', (e) => {
-      // Ao invés de abrir o modal na home, redireciona para o catálogo
+      // Redireciona para o catálogo e abre o modal do texto
       const id = e.currentTarget.dataset.id;
       if (id) abrirCatalogo(id, 'abrir'); 
     });
@@ -178,7 +189,7 @@ function montarHome() {
 
   // 2. Montar Tags Dinamicamente
   const todasAsTags = window.textos.flatMap(t => t.tags || []);
-  const tagsUnicas = [...new Set(todasAsTags.map(t => t.toLowerCase()))];
+  const tagsUnicas = [...new Set(todasAsTags.map(t => t.toLowerCase()))].sort(); // Ordena as tags
   
   tagsContainer.innerHTML = '';
   tagsUnicas.forEach(tag => {
@@ -193,7 +204,7 @@ function montarHome() {
   const btnLerTodos = $('#btn-ler-todos');
   if(btnLerTodos){
     btnLerTodos.addEventListener('click', (e) => {
-      e.preventDefault(); // Impede o comportamento padrão do link
+      e.preventDefault(); 
       abrirCatalogo('todos', 'tag');
     });
   }
@@ -225,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Fecha o modal com a tecla ESC
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.style.display === 'flex') {
+    if (e.key === 'Escape' && overlay && overlay.style.display === 'flex') {
       fecharModal();
     }
   });
