@@ -6,64 +6,70 @@
   <title>Meu Cantinho ✨</title>
   <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
-  <script defer src="textos.js"></script>
-  <script defer src="script.js"></script>
 </head>
 <body>
-  <header class="topo">
-    <div class="topo-left">
-      <div class="logo-site">Meu Cantinho ✨</div>
+  <header class="header-home">
+    <div class="header-inner container">
+      <div class="logo-left">Meu Cantinho ✨</div>
+      <nav class="header-nav">
+        <a href="#inicio">Início</a>
+        <a href="#sobre">Sobre Mim</a>
+        <a href="#favoritos">Textos Favoritos</a>
+        <a href="#tags">Tags</a>
+        <a href="#contato">Contato</a>
+      </nav>
     </div>
-
-    <nav class="topo-center" aria-label="Atalhos">
-      <a href="#inicio">Início</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#textos">Textos Favoritos</a>
-      <a href="#tags">Tags</a>
-      <a href="#contato">Contato</a>
-    </nav>
   </header>
 
   <main class="container">
-    <section id="inicio" class="secao secao-inicio">
-      <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil">
+    <section id="inicio" class="secao-inicio">
+      <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil" />
       <h1>Bem-vindo ao meu cantinho de palavras</h1>
       <p class="descricao">Aqui estão alguns dos meus textos, crônicas e poemas. Fique à vontade para dar uma olhada 🌻</p>
     </section>
 
-    <section id="sobre" class="secao">
-      <h2>Sobre mim</h2>
-      <p>
-        Eu me chamo <strong>Brendon Phillipe</strong>. Comecei a escrever desde muito pequeno, com meus 12 anos,
-        e agora voltei a escrever e quero compartilhar minhas novas produções com vocês.
-      </p>
+    <section id="sobre" class="section">
+      <h2>Sobre Mim</h2>
+      <p>Eu me chamo <strong>Brendon Phillipe</strong>. Comecei a escrever desde muito pequeno, com 12 anos, e agora voltei a escrever e quero compartilhar minhas novas produções com vocês.</p>
     </section>
 
-    <section id="textos" class="secao">
+    <section id="favoritos" class="section">
       <h2>Textos Favoritos</h2>
-      <div id="catalogo-home" class="catalogo-home"></div>
+      <div id="lista-favoritos" class="favoritos-grid"></div>
 
-      <div class="botao-leia-todos">
-        <a class="btn-todos" href="catalogo.html?tag=Todos">📖 Ver todos os textos</a>
+      <!-- botão que leva ao catálogo com Todos -->
+      <div style="margin-top:14px">
+        <a id="btn-ler-todos" class="btn-todos" href="catalogo.html?tag=Todos">📖 Ler todos os textos</a>
       </div>
     </section>
 
-    <section id="tags" class="secao">
+    <section id="tags" class="section">
       <h2>Tags</h2>
-      <div id="tags-home" class="tags-row"></div>
+      <div id="lista-tags" class="tags-row"></div>
     </section>
 
-    <section id="contato" class="secao">
+    <section id="contato" class="section">
       <h2>Contato</h2>
-      <ul class="contato-list">
-        <li><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></li>
-        <li><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank" rel="noopener">linktr.ee/mgziin</a></li>
-      </ul>
+      <p><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></p>
+      <p><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank" rel="noopener">https://linktr.ee/mgziin</a></p>
     </section>
 
-    <footer class="rodape">
-      <p>© 2025 — Feito com carinho por Brendon Phillipe 🌙</p>
+    <footer class="footer">
+      © 2025 — Feito com carinho por Brendon Phillipe 🌙
     </footer>
   </main>
+
+  <!-- modal para consistência (pode existir em ambas) -->
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <button id="modal-close-btn" class="modal-close">✕</button>
+      <h2 id="modal-titulo"></h2>
+      <div id="modal-conteudo"></div>
+    </div>
+  </div>
+
+  <!-- scripts: textos.js DEVE ser carregado primeiro -->
+  <script defer src="textos.js"></script>
+  <script defer src="script.js"></script>
 </body>
 </html>
