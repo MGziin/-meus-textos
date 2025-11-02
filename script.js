@@ -7,67 +7,16 @@ const $$ = sel => Array.from(document.querySelectorAll(sel));
 const qs = k => new URLSearchParams(window.location.search).get(k);
 
 // Estado atual do filtro (para uso em busca e tag)
+// Se houver um parâmetro 'tag' na URL, usa ele, senão, 'Todos'.
 let filtroTagAtual = qs('tag') || 'Todos';
 
-// small util
+// small util: Escapa HTML (segurança)
 function escapeHtml(text){
   if(text === null || text === undefined) return '';
   return String(text)
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;');
-}
-
-// monta home (função antiga, mantida)
-function montarHome(){
-  const favContainer = $('#lista-favoritos');
-  const tagsContainer = $('#lista-tags');
-  if(!favContainer || !tagsContainer) return;
-
-  // ... (lógica da home)
-  const favoritos = window.textos.filter(t => t.favorito);
-  favContainer.innerHTML = '';
-  favoritos.forEach(t => {
-    const card = document.createElement('div');
-    card.className = 'card-fav';
-    card.innerHTML = `
-      <div class="titulo-row">
-        <h3>${t.titulo}</h3>
-        <div class="star">★</div>
-      </div>
-      <div class="resumo">${escapeHtml(t.resumo)}</div>
-      <button class="btn-ler" data-id="${t.id}">Ler mais</button>
-    `;
-    favContainer.appendChild(card);
-  });
-
-  const cats = Array.from(new Set(window.textos.map(t => t.categoria)));
-  tagsContainer.innerHTML = '';
-  const allPill = document.createElement('a');
-  allPill.className = 'tag-pill';
-  allPill.href = `catalogo.html?tag=Todos`;
-  allPill.textContent = 'Todos';
-  tagsContainer.appendChild(allPill);
-
-  cats.forEach(cat => {
-    const a = document.createElement('a');
-    a.className = 'tag-pill';
-    a.href = `catalogo.html?tag=${encodeURIComponent(cat)}`;
-    a.textContent = `#${cat}`;
-    tagsContainer.appendChild(a);
-  });
-
-  const btnTodos = $('#btn-ler-todos');
-  if(btnTodos){
-    btnTodos.href = `catalogo.html?tag=Todos`;
-  }
-
-  $$('.btn-ler').forEach(b => {
-    b.addEventListener('click', (e) => {
-      const id = e.currentTarget.dataset.id;
-      window.location.href = `catalogo.html?abrir=${encodeURIComponent(id)}`;
-    });
-  });
 }
 
 // HELPER: Cria o HTML do card de texto para o catálogo
@@ -81,7 +30,67 @@ function criarCardCatalogo(t) {
     `;
 }
 
-// montar catálogo (AGORA COM LÓGICA DE FILTRO E RENDERIZAÇÃO DE TAGS)
+// ===================================
+// LÓGICA DA HOME (INDEX.HTML)
+// ===================================
+function montarHome(){
+  const favContainer = $('#lista-favoritos');
+  const tagsContainer = $('#lista-tags');
+  if(!favContainer || !tagsContainer) return;
+
+  // 1. Renderiza Favoritos
+  const favoritos = window.textos.filter(t => t.favorito);
+  favContainer.innerHTML = '';
+  favoritos.forEach(t => {
+    const card = document.createElement('div');
+    card.className = 'card-fav';
+    card.innerHTML = `
+      <div class="titulo-row">
+        <h3>${escapeHtml(t.titulo)}</h3>
+        <div class="star">★</div>
+      </div>
+      <div class="resumo">${escapeHtml(t.resumo)}</div>
+      <button class="btn-ler" data-id="${t.id}">Ler mais</button>
+    `;
+    favContainer.appendChild(card);
+  });
+
+  // 2. Renderiza Tags para a Home
+  const todasCategorias = window.textos.map(t => t.categoria);
+  const tagsUnicas = Array.from(new Set(todasCategorias));
+  
+  tagsContainer.innerHTML = '';
+  
+  // Adiciona a tag "Todos"
+  const allPill = document.createElement('a');
+  allPill.className = 'tag-pill';
+  allPill.href = `catalogo.html?tag=Todos`;
+  allPill.textContent = 'Todos';
+  tagsContainer.appendChild(allPill);
+
+  // Adiciona as tags únicas restantes (com link para o catálogo)
+  tagsUnicas.forEach(cat => {
+    const a = document.createElement('a');
+    a.className = 'tag-pill';
+    a.href = `catalogo.html?tag=${encodeURIComponent(cat)}`;
+    a.textContent = `#${cat}`;
+    tagsContainer.appendChild(a);
+  });
+
+  // 3. LIGA EVENTOS
+  $$('.btn-ler').forEach(b => {
+    b.addEventListener('click', (e) => {
+      const id = e.currentTarget.dataset.id;
+      // Abre catálogo e indica para abrir o modal
+      window.location.href = `catalogo.html?abrir=${encodeURIComponent(id)}`;
+    });
+  });
+}
+
+
+// ===================================
+// LÓGICA DO CATÁLOGO (CATALOGO.HTML)
+// ===================================
 function montarCatalogo(filtroBusca = '') {
   const container = $('#lista-textos');
   const tagContainer = $('#lista-tags-catalogo');
@@ -105,7 +114,7 @@ function montarCatalogo(filtroBusca = '') {
     );
   }
 
-  // 2. RENDERIZAÇÃO DAS TAGS (CORRIGIDO PARA ÚNICAS)
+  // 2. RENDERIZAÇÃO DAS TAGS DE FILTRO
   const todasCategorias = window.textos.map(t => t.categoria);
   const tagsUnicas = Array.from(new Set(todasCategorias));
   
@@ -137,6 +146,7 @@ function montarCatalogo(filtroBusca = '') {
     }
     
     tagEl.addEventListener('click', () => {
+        // Alterna o filtro: se clicar na mesma tag, desativa
         if (filtroTagAtual === tag) {
             filtroTagAtual = 'Todos';
         } else {
@@ -151,10 +161,10 @@ function montarCatalogo(filtroBusca = '') {
   container.innerHTML = textosFiltrados.map(t => criarCardCatalogo(t)).join('');
 
   if (textosFiltrados.length === 0) {
-    container.innerHTML = `<div style="padding:36px;text-align:center;color:#6b5314">Nenhum texto encontrado para essa categoria.</div>`;
+    container.innerHTML = `<div style="padding:36px;text-align:center;color:#6b5314">Nenhum texto encontrado para essa busca/categoria.</div>`;
   }
   
-  // 4. LIGAR LISTENERS DE MODAL
+  // 4. LIGAR LISTENERS DE MODAL (Ler mais)
   $$('.ler-mais').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.dataset.id;
@@ -165,28 +175,31 @@ function montarCatalogo(filtroBusca = '') {
     });
   });
 
-  // se veio ?abrir=..., abrir o modal automaticamente
+  // 5. Abertura Automática do Modal (se veio da Home)
   const abrirParam = qs('abrir');
   if (abrirParam) {
     setTimeout(() => abrirModalPorId(abrirParam), 160);
   }
 }
 
-// Configura a barra de busca e interação das tags
+// Configura a barra de busca
 function setupCatalogoInteractions() {
     const searchBar = $('#barra-busca');
     if (searchBar) {
         searchBar.addEventListener('input', (e) => {
+            // Mantém a tag atual, mas aplica o filtro de busca
             montarCatalogo(e.target.value.trim());
         });
     }
 }
 
-// abrir modal por id (procura no window.textos)
+// ===================================
+// LÓGICA DO MODAL
+// ===================================
 function abrirModalPorId(id){
   const t = window.textos.find(x => x.id === id);
   if(!t) return;
-  // Seletores do modal compatíveis com o HTML: .modal-overlay, #modal-titulo, #modal-conteudo
+  
   const overlay = $('.modal-overlay');
   const tituloEl = $('#modal-titulo');
   const conteudoEl = $('#modal-conteudo');
@@ -194,37 +207,38 @@ function abrirModalPorId(id){
   if(!overlay || !tituloEl || !conteudoEl) return;
   
   tituloEl.textContent = t.titulo;
-  // CORREÇÃO: Usa t.conteudo e substitui \n por <br>
+  // Usa t.conteudo e substitui \n por <br> para manter a formatação
   conteudoEl.innerHTML = escapeHtml(t.conteudo).replace(/\n/g, '<br>');
   
   overlay.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
 
-// fechar modal
 function fecharModal(){
   const overlay = $('.modal-overlay');
   if(overlay) overlay.style.display = 'none';
   document.body.style.overflow = '';
+  // Limpa o parâmetro 'abrir' da URL
   const u = new URL(window.location.href);
   u.searchParams.delete('abrir');
   history.replaceState({}, '', u.toString());
 }
 
+
 /* ================== INICIALIZAÇÃO ================== */
 document.addEventListener('DOMContentLoaded', () => {
-  // montar home se houver elementos
+  // Lógica de Inicialização da Home
   if($('#lista-favoritos') || $('#lista-tags')){
     montarHome();
   }
 
-  // montar catálogo se houver
+  // Lógica de Inicialização do Catálogo
   if($('#lista-textos')){
     setupCatalogoInteractions(); // Configura a busca/filtro
     montarCatalogo();
   }
 
-  // Ligar fechamento do modal
+  // Ligar eventos de fechamento do modal
   const overlay = $('.modal-overlay');
   if(overlay){
     overlay.addEventListener('click', (e) => {
@@ -234,21 +248,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeBtn = document.getElementById('modal-close-btn');
   if(closeBtn) closeBtn.addEventListener('click', fecharModal);
 
-  // Home: corrige a função abrirCatalogo (necessário para o index.html)
-  const abrirCatalogoFunc = (parametro) => {
-      if (parametro === 'todos') {
-          window.location.href = `catalogo.html?tag=Todos`;
-      } else {
-          const texto = window.textos.find(t => t.titulo === parametro);
-          if (texto) {
-              window.location.href = `catalogo.html?abrir=${encodeURIComponent(texto.id)}`;
-          } else {
-              window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
-          }
-      }
-  };
-  
+  // Home: Função global para links antigos funcionarem
   if (typeof window.abrirCatalogo === 'undefined') {
-      window.abrirCatalogo = abrirCatalogoFunc;
+      window.abrirCatalogo = (parametro) => {
+          // Se for uma tag (ex: 'reflexão'), vai para o catálogo com a tag
+          if(parametro !== 'todos') {
+               window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
+          } else {
+              // Se for 'todos', vai para o catálogo geral
+              window.location.href = `catalogo.html?tag=Todos`;
+          }
+      };
   }
 });
