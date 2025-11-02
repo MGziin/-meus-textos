@@ -12,7 +12,7 @@ body {
   color: #3b3b3b;
   margin: 0;
   padding: 0;
-  /* NOVO: Scroll Suave para navegação interna */
+  /* Scroll Suave para navegação interna */
   scroll-behavior: smooth;
 }
 
@@ -230,11 +230,11 @@ a:hover {
   text-align: left;
   position: relative;
   max-width: 100%;
-  /* NOVO: Transição para o efeito de "infladinha" */
+  /* Transição para o efeito de "infladinha" */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* NOVO: Efeito "infladinha" (scale) ao passar o mouse */
+/* Efeito "infladinha" (scale) ao passar o mouse */
 .card-fav:hover, .card-texto:hover {
   transform: scale(1.02); 
   box-shadow: 0 8px 15px rgba(0,0,0,0.15);
@@ -269,7 +269,7 @@ a:hover {
   border-radius: 8px;
   cursor: pointer;
   margin-top: 10px;
-  transition: background-color 0.2s, transform 0.2s; /* Adicionado transform */
+  transition: background-color 0.2s, transform 0.2s; 
   display: inline-block;
   text-decoration: none;
 }
