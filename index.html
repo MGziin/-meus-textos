@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="home-body">
-  <header class="header-home">
+  <header class="header-home header-nav">
     <h1 class="titulo-site">Meu Cantinho</h1>
     <nav class="atalhos">
       <a href="#inicio">Início</a>
@@ -19,48 +19,30 @@
   </header>
 
   <main class="conteudo">
-    <!-- Início -->
     <section id="inicio" class="secao">
       <h2>Início</h2>
       <p>Bem-vindo(a) ao meu cantinho — aqui você encontra todos os meus textos, reflexões e histórias. 💛</p>
     </section>
 
-    <!-- Sobre Mim -->
     <section id="sobre" class="secao">
       <h2>Sobre Mim</h2>
+      <img src="foto-perfil.jpg" alt="Uma foto do meu rosto" class="foto-perfil">
       <p>Sou alguém que transforma pensamentos em palavras. Cada texto aqui é uma parte do que vivi, senti e aprendi.</p>
     </section>
 
-    <!-- Textos Favoritos -->
     <section id="favoritos" class="secao">
       <h2>Textos Favoritos</h2>
-
-      <div class="card-texto favorito">
-        <h3>A Semente</h3>
-        <p>Um fazendeiro sonha com uma semente especial, mas, ao tentar conquistá-la, perde tudo o que realmente importava.</p>
-        <button class="ver-mais" onclick="abrirCatalogo('A Semente')">Ler mais</button>
-      </div>
-
-      <div class="card-texto favorito">
-        <h3>Muros Falsos</h3>
-        <p>Entre metáforas e reflexões, um eu lírico encara o peso de um castelo ilusório e o desejo por um novo lar.</p>
-        <button class="ver-mais" onclick="abrirCatalogo('Muros Falsos')">Ler mais</button>
-      </div>
-
-      <button class="botao-catalogo" onclick="abrirCatalogo('todos')">Ver todos os textos</button>
+      <div id="lista-favoritos">
+        </div>
+      <a href="#" id="btn-ler-todos" class="botao-catalogo">Ver todos os textos</a>
     </section>
 
-    <!-- Tags -->
     <section id="tags" class="secao">
       <h2>Tags</h2>
-      <div class="tags-container">
-        <button class="tag" onclick="abrirCatalogo('reflexão')">#reflexão</button>
-        <button class="tag" onclick="abrirCatalogo('vida')">#vida</button>
-        <button class="tag" onclick="abrirCatalogo('emoções')">#emoções</button>
-      </div>
+      <div id="lista-tags" class="tags-container">
+        </div>
     </section>
 
-    <!-- Contato -->
     <section id="contato" class="secao">
       <h2>Contato</h2>
       <p>Quer conversar, trocar ideias ou sugerir algo? Entre em contato comigo! 💬</p>
@@ -68,11 +50,7 @@
     </section>
   </main>
 
-  <script>
-    // Função para abrir o catálogo com a tag ou texto selecionado
-    function abrirCatalogo(parametro) {
-      window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
-    }
-  </script>
+  <script src="textos.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
