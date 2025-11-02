@@ -72,51 +72,6 @@ a:hover {
   margin-bottom: 20px;
 }
 
-/* ===== TEXTOS FAVORITOS E TAGS (Antigas) ===== 
-.card-texto {
-  background-color: #fff7cc;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.card-texto h3 {
-  margin-top: 0;
-  font-size: 1.2rem;
-}
-
-.ver-mais {
-  background-color: #ffdb4d;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.tags-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.tag {
-  background-color: #fff7cc;
-  border: 2px solid #ffdb4d;
-  border-radius: 20px;
-  padding: 8px 16px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #3b3b3b;
-  transition: all 0.2s;
-}
-
-.tag:hover {
-  background-color: #ffdb4d;
-} */
-
 /* ===== CONTATO ===== */
 #contato a {
   display: inline-block;
@@ -141,7 +96,7 @@ a:hover {
   border: none;
   cursor: pointer;
   color: #b38b00;
-  z-index: 11; /* Acima do menu lateral para cliques */
+  z-index: 11;
 }
 
 .catalogo-container {
@@ -162,7 +117,7 @@ a:hover {
   width: 150px;           
   height: 150px;          
   border-radius: 50%;       
-  object-fit: cover;        /* A MÁGICA: Não distorce, apenas "corta" para caber no círculo */
+  object-fit: cover;        
   border: 3px solid #b38b00; 
   margin-bottom: 15px;
 }
