@@ -1,75 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Meu Cantinho ✨</title>
-  <link rel="icon" href="favicon.png" type="image/png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Cantinho</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="home-body">
   <header class="header-home">
-    <div class="header-inner container">
-      <div class="logo-left">Meu Cantinho ✨</div>
-      <nav class="header-nav">
-        <a href="#inicio">Início</a>
-        <a href="#sobre">Sobre Mim</a>
-        <a href="#favoritos">Textos Favoritos</a>
-        <a href="#tags">Tags</a>
-        <a href="#contato">Contato</a>
-      </nav>
-    </div>
+    <h1 class="titulo-site">Meu Cantinho</h1>
+    <nav class="atalhos">
+      <a href="#inicio">Início</a>
+      <a href="#sobre">Sobre Mim</a>
+      <a href="#favoritos">Textos Favoritos</a>
+      <a href="#tags">Tags</a>
+      <a href="#contato">Contato</a>
+    </nav>
   </header>
 
-  <main class="container">
-    <section id="inicio" class="secao-inicio">
-      <img src="foto-perfil.jpg" alt="Foto de perfil" class="foto-perfil" />
-      <h1>Bem-vindo ao meu cantinho de palavras</h1>
-      <p class="descricao">Aqui estão alguns dos meus textos, crônicas e poemas. Fique à vontade para dar uma olhada 🌻</p>
+  <main class="conteudo">
+    <!-- Início -->
+    <section id="inicio" class="secao">
+      <h2>Início</h2>
+      <p>Bem-vindo(a) ao meu cantinho — aqui você encontra todos os meus textos, reflexões e histórias. 💛</p>
     </section>
 
-    <section id="sobre" class="section">
+    <!-- Sobre Mim -->
+    <section id="sobre" class="secao">
       <h2>Sobre Mim</h2>
-      <p>Eu me chamo <strong>Brendon Phillipe</strong>. Comecei a escrever desde muito pequeno, com 12 anos, e agora voltei a escrever e quero compartilhar minhas novas produções com vocês.</p>
+      <p>Sou alguém que transforma pensamentos em palavras. Cada texto aqui é uma parte do que vivi, senti e aprendi.</p>
     </section>
 
-    <section id="favoritos" class="section">
+    <!-- Textos Favoritos -->
+    <section id="favoritos" class="secao">
       <h2>Textos Favoritos</h2>
-      <div id="lista-favoritos" class="favoritos-grid"></div>
 
-      <!-- botão que leva ao catálogo com Todos -->
-      <div style="margin-top:14px">
-        <a id="btn-ler-todos" class="btn-todos" href="catalogo.html?tag=Todos">📖 Ler todos os textos</a>
+      <div class="card-texto favorito">
+        <h3>A Semente</h3>
+        <p>Um fazendeiro sonha com uma semente especial, mas, ao tentar conquistá-la, perde tudo o que realmente importava.</p>
+        <button class="ver-mais" onclick="abrirCatalogo('A Semente')">Ler mais</button>
+      </div>
+
+      <div class="card-texto favorito">
+        <h3>Muros Falsos</h3>
+        <p>Entre metáforas e reflexões, um eu lírico encara o peso de um castelo ilusório e o desejo por um novo lar.</p>
+        <button class="ver-mais" onclick="abrirCatalogo('Muros Falsos')">Ler mais</button>
+      </div>
+
+      <button class="botao-catalogo" onclick="abrirCatalogo('todos')">Ver todos os textos</button>
+    </section>
+
+    <!-- Tags -->
+    <section id="tags" class="secao">
+      <h2>Tags</h2>
+      <div class="tags-container">
+        <button class="tag" onclick="abrirCatalogo('reflexão')">#reflexão</button>
+        <button class="tag" onclick="abrirCatalogo('vida')">#vida</button>
+        <button class="tag" onclick="abrirCatalogo('emoções')">#emoções</button>
       </div>
     </section>
 
-    <section id="tags" class="section">
-      <h2>Tags</h2>
-      <div id="lista-tags" class="tags-row"></div>
-    </section>
-
-    <section id="contato" class="section">
+    <!-- Contato -->
+    <section id="contato" class="secao">
       <h2>Contato</h2>
-      <p><strong>Email:</strong> <a href="mailto:brendonph.trabalho@gmail.com">brendonph.trabalho@gmail.com</a></p>
-      <p><strong>Linktree:</strong> <a href="https://linktr.ee/mgziin" target="_blank" rel="noopener">https://linktr.ee/mgziin</a></p>
+      <p>Quer conversar, trocar ideias ou sugerir algo? Entre em contato comigo! 💬</p>
+      <a href="mailto:seuemail@exemplo.com" class="botao-catalogo">Enviar e-mail</a>
     </section>
-
-    <footer class="footer">
-      © 2025 — Feito com carinho por Brendon Phillipe 🌙
-    </footer>
   </main>
 
-  <!-- modal para consistência (pode existir em ambas) -->
-  <div class="modal-overlay">
-    <div class="modal-box">
-      <button id="modal-close-btn" class="modal-close">✕</button>
-      <h2 id="modal-titulo"></h2>
-      <div id="modal-conteudo"></div>
-    </div>
-  </div>
-
-  <!-- scripts: textos.js DEVE ser carregado primeiro -->
-  <script defer src="textos.js"></script>
-  <script defer src="script.js"></script>
+  <script>
+    // Função para abrir o catálogo com a tag ou texto selecionado
+    function abrirCatalogo(parametro) {
+      window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
+    }
+  </script>
 </body>
 </html>
