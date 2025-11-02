@@ -177,4 +177,124 @@ a:hover {
   /* Centraliza o título */
   flex-grow: 1;
   text-align: center;
-  margin: 0
+  margin: 0;
+  padding: 0;
+}
+
+.menu-hamburguer {
+  /* Manteve a posição na esquerda */
+  font-size: 1.6rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #b38b00;
+  padding: 0;
+}
+
+.lang-selector {
+  font-size: 0.9rem;
+  color: #3b3b3b;
+  font-weight: 500;
+}
+
+.menu {
+  display: none;
+  flex-direction: column;
+  background: #fff7cc;
+  padding: 10px 20px;
+  border-bottom: 2px solid #ffdb4d;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.menu.open {
+  display: flex;
+}
+
+.menu a {
+  color: #b38b00;
+  text-decoration: none;
+  margin: 6px 0;
+  font-weight: bold;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}
+
+.catalogo-main {
+    padding: 20px;
+}
+
+.secao-filtros {
+    padding: 0;
+    margin-bottom: 20px;
+    border-bottom: none;
+    text-align: center;
+}
+
+.tags-filtro-container h3 {
+    margin-top: 0;
+}
+
+#barra-busca {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #ffdb4d;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: #fffef2;
+    color: #3b3b3b;
+}
+
+/* ===== MODAL REUSO ===== */
+
+/* O modal-overlay é o fundo escuro */
+.modal-overlay {
+  display: none; /* Escondido por padrão */
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.55);
+  z-index: 20;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto; /* Permite scroll se o conteúdo for longo */
+}
+
+/* O modal-box é o container do conteúdo */
+.modal-box {
+  background-color: #fffef2;
+  margin: 40px 10px;
+  padding: 25px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 650px;
+  border: 2px solid #ffdb4d;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #b38b00;
+  line-height: 1;
+}
+
+/* Estilo para o conteúdo do modal */
+#modal-conteudo {
+    margin-top: 15px;
+    line-height: 1.6;
+    text-align: left;
+    white-space: pre-wrap;
+}
+
+#modal-titulo {
+    margin-top: 0;
+    text-align: left;
+}
