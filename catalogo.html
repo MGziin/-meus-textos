@@ -6,53 +6,45 @@
   <title>Catálogo de Textos ✨</title>
   <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
-  <script defer src="textos.js"></script>
-  <script defer src="script.js"></script>
 </head>
 <body>
-  <header class="topo catalogo-topo">
-    <div class="topo-left">
-      <div class="logo-site">Catálogo de Textos</div>
-    </div>
-
-    <div class="topo-right">
-      <button id="hambBtn" class="hamburguer" aria-label="Abrir menu">
-        <span class="hamb-icon"><span></span><span></span><span></span></span>
-      </button>
-    </div>
-
-    <!-- painel hamburger (aparece só no catálogo) -->
-    <nav id="menuPanel" class="menu-panel" aria-hidden="true">
-      <a href="index.html#inicio">Início</a>
-      <a href="index.html#textos">Textos Favoritos</a>
-      <a href="index.html#tags">Tags</a>
-      <a href="index.html#sobre">Sobre Mim</a>
-      <a href="index.html#contato">Contato</a>
-    </nav>
+  <header class="topo-catalogo">
+    <button id="abrir-menu" class="menu-btn" aria-label="Abrir menu">☰</button>
+    <h1>Catálogo de Textos</h1>
   </header>
 
+  <!-- menu lateral (aparece apenas nesta página) -->
+  <aside class="menu-lateral" id="menu-lateral">
+    <button id="fechar-menu" class="fechar">✕</button>
+    <ul>
+      <li><a href="index.html#inicio">Início</a></li>
+      <li><a href="index.html#favoritos">Textos Favoritos</a></li>
+      <li><a href="index.html#tags">Tags</a></li>
+      <li><a href="index.html#sobre">Sobre Mim</a></li>
+      <li><a href="index.html#contato">Contato</a></li>
+    </ul>
+  </aside>
+
   <main class="container">
-    <section id="filtros" class="secao">
-      <h2>Filtrar por tags</h2>
-      <div id="filtros-topo" class="tags-row"></div>
+    <section>
+      <div id="lista-textos" class="textos-container"></div>
     </section>
 
-    <section id="catalogo" class="secao">
-      <h2>Todos os Textos</h2>
-      <div id="catalogo-todos" class="catalogo"></div>
-    </section>
-
-    <footer class="rodape">
-      <p>© 2025 — Feito por Brendon Phillipe</p>
+    <footer class="footer">
+      © 2025 — Feito com carinho por Brendon Phillipe 🌙
     </footer>
   </main>
 
-  <!-- Modal (overlay) -->
-  <div id="modal-texto" class="modal-overlay" aria-hidden="true">
-    <div class="modal-caixa" role="dialog" aria-modal="true">
-      <button id="modal-close" class="modal-close" aria-label="Fechar">✕</button>
-      <div id="modal-body" class="modal-body"></div>
+  <!-- modal -->
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <button id="modal-close-btn" class="modal-close">✕</button>
+      <h2 id="modal-titulo"></h2>
+      <div id="modal-conteudo"></div>
     </div>
   </div>
+
+  <script defer src="textos.js"></script>
+  <script defer src="script.js"></script>
 </body>
 </html>
