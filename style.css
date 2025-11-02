@@ -36,14 +36,20 @@ a:hover {
     margin: 0 auto;
 }
 
-/* CORREÇÃO DA FOTO: Garante que a seção "Sobre Mim" tenha altura suficiente */
+/* CORRIGIDO: Garante que a seção "Sobre Mim" tenha altura suficiente e fundo configurado */
 #sobre {
-    min-height: 350px; /* Altura mínima aumentada */
-    /* ATENÇÃO: Adicione a URL da sua imagem de fundo/banner aqui: */
-    /* background-image: url('caminho/para/sua/imagem.jpg'); */ 
+    min-height: 400px; /* Altura mínima aumentada para a imagem aparecer */
+    /* *** IMPORTANTE ***: COLOQUE A URL DA SUA IMAGEM AQUI! */
+    /* EX: background-image: url('images/minha-foto.jpg'); */ 
     background-size: cover; /* Redimensiona para cobrir todo o espaço */
     background-repeat: no-repeat;
     background-position: center;
+    color: white; /* Ajustado para que o texto seja visível sobre a imagem (se a imagem for escura) */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+#sobre h2 {
+    color: white; /* A cor do título deve ser legível sobre a imagem */
 }
 
 
@@ -81,7 +87,7 @@ a:hover {
   color: #ffcc00;
 }
 
-/* ESTILO: Seletor de idioma na Home */
+/* CORRIGIDO: Estilo para o seletor de idioma na Home */
 .header-home .lang-selector {
     font-size: 0.95rem;
     font-weight: 500;
@@ -205,10 +211,10 @@ a:hover {
   padding: 0;
 }
 
-/* ESTILO: Seletor de idioma no Catálogo */
+/* CORRIGIDO: Estilo para o seletor de idioma no Catálogo */
 .lang-selector {
-  font-size: 0.9rem;
-  color: #3b3b3b;
+  font-size: 0.95rem;
+  color: #b38b00;
   font-weight: 500;
 }
 
