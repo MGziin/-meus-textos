@@ -10,8 +10,7 @@
   <header class="header-catalogo">
     <button id="menu-toggle" class="menu-hamburguer">☰</button>
     <h1 class="titulo-catalogo">Catálogo de Textos</h1>
-    <div class="lang-selector">Idioma: Português</div>
-  </header>
+    </header>
 
   <nav id="menu" class="menu">
     <a href="index.html#inicio">Início</a>
@@ -35,8 +34,8 @@
     <section id="lista-textos" class="catalogo-container"></section>
   </main>
 
-  <div id="modal-overlay" class="modal-overlay">
-    <div id="modal-box" class="modal-box">
+  <div class="modal-overlay">
+    <div class="modal-box">
       <span id="modal-close-btn" class="close">&times;</span>
       <h2 id="modal-titulo"></h2>
       <div id="modal-conteudo"></div>
@@ -45,16 +44,5 @@
 
   <script src="textos.js"></script>
   <script src="script.js"></script>
-
-  <script>
-    // Configuração do Menu Hamburguer (usando IDs do HTML original)
-    const menuToggle = document.getElementById("menu-toggle");
-    const menu = document.getElementById("menu");
-    if(menuToggle && menu) {
-        menuToggle.addEventListener("click", () => {
-          menu.classList.toggle("open");
-        });
-    }
-  </script>
 </body>
 </html>
