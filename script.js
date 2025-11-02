@@ -177,6 +177,15 @@ function montarCatalogo(filtroBusca = '') {
   // 5. Abertura Automática do Modal (se veio da Home)
   const abrirParam = qs('abrir');
   if (abrirParam) {
+    // Isso garante que a tag correta será filtrada antes de abrir o modal.
+    const texto = window.textos.find(t => t.id === abrirParam);
+    if (texto && texto.categoria !== filtroTagAtual && filtroTagAtual === 'Todos') {
+         // Não faz nada se já está no 'Todos' para evitar filtro não desejado
+    } else if (texto && texto.categoria !== filtroTagAtual) {
+      // Se veio de um link que não filtra a tag, garante que o filtro 'Todos' esteja ativo antes de abrir.
+      filtroTagAtual = 'Todos';
+      montarCatalogo();
+    }
     setTimeout(() => abrirModalPorId(abrirParam), 160);
   }
 }
@@ -206,7 +215,7 @@ function abrirModalPorId(id){
   if(!overlay || !tituloEl || !conteudoEl) return;
   
   tituloEl.textContent = t.titulo;
-  // Usa t.conteudo e substitui \n por <br> para manter a formatação
+  // Escapa o HTML e substitui \n por <br>
   conteudoEl.innerHTML = escapeHtml(t.conteudo).replace(/\n/g, '<br>');
   
   overlay.style.display = 'flex';
@@ -253,8 +262,11 @@ document.addEventListener('DOMContentLoaded', () => {
           if (parametro === 'todos') {
               window.location.href = `catalogo.html?tag=Todos`;
           } else {
-              // assume que o parâmetro é uma tag
-              window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
+              // Redireciona para o catálogo usando o primeiro ID que corresponda ao título
+              const texto = window.textos.find(t => t.titulo === parametro);
+              if (texto) {
+                 window.location.href = `catalogo.html?abrir=${encodeURIComponent(texto.id)}&tag=Todos`;
+              }
           }
       };
   }
