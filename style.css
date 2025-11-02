@@ -28,7 +28,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* CORREÇÃO DA FOTO GIGANTE: Garante que imagens e backgrounds grandes se ajustem */
+/* CORREÇÃO DA FOTO GIGANTE: Garante que imagens não sejam maiores que o contêiner */
 .img-full-width, img {
     max-width: 100%;
     height: auto;
@@ -36,15 +36,16 @@ a:hover {
     margin: 0 auto;
 }
 
-/* Se a imagem na seção "Sobre Mim" for um background: */
+/* CORREÇÃO DA FOTO SUMIDA: Garante que a seção "Sobre Mim" tenha altura suficiente */
 #sobre {
-    /* Garante que a seção Sobre Mim não tenha altura desproporcional por causa do background */
-    min-height: auto; 
-    background-size: contain; /* Ou 'cover', dependendo do efeito desejado */
+    min-height: 250px; /* Adiciona uma altura mínima para o background aparecer */
+    /* Se a imagem for background, ajuste o caminho aqui, se necessário */
+    /* background-image: url('caminho/para/sua/imagem.jpg'); */
+    background-size: cover; 
     background-repeat: no-repeat;
     background-position: center;
 }
-/* FIM CORREÇÃO DA FOTO GIGANTE */
+
 
 /* ===== HEADER HOME ===== */
 .header-home {
@@ -65,6 +66,12 @@ a:hover {
   color: #b38b00;
 }
 
+.atalhos {
+    /* Garante que a nav não se expanda demais */
+    display: flex;
+    align-items: center;
+}
+
 .atalhos a {
   margin: 0 10px;
   font-weight: bold;
@@ -73,6 +80,14 @@ a:hover {
 
 .atalhos a:hover {
   color: #ffcc00;
+}
+
+/* NOVO: Estilo para o seletor de idioma na Home */
+.header-home .lang-selector {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #b38b00;
+    margin-left: 20px; /* Afasta da navegação */
 }
 
 /* ===== SEÇÕES ===== */
@@ -169,7 +184,7 @@ a:hover {
 .header-catalogo {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Melhor espaçamento para hamburguer e idioma */
+  justify-content: space-between;
   background-color: #fff3b3;
   padding: 12px 20px;
   border-bottom: 3px solid #ffdb4d;
@@ -195,7 +210,6 @@ a:hover {
   font-size: 0.9rem;
   color: #3b3b3b;
   font-weight: 500;
-  /* Espaço para o seletor de idioma (se for um select) */
 }
 
 .menu {
