@@ -28,7 +28,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* CORREÇÃO DA FOTO GIGANTE: Garante que imagens não sejam maiores que o contêiner */
+/* CORREÇÃO DA FOTO: Garante que imagens e backgrounds grandes se ajustem */
 .img-full-width, img {
     max-width: 100%;
     height: auto;
@@ -38,9 +38,7 @@ a:hover {
 
 /* CORREÇÃO DA FOTO SUMIDA: Garante que a seção "Sobre Mim" tenha altura suficiente */
 #sobre {
-    min-height: 250px; /* Adiciona uma altura mínima para o background aparecer */
-    /* Se a imagem for background, ajuste o caminho aqui, se necessário */
-    /* background-image: url('caminho/para/sua/imagem.jpg'); */
+    min-height: 250px; /* Garante que o contêiner tenha altura para a imagem de fundo aparecer */
     background-size: cover; 
     background-repeat: no-repeat;
     background-position: center;
@@ -103,7 +101,7 @@ a:hover {
 }
 
 /* ===== TEXTOS FAVORITOS E CATÁLOGO CARDS ===== */
-.card-texto, .card-fav { /* .card-fav é o card da Home */
+.card-texto, .card-fav { 
   background: #fffdf4;
   border: 2px solid #ffeb99;
   border-radius: 15px;
@@ -129,7 +127,7 @@ a:hover {
   font-size: 1.3em;
 }
 
-/* CORREÇÃO: Estiliza todos os botões de ação com o amarelo */
+/* Estiliza todos os botões de ação com o amarelo */
 .ver-mais, .botao-catalogo, .ler-mais, .btn-ler {
   background-color: #ffdb4d;
   border: none;
@@ -206,6 +204,7 @@ a:hover {
   padding: 0;
 }
 
+/* Estilo para o seletor de idioma no Catálogo */
 .lang-selector {
   font-size: 0.9rem;
   color: #3b3b3b;
@@ -264,7 +263,7 @@ a:hover {
     color: #3b3b3b;
 }
 
-/* ===== MODAL REUSO (Ajustado para o seu JS) ===== */
+/* ===== MODAL REUSO ===== */
 
 /* O modal-overlay é o fundo escuro */
 .modal-overlay {
@@ -275,7 +274,7 @@ a:hover {
   z-index: 20;
   align-items: center;
   justify-content: center;
-  overflow-y: auto; /* Permite scroll se o conteúdo for longo */
+  overflow-y: auto; 
 }
 
 /* O modal-box é o container do conteúdo */
