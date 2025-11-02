@@ -5,34 +5,153 @@
    Bordas e detalhes: #b38b00
 ================================== */
 
-body.catalogo-body {
+/* ======== GERAL ======== */
+body {
   font-family: "Poppins", sans-serif;
   background-color: #fff9e6;
   color: #3b3b3b;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
-/* ===== Header ===== */
+h1, h2, h3 {
+  color: #b38b00;
+}
+
+a {
+  color: #b38b00;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===== HEADER HOME ===== */
+.header-home {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff3b3;
+  padding: 12px 20px;
+  border-bottom: 3px solid #ffdb4d;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.titulo-site {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #b38b00;
+}
+
+.atalhos a {
+  margin: 0 10px;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.atalhos a:hover {
+  color: #ffcc00;
+}
+
+/* ===== SEÇÕES ===== */
+.secao {
+  padding: 40px 20px;
+  border-bottom: 2px solid #ffeb99;
+  text-align: center;
+}
+
+.secao h2 {
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+}
+
+/* ===== TEXTOS FAVORITOS ===== */
+.card-texto {
+  background: #fffdf4;
+  border: 2px solid #ffeb99;
+  border-radius: 15px;
+  padding: 18px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  max-width: 500px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+.card-texto.favorito {
+  border: 2px solid gold;
+  position: relative;
+  background-color: #fff8d1;
+}
+
+.card-texto.favorito::after {
+  content: "★";
+  color: gold;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.3em;
+}
+
+.ver-mais, .botao-catalogo {
+  background-color: #ffdb4d;
+  border: none;
+  color: #3b3b3b;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.ver-mais:hover, .botao-catalogo:hover {
+  background-color: #ffcc00;
+}
+
+/* ===== TAGS ===== */
+.tags-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.tag {
+  background-color: #fff7cc;
+  border: 2px solid #ffdb4d;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #3b3b3b;
+  transition: all 0.2s;
+}
+
+.tag:hover {
+  background-color: #ffdb4d;
+}
+
+/* ===== CONTATO ===== */
+#contato a {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* ===== ESTILOS DO CATÁLOGO (reuso) ===== */
 .header-catalogo {
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #fff3b3;
   padding: 12px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
   border-bottom: 3px solid #ffdb4d;
 }
 
-.header-catalogo h1.titulo-catalogo {
-  margin: 0;
-  font-size: 1.6rem;
-  color: #b38b00;
-}
-
-/* ===== Menu hamburguer ===== */
 .menu-hamburguer {
   position: absolute;
   left: 15px;
@@ -41,14 +160,8 @@ body.catalogo-body {
   border: none;
   cursor: pointer;
   color: #b38b00;
-  transition: transform 0.2s;
 }
 
-.menu-hamburguer:hover {
-  transform: scale(1.1);
-}
-
-/* ===== Menu lateral ===== */
 .menu {
   display: none;
   flex-direction: column;
@@ -66,79 +179,13 @@ body.catalogo-body {
   text-decoration: none;
   margin: 6px 0;
   font-weight: bold;
-  font-size: 1rem;
 }
 
 .menu a:hover {
   text-decoration: underline;
 }
 
-/* ===== Container dos textos ===== */
-.catalogo-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  padding: 20px;
-}
-
-/* ===== Cartões dos textos ===== */
-.card-texto {
-  background: #fffdf4;
-  border: 2px solid #ffeb99;
-  border-radius: 15px;
-  padding: 18px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card-texto:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 5px 12px rgba(0,0,0,0.12);
-}
-
-.card-texto h3 {
-  color: #b38b00;
-  margin-top: 0;
-}
-
-.card-texto p {
-  color: #4a4a4a;
-}
-
-/* ===== Destaque dos favoritos ===== */
-.card-texto.favorito {
-  border: 2px solid gold;
-  position: relative;
-  background-color: #fff8d1;
-}
-
-.card-texto.favorito::after {
-  content: "★";
-  color: gold;
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 1.3em;
-}
-
-/* ===== Botão Ler Mais ===== */
-.ler-mais {
-  background-color: #ffdb4d;
-  border: none;
-  color: #3b3b3b;
-  font-weight: bold;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.2s;
-}
-
-.ler-mais:hover {
-  background-color: #ffcc00;
-}
-
-/* ===== Modal ===== */
+/* ===== MODAL REUSO ===== */
 .modal {
   display: none;
   position: fixed;
@@ -163,8 +210,4 @@ body.catalogo-body {
   font-size: 1.8rem;
   cursor: pointer;
   color: #b38b00;
-}
-
-.close:hover {
-  color: #ffcc00;
 }
