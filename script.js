@@ -42,7 +42,7 @@ function abrirModalPorId(id) {
   if (tituloEl && conteudoEl) {
     tituloEl.textContent = t.titulo;
     
-    // CORREÇÃO FINAL: Usamos textContent para que o CSS (white-space: pre-line)
+    // CORREÇÃO: Usamos textContent para que o CSS (white-space: pre-line)
     // formate as quebras de linha do texto (campo 'conteudo') corretamente.
     conteudoEl.textContent = t.conteudo;
   }
@@ -98,12 +98,10 @@ function montarCatalogo() {
     textosFiltrados = window.textos.filter(t => 
       t.tags && t.tags.some(tag => tag.toLowerCase() === tagFiltro.toLowerCase())
     );
-    // Opcional: Mostrar qual tag está sendo filtrada no título da página
     document.title = `Catálogo - #${tagFiltro}`; 
   }
 
   // 2. Renderização
-  // Renderiza do mais novo para o mais antigo (baseado na ordem no textos.js)
   const textosParaMostrar = textosFiltrados.slice().reverse(); 
   container.innerHTML = textosParaMostrar.map(t => criarCardHtml(t)).join('');
 
@@ -118,7 +116,6 @@ function montarCatalogo() {
   // 4. Abrir Modal Automaticamente se houver o parâmetro 'abrir' na URL
   if (abrirId) {
     abrirModalPorId(abrirId);
-    // Limpar o parâmetro da URL para não reabrir o modal em um refresh
     history.replaceState(null, '', location.pathname + (tagFiltro ? `?tag=${tagFiltro}` : ''));
   }
 }
@@ -133,7 +130,7 @@ function setupHamburguerCatalogo() {
   abrir.addEventListener('click', () => menu.classList.add('ativo'));
   if (fechar) fechar.addEventListener('click', () => menu.classList.remove('ativo'));
   
-  // Fecha ao clicar fora ou ao redimensionar
+  // Fecha ao clicar fora
   window.addEventListener('click', (e) => {
     if (menu.classList.contains('ativo') && !menu.contains(e.target) && e.target !== abrir) {
       menu.classList.remove('ativo');
@@ -148,14 +145,11 @@ function abrirCatalogo(parametro, tipo = 'tag') {
   if (tipo === 'tag') {
     window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
   } else if (tipo === 'abrir') {
-    // Para abrir um texto específico direto do catálogo (ex: favoritos da home)
     window.location.href = `catalogo.html?abrir=${encodeURIComponent(parametro)}`;
   } else {
-    // Para "Ver todos os textos"
     window.location.href = `catalogo.html`; 
   }
 }
-window.abrirCatalogo = abrirCatalogo; // Torna global para uso em HTMLs antigos ou debug (não é mais necessário no novo HTML)
 
 // Montar a seção de Favoritos e Tags na Home
 function montarHome() {
@@ -181,7 +175,6 @@ function montarHome() {
 
     // Event Listener: botão "Ler mais" na HOME
     card.querySelector('.btn-ler').addEventListener('click', (e) => {
-      // Redireciona para o catálogo e abre o modal do texto
       const id = e.currentTarget.dataset.id;
       if (id) abrirCatalogo(id, 'abrir'); 
     });
@@ -189,7 +182,7 @@ function montarHome() {
 
   // 2. Montar Tags Dinamicamente
   const todasAsTags = window.textos.flatMap(t => t.tags || []);
-  const tagsUnicas = [...new Set(todasAsTags.map(t => t.toLowerCase()))].sort(); // Ordena as tags
+  const tagsUnicas = [...new Set(todasAsTags.map(t => t.toLowerCase()))].sort(); 
   
   tagsContainer.innerHTML = '';
   tagsUnicas.forEach(tag => {
