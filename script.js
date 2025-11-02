@@ -22,6 +22,65 @@ function escapeHtml(text) {
   return String(text).replace(/[&<>"']/g, (m) => map[m]);
 }
 
+/* ================== TRADUÇÃO ================== */
+
+function translate(key) {
+    return window.translations[window.currentLang][key] || key;
+}
+
+// Aplica a tradução a todos os elementos com o atributo data-lang-key
+function applyTranslations() {
+    const lang = window.currentLang;
+    const t = window.translations[lang];
+
+    // 1. Títulos principais e Placeholders
+    // Catálogo
+    const catalogoPageTitle = $('#catalogo-page-title');
+    const catalogoHeaderTitle = $('#catalogo-header-title');
+    const tagsFiltroLabel = $('#tags-filtro-label');
+    const barraBusca = $('#barra-busca');
+    
+    if (catalogoPageTitle) catalogoPageTitle.textContent = t['catalogo_title'];
+    if (catalogoHeaderTitle) catalogoHeaderTitle.textContent = t['catalogo_title'];
+    if (tagsFiltroLabel) tagsFiltroLabel.textContent = t['filter_by_tag'];
+    if (barraBusca) barraBusca.placeholder = t['search_placeholder'];
+    
+    // Home
+    const homePageTitle = $('#site-page-title');
+    if (homePageTitle) homePageTitle.textContent = t['site_title'];
+    
+    // Conteúdo fixo da Home (para tradução)
+    if ($('#inicio')) {
+        $('#home-inicio-text').textContent = (lang === 'en') 
+            ? 'Welcome to my little corner — here you will find all my texts, reflections, and stories. 💛' 
+            : 'Bem-vindo(a) ao meu cantinho — aqui você encontra todos os meus textos, reflexões e histórias. 💛';
+        $('#home-sobre-text').textContent = (lang === 'en')
+            ? 'I am someone who transforms thoughts into words. Every text here is a part of what I have lived, felt, and learned.'
+            : 'Sou alguém que transforma pensamentos em palavras. Cada texto aqui é uma parte do que vivi, senti e aprendi.';
+        $('#home-contato-text').textContent = (lang === 'en')
+            ? 'Want to chat, exchange ideas, or suggest something? Contact me! 💬'
+            : 'Quer conversar, trocar ideias ou sugerir algo? Entre em contato comigo! 💬';
+    }
+
+
+    // 2. Navegação (Home e Catálogo)
+    $$('[data-lang-key]').forEach(el => {
+        const key = el.getAttribute('data-lang-key');
+        if (t[key]) {
+            el.textContent = t[key];
+        }
+    });
+    
+    // 3. Re-renderizar conteúdo dinâmico (catalogo e home)
+    if ($('#lista-textos')) {
+        montarCatalogo(document.getElementById('barra-busca').value || '');
+    }
+    if ($('#lista-favoritos')) {
+        montarHome();
+    }
+}
+
+
 /* ================== FUNÇÕES DO MODAL ================== */
 
 // Abrir modal por ID
@@ -35,16 +94,17 @@ function abrirModalPorId(id) {
   const overlay = $('.modal-overlay');
   if (!overlay) return;
 
-  // Preencher modal
+  // Preencher modal (USANDO O IDIOMA ATUAL)
+  const langSuffix = window.currentLang === 'en' ? '_en' : '';
+  const titulo = t['titulo' + langSuffix] || t.titulo;
+  const conteudo = t['conteudo' + langSuffix] || t.conteudo;
+
   const tituloEl = document.getElementById('modal-titulo');
   const conteudoEl = document.getElementById('modal-conteudo');
   
   if (tituloEl && conteudoEl) {
-    tituloEl.textContent = t.titulo;
-    
-    // CORREÇÃO: Usamos textContent para que o CSS (white-space: pre-line)
-    // formate as quebras de linha do texto (campo 'conteudo') corretamente.
-    conteudoEl.textContent = t.conteudo;
+    tituloEl.textContent = titulo;
+    conteudoEl.textContent = conteudo;
   }
 
   // Mostrar modal
@@ -63,61 +123,114 @@ function fecharModal() {
 
 /* ================== FUNÇÕES DO CATÁLOGO ================== */
 
+// Estado atual do filtro (para uso em busca e tag)
+let filtroTagAtual = qs('tag') || 'todos'; 
+
 // Gerar o HTML de um Card de Texto
 function criarCardHtml(t) {
-  // O foco agora é na Categoria/Estilo (que já aparece no meta-info)
+  const langSuffix = window.currentLang === 'en' ? '_en' : '';
+  const titulo = t['titulo' + langSuffix] || t.titulo;
+  const categoria = t['categoria' + langSuffix] || t.categoria;
+  const resumo = t['resumo' + langSuffix] || t.resumo;
   
   return `
     <div class="card-texto ${t.favorito ? 'favorito' : ''}">
-      <h3>${escapeHtml(t.titulo)}</h3>
+      <h3>${escapeHtml(titulo)}</h3>
       <div class="meta-info">
-        <span class="categoria">${escapeHtml(t.categoria)}</span> | 
+        <span class="categoria">${escapeHtml(categoria)}</span> | 
         <span class="data">${escapeHtml(t.data)}</span>
-        ${t.favorito ? '<span class="star">★ Favorito</span>' : ''}
+        ${t.favorito ? `<span class="star">${translate('favorite_star')}</span>` : ''}
       </div>
-      <p class="resumo">${escapeHtml(t.resumo)}</p>
-      <button class="btn-ler" data-id="${t.id}">Ler mais</button>
+      <p class="resumo">${escapeHtml(resumo)}</p>
+      <button class="btn-ler" data-id="${t.id}">${translate('read_more')}</button>
     </div>
   `;
 }
 
 // Montar e Renderizar o Catálogo
-function montarCatalogo() {
+function montarCatalogo(filtroBusca = '') {
   const container = $('#lista-textos');
-  if (!container) return;
+  const tagContainer = $('#lista-tags-catalogo');
+  if (!container || !tagContainer) return;
 
-  const tagFiltro = qs('tag');
-  const abrirId = qs('abrir');
+  // 1. Filtragem de Textos
+  let textosFiltrados = window.textos.slice().reverse(); // Começa do mais novo
   
-  let textosFiltrados = window.textos;
-
-  // 1. Filtragem por Categoria (a nova lógica de filtro)
-  if (tagFiltro && tagFiltro !== 'todos') {
-    textosFiltrados = window.textos.filter(t => 
-      t.categoria && t.categoria.toLowerCase() === tagFiltro.toLowerCase()
+  // 1a. Filtro por Categoria (Tag)
+  if (filtroTagAtual !== 'todos') {
+    textosFiltrados = textosFiltrados.filter(t => 
+      (t.categoria && t.categoria.toLowerCase() === filtroTagAtual) ||
+      (t.categoria_en && t.categoria_en.toLowerCase() === filtroTagAtual)
     );
-    document.title = `Catálogo - #${tagFiltro}`; 
+  }
+  
+  // 1b. Filtro por Busca (título, resumo, conteúdo)
+  if (filtroBusca) {
+    const termo = filtroBusca.toLowerCase();
+    textosFiltrados = textosFiltrados.filter(t => {
+      const ptMatch = t.titulo.toLowerCase().includes(termo) || 
+                      t.resumo.toLowerCase().includes(termo) || 
+                      t.conteudo.toLowerCase().includes(termo);
+      const enMatch = (t.titulo_en && t.titulo_en.toLowerCase().includes(termo)) ||
+                      (t.resumo_en && t.resumo_en.toLowerCase().includes(termo)) ||
+                      (t.conteudo_en && t.conteudo_en.toLowerCase().includes(termo));
+      return ptMatch || enMatch;
+    });
   }
 
-  // 2. Renderização
-  // Exibe os mais novos primeiro
-  const textosParaMostrar = textosFiltrados.slice().reverse(); 
-  container.innerHTML = textosParaMostrar.map(t => criarCardHtml(t)).join('');
+  // 2. Renderização dos Textos
+  container.innerHTML = textosFiltrados.map(t => criarCardHtml(t)).join('');
 
-  // 3. Adicionar Event Listeners aos botões "Ler mais"
+  // 3. Renderização e Eventos das Tags de Filtro
+  // Colhemos todas as categorias e mapeamos para minúsculas
+  const todasAsCategorias = [
+    ...window.textos.map(t => t.categoria).filter(Boolean),
+    ...window.textos.map(t => t.categoria_en).filter(Boolean)
+  ];
+  const tagsUnicas = [...new Set(todasAsCategorias.map(t => t.toLowerCase()))].sort(); 
+  
+  tagContainer.innerHTML = '';
+  
+  tagsUnicas.forEach(tag => {
+    const tagEl = document.createElement('a');
+    tagEl.className = 'tag-pill';
+    tagEl.href = 'javascript:void(0);'; // Previne navegação padrão
+    
+    if (tag === filtroTagAtual) {
+        tagEl.classList.add('active');
+    }
+    
+    // Exibe o nome da categoria no idioma atual (se disponível)
+    const tagDisplayName = window.textos.find(t => 
+        (t.categoria && t.categoria.toLowerCase() === tag) || 
+        (t.categoria_en && t.categoria_en.toLowerCase() === tag)
+    );
+    const langKey = window.currentLang === 'en' ? 'categoria_en' : 'categoria';
+    const displayTag = tagDisplayName ? tagDisplayName[langKey] || tagDisplayName.categoria : tag;
+
+    tagEl.textContent = `#${displayTag}`;
+    
+    tagEl.addEventListener('click', () => {
+        // Alternar filtro: se a tag clicada já estiver ativa, desativa o filtro
+        if (filtroTagAtual === tag) {
+            filtroTagAtual = 'todos';
+        } else {
+            filtroTagAtual = tag;
+        }
+        montarCatalogo(document.getElementById('barra-busca').value); // Re-renderiza com o novo filtro
+    });
+    tagContainer.appendChild(tagEl);
+  });
+
+  // 4. Adicionar Event Listeners aos botões "Ler mais"
   $$('.btn-ler').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.dataset.id;
       if (id) abrirModalPorId(id);
     });
   });
-
-  // 4. Abrir Modal Automaticamente se houver o parâmetro 'abrir' na URL
-  if (abrirId) {
-    abrirModalPorId(abrirId);
-    history.replaceState(null, '', location.pathname + (tagFiltro ? `?tag=${tagFiltro}` : ''));
-  }
 }
+
 
 // Configurar menu hamburguer (Catalogo)
 function setupHamburguerCatalogo() {
@@ -137,18 +250,52 @@ function setupHamburguerCatalogo() {
   });
 }
 
+// Configurar Troca de Idioma e Busca (CATALOGO)
+function setupCatalogoInteractions() {
+    const langSwitch = $('#lang-switch');
+    if (langSwitch) {
+        
+        langSwitch.addEventListener('change', (e) => {
+            window.currentLang = e.target.value;
+            applyTranslations();
+        });
+    }
+    
+    // Configura a barra de busca
+    const searchBar = $('#barra-busca');
+    if (searchBar) {
+        searchBar.addEventListener('input', (e) => {
+            montarCatalogo(e.target.value.trim());
+        });
+        // Se houver filtro de tags, remove o filtro de busca ao carregar
+        if (filtroTagAtual !== 'todos') {
+             searchBar.value = '';
+        }
+    }
+}
+
+
 /* ================== FUNÇÕES DA HOME ================== */
 
 // Função que o botão na HOME deve chamar
 function abrirCatalogo(parametro, tipo = 'tag') {
+  let url = 'catalogo.html?';
+  
   if (tipo === 'tag') {
-    window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
+    url += `tag=${encodeURIComponent(parametro)}`;
   } else if (tipo === 'abrir') {
-    window.location.href = `catalogo.html?abrir=${encodeURIComponent(parametro)}`;
-  } else {
-    window.location.href = `catalogo.html`; 
+    // Para abrir direto o modal no catálogo
+    url += `abrir=${encodeURIComponent(parametro)}`;
   }
+  
+  // Inclui o idioma atual na URL ao mudar de página
+  if (window.currentLang !== 'pt') {
+      url += (url.includes('?') ? '&' : '') + `lang=${window.currentLang}`;
+  }
+  
+  window.location.href = url;
 }
+
 
 // Montar a seção de Favoritos e Tags na Home
 function montarHome() {
@@ -156,19 +303,24 @@ function montarHome() {
   const tagsContainer = $('#lista-tags');
   if (!favContainer || !tagsContainer) return;
 
+  const langSuffix = window.currentLang === 'en' ? '_en' : '';
+  
   // 1. Montar Favoritos
   const favoritos = window.textos.filter(t => t.favorito);
   favContainer.innerHTML = '';
   favoritos.forEach(t => {
+    const titulo = t['titulo' + langSuffix] || t.titulo;
+    const resumo = t['resumo' + langSuffix] || t.resumo;
+    
     const card = document.createElement('div');
     card.className = 'card-fav';
     card.innerHTML = `
       <div class="titulo-row">
-        <h3>${escapeHtml(t.titulo)}</h3>
-        <div class="star">★</div>
+        <h3>${escapeHtml(titulo)}</h3>
+        <div class="star">${translate('favorite_star').replace(' Favorito', '')}</div>
       </div>
-      <div class="resumo">${escapeHtml(t.resumo)}</div>
-      <button class="btn-ler" data-id="${t.id}">Ler mais</button>
+      <div class="resumo">${escapeHtml(resumo)}</div>
+      <button class="btn-ler" data-id="${t.id}">${translate('read_more')}</button>
     `;
     favContainer.appendChild(card);
 
@@ -181,23 +333,27 @@ function montarHome() {
 
   // 2. Montar Tags (Estilos) Dinamicamente usando o campo 'categoria'
   const todasAsCategorias = window.textos.map(t => t.categoria).filter(Boolean);
-  // Remove duplicatas e coloca em minúsculas
   const tagsUnicas = [...new Set(todasAsCategorias.map(t => t.toLowerCase()))].sort(); 
   
   tagsContainer.innerHTML = '';
   tagsUnicas.forEach(tag => {
     const tagEl = document.createElement('a');
     tagEl.className = 'tag-pill';
-    // O filtro na URL é sempre minúsculo
-    tagEl.href = `catalogo.html?tag=${encodeURIComponent(tag)}`;
-    // Exibe com a primeira letra maiúscula para melhor aparência
-    tagEl.textContent = `#${tag.charAt(0).toUpperCase() + tag.slice(1)}`;
+    
+    // Encontra o nome da tag no idioma atual (ou usa o nome em PT)
+    const tagDisplayName = window.textos.find(t => t.categoria.toLowerCase() === tag);
+    const langKey = window.currentLang === 'en' ? 'categoria_en' : 'categoria';
+    const displayTag = tagDisplayName ? tagDisplayName[langKey] || tagDisplayName.categoria : tag;
+    
+    tagEl.href = `catalogo.html?tag=${encodeURIComponent(tag)}&lang=${window.currentLang}`;
+    tagEl.textContent = `#${displayTag.charAt(0).toUpperCase() + displayTag.slice(1)}`;
     tagsContainer.appendChild(tagEl);
   });
   
   // 3. Listener no botão "Ver todos os textos"
   const btnLerTodos = $('#btn-ler-todos');
   if(btnLerTodos){
+    btnLerTodos.textContent = translate('all_texts');
     btnLerTodos.addEventListener('click', (e) => {
       e.preventDefault(); 
       abrirCatalogo('todos', 'tag');
@@ -205,23 +361,71 @@ function montarHome() {
   }
 }
 
+// Configura o idioma inicial (URL ou padrão) e os listeners de troca (HOME e CATÁLOGO)
+function setupInitialLanguage() {
+    // 1. Define o idioma inicial pela URL, se houver
+    const urlLang = qs('lang');
+    if (urlLang && window.translations[urlLang]) {
+        window.currentLang = urlLang;
+    }
+    
+    // 2. Sincroniza os seletores de idioma e configura o listener
+    const langSwitches = [$('#lang-switch'), $('#lang-switch-home')].filter(el => el);
+    
+    langSwitches.forEach(switchEl => {
+        // Define o valor inicial
+        switchEl.value = window.currentLang;
+
+        // Configura o listener para aplicar a tradução e atualizar a URL
+        switchEl.addEventListener('change', (e) => {
+            const newLang = e.target.value;
+            window.currentLang = newLang;
+            
+            // Sincroniza o outro seletor (se existir)
+            langSwitches.filter(el => el !== switchEl).forEach(el => el.value = newLang);
+            
+            applyTranslations();
+
+            // Atualiza a URL para manter o idioma ao recarregar/navegar
+            const url = new URL(window.location);
+            if (newLang !== 'pt') {
+                url.searchParams.set('lang', newLang);
+            } else {
+                url.searchParams.delete('lang');
+            }
+            window.history.pushState({}, '', url);
+        });
+    });
+}
+
+
 /* ================== INICIALIZAÇÃO ================== */
 document.addEventListener('DOMContentLoaded', () => {
-  // Montar Home se houver elementos de Home (index.html)
-  if ($('#lista-favoritos') || $('#lista-tags')) {
-    montarHome();
+  // 1. Configuração global de idioma (afeta ambas as páginas ao carregar)
+  setupInitialLanguage();
+
+  // 2. Montar Home se houver elementos de Home (index.html)
+  if ($('#lista-favoritos')) {
+    applyTranslations();
   }
 
-  // Montar Catálogo se houver o container do Catálogo (catalogo.html)
+  // 3. Montar Catálogo se houver o container do Catálogo (catalogo.html)
   if ($('#lista-textos')) {
-    montarCatalogo();
+    setupCatalogoInteractions(); // Configura busca e filtro
+    applyTranslations();
     setupHamburguerCatalogo();
+    
+    // Verifica se deve abrir o modal após carregar (vindo da home)
+    const abrirId = qs('abrir');
+    if (abrirId) {
+        // Garantir que a renderização terminou antes de abrir o modal
+        setTimeout(() => abrirModalPorId(abrirId), 100); 
+    }
   }
 
-  // Configuração global para fechar o modal (funciona em ambos os sites)
+  // 4. Configuração global para fechar o modal (funciona em ambos os sites)
   const overlay = $('.modal-overlay');
   if (overlay) {
-    // Fecha ao clicar no fundo
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) fecharModal();
     });
