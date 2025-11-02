@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catálogo de Textos</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon"> 
 </head>
 <body class="catalogo-body">
   <header class="header-catalogo">
     <button id="menu-toggle" class="menu-hamburguer">☰</button>
     <h1 class="titulo-catalogo">Catálogo de Textos</h1>
-    <div class="lang-selector">Idioma: Português</div> 
+    <div class="lang-selector">Idioma: Português</div>
   </header>
 
   <nav id="menu" class="menu">
@@ -44,8 +45,10 @@
   </div>
 
   <script src="textos.js"></script>
-  <script src="script.js"></script> <script>
-    // Configuração do Menu Hamburguer (simples, nativo)
+  <script src="script.js"></script>
+  
+  <script>
+    // JS nativo para o hamburguer (simples, compatível com a classe .open do style.css)
     const menuToggle = document.getElementById("menu-toggle");
     const menu = document.getElementById("menu");
     if(menuToggle && menu) {
