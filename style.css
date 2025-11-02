@@ -12,7 +12,7 @@ body {
   color: #3b3b3b;
   margin: 0;
   padding: 0;
-  /* ATUALIZADO: Scroll Suave para navegação interna */
+  /* Scroll Suave para navegação interna */
   scroll-behavior: smooth;
 }
 
@@ -29,7 +29,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* ===== HEADER HOME ===== */
+/* ===== HEADER HOME (Ajuste para o seletor de idioma) ===== */
 .header-home {
   display: flex;
   align-items: center;
@@ -44,6 +44,13 @@ a:hover {
 
 .titulo-site {
   font-size: 1.6rem;
+  /* Garante que o título e o seletor fiquem alinhados */
+  margin-right: auto;
+}
+
+.atalhos {
+    /* Garante que os atalhos fiquem à direita */
+    margin-left: 20px;
 }
 
 .atalhos a {
@@ -74,40 +81,125 @@ a:hover {
 }
 
 /* ===== CONTATO ===== */
-#contato a {
-  display: inline-block;
-  margin-top: 10px;
+.contato-links {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 15px;
+    margin-top: 15px;
 }
+
+.link-contato {
+    display: inline-block; 
+}
+
 
 /* ===== ESTILOS DO CATÁLOGO (reuso) ===== */
 .header-catalogo {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   background-color: #fff3b3;
-  padding: 12px;
+  padding: 12px 20px;
   border-bottom: 3px solid #ffdb4d;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.titulo-catalogo {
+    margin: 0 auto;
+}
+
+/* Estilo do Seletor de Idioma (Comum para Home e Catálogo) */
+.lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.home-lang-selector {
+    /* Ajuda a posicionar o seletor da home */
+    margin-left: 20px;
+}
+
+#lang-switch, #lang-switch-home {
+    padding: 5px 8px;
+    border-radius: 5px;
+    border: 1px solid #b38b00;
+    background-color: #fffef2;
 }
 
 .menu-hamburguer {
-  position: absolute;
-  left: 15px;
+  position: static;
   font-size: 1.6rem;
   background: none;
   border: none;
   cursor: pointer;
   color: #b38b00;
   z-index: 11;
+  order: -1;
+}
+
+.catalogo-main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .catalogo-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 20px 0;
 }
+
+/* Estilos da Barra de Busca e Filtros */
+.secao-filtros {
+    padding: 20px 0;
+    border-bottom: 1px solid #ffdb4d;
+}
+
+#barra-busca {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    border: 2px solid #ffdb4d;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.tags-filtro-container h3 {
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/* Estilo das Tags */
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.tag-pill {
+    background-color: #fff7cc;
+    border: 2px solid #ffdb4d;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #3b3b3b;
+    transition: all 0.2s;
+    display: inline-block;
+    text-decoration: none;
+}
+.tag-pill:hover, .tag-pill.active { /* Adicionado classe 'active' para estado de filtro */
+    background-color: #ffdb4d;
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
 
 /* ======================================================== */
 /* ======== CORREÇÕES E ADIÇÕES CRUCIAIS PARA O SITE ======== */
@@ -127,7 +219,7 @@ a:hover {
 .menu-lateral {
   position: fixed;
   top: 0;
-  left: -300px; /* Começa escondido */
+  left: -300px; 
   width: 250px;
   height: 100%;
   background-color: #fff7cc;
@@ -141,7 +233,7 @@ a:hover {
 }
 
 .menu-lateral.ativo {
-  left: 0; /* Move para a tela */
+  left: 0; 
 }
 
 .menu-lateral a {
@@ -166,7 +258,7 @@ a:hover {
 
 /* --- Estilos do Modal (para o script.js) --- */
 .modal-overlay {
-  display: none; /* Começa escondido */
+  display: none; 
   position: fixed;
   inset: 0;
   background-color: rgba(0,0,0,0.55);
@@ -198,7 +290,6 @@ a:hover {
   font-size: 1rem;
   line-height: 1.6;
   color: #3b3b3b;
-  /* ESSENCIAL: Respeita as quebras de linha do seu texto.js */
   white-space: pre-line; 
   max-height: 60vh;
   overflow-y: auto;
@@ -230,7 +321,6 @@ a:hover {
   text-align: left;
   position: relative;
   max-width: 100%;
-  /* Transição para o efeito de "infladinha" */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -276,25 +366,5 @@ a:hover {
 
 .btn-ler:hover, .botao-catalogo:hover {
   background-color: #ffcc00;
-  transform: translateY(-2px); /* Animação leve ao clicar/passar */
-}
-
-/* Tags geradas pelo script.js */
-.tag-pill {
-  background-color: #fff7cc;
-  border: 2px solid #ffdb4d;
-  border-radius: 20px;
-  padding: 8px 16px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #3b3b3b;
-  transition: all 0.2s;
-  display: inline-block;
-  margin: 5px;
-  text-decoration: none;
-}
-.tag-pill:hover {
-  background-color: #ffdb4d;
-  text-decoration: none;
-  transform: scale(1.05); /* Leve "infladinha" na tag */
+  transform: translateY(-2px);
 }
