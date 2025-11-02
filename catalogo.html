@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catálogo de Textos</title>
+  <title id="catalogo-page-title">Catálogo de Textos</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/png" href="favicon.png"> 
 </head>
@@ -11,19 +11,39 @@
 
   <header class="header-catalogo">
     <button id="abrir-menu" class="menu-hamburguer">☰</button>
-    <h1 class="titulo-catalogo">Catálogo de Textos</h1>
+    <h1 id="catalogo-header-title" class="titulo-catalogo">Catálogo de Textos</h1>
+    
+    <div class="lang-selector">
+        <label for="lang-switch">Idioma:</label>
+        <select id="lang-switch">
+            <option value="pt">Português</option>
+            <option value="en">English</option>
+        </select>
+    </div>
   </header>
 
   <nav id="menu" class="menu-lateral">
     <a href="javascript:void(0)" id="fechar-menu" class="fechar-menu-btn">&times; Fechar</a>
-    <a href="index.html#inicio">Início</a>
-    <a href="index.html#favoritos">Textos Favoritos</a>
-    <a href="index.html#tags">Tags</a>
-    <a href="index.html#sobre">Sobre Mim</a>
-    <a href="index.html#contato">Contato</a>
+    <a href="index.html#inicio" data-lang-key="home">Início</a>
+    <a href="index.html#favoritos" data-lang-key="favorites">Textos Favoritos</a>
+    <a href="index.html#tags" data-lang-key="tags">Tags</a>
+    <a href="index.html#sobre" data-lang-key="about">Sobre Mim</a>
+    <a href="index.html#contato" data-lang-key="contact">Contato</a>
   </nav>
 
-  <main id="lista-textos" class="catalogo-container"></main>
+  <main class="catalogo-main">
+    <section id="catalogo-filtros" class="secao-filtros">
+        <input type="text" id="barra-busca" placeholder="Buscar por título, resumo ou conteúdo...">
+        
+        <div class="tags-filtro-container">
+            <h3 id="tags-filtro-label">Filtrar por Categoria:</h3>
+            <div id="lista-tags-catalogo" class="tags-container">
+                </div>
+        </div>
+    </section>
+
+    <section id="lista-textos" class="catalogo-container"></section>
+  </main>
 
   <div class="modal-overlay">
     <div class="modal-box">
