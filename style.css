@@ -28,6 +28,14 @@ a:hover {
   text-decoration: underline;
 }
 
+/* NOVO CSS: Garante que imagens não sejam maiores que o contêiner (CORREÇÃO DA FOTO GRANDE) */
+.img-full-width, img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 /* ===== HEADER HOME ===== */
 .header-home {
   display: flex;
@@ -97,7 +105,7 @@ a:hover {
 }
 
 /* CORREÇÃO: Adicionado .ler-mais para estilizar o botão do catálogo */
-.ver-mais, .botao-catalogo, .ler-mais {
+.ver-mais, .botao-catalogo, .ler-mais, .btn-ler {
   background-color: #ffdb4d;
   border: none;
   color: #3b3b3b;
@@ -109,7 +117,7 @@ a:hover {
   transition: background-color 0.2s;
 }
 
-.ver-mais:hover, .botao-catalogo:hover, .ler-mais:hover {
+.ver-mais:hover, .botao-catalogo:hover, .ler-mais:hover, .btn-ler:hover {
   background-color: #ffcc00;
 }
 
@@ -167,7 +175,7 @@ a:hover {
 .header-catalogo {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Ajustado para melhor espaçamento do hamburguer e idioma */
+  justify-content: space-between;
   background-color: #fff3b3;
   padding: 12px 20px;
   border-bottom: 3px solid #ffdb4d;
