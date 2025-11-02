@@ -65,7 +65,7 @@ function fecharModal() {
 
 // Gerar o HTML de um Card de Texto
 function criarCardHtml(t) {
-  // ATUALIZAÇÃO: Removido o display das tags temáticas. O foco agora é na Categoria/Estilo.
+  // O foco agora é na Categoria/Estilo (que já aparece no meta-info)
   
   return `
     <div class="card-texto ${t.favorito ? 'favorito' : ''}">
@@ -91,7 +91,7 @@ function montarCatalogo() {
   
   let textosFiltrados = window.textos;
 
-  // 1. Filtragem por Categoria (o novo estilo de "Tag" de acordo com o usuário)
+  // 1. Filtragem por Categoria (a nova lógica de filtro)
   if (tagFiltro && tagFiltro !== 'todos') {
     textosFiltrados = window.textos.filter(t => 
       t.categoria && t.categoria.toLowerCase() === tagFiltro.toLowerCase()
@@ -100,6 +100,7 @@ function montarCatalogo() {
   }
 
   // 2. Renderização
+  // Exibe os mais novos primeiro
   const textosParaMostrar = textosFiltrados.slice().reverse(); 
   container.innerHTML = textosParaMostrar.map(t => criarCardHtml(t)).join('');
 
@@ -155,7 +156,7 @@ function montarHome() {
   const tagsContainer = $('#lista-tags');
   if (!favContainer || !tagsContainer) return;
 
-  // 1. Montar Favoritos (sem alteração)
+  // 1. Montar Favoritos
   const favoritos = window.textos.filter(t => t.favorito);
   favContainer.innerHTML = '';
   favoritos.forEach(t => {
@@ -178,10 +179,9 @@ function montarHome() {
     });
   });
 
-  // 2. Montar Tags (Estilos) Dinamicamente
-  // ATUALIZAÇÃO: Usando o campo 'categoria' (o estilo do texto) para gerar as tags/filtros.
+  // 2. Montar Tags (Estilos) Dinamicamente usando o campo 'categoria'
   const todasAsCategorias = window.textos.map(t => t.categoria).filter(Boolean);
-  // Coloca todas em minúsculas para remover duplicatas (ex: "Conto" e "conto")
+  // Remove duplicatas e coloca em minúsculas
   const tagsUnicas = [...new Set(todasAsCategorias.map(t => t.toLowerCase()))].sort(); 
   
   tagsContainer.innerHTML = '';
@@ -195,7 +195,7 @@ function montarHome() {
     tagsContainer.appendChild(tagEl);
   });
   
-  // 3. Listener no botão "Ver todos os textos" (sem alteração)
+  // 3. Listener no botão "Ver todos os textos"
   const btnLerTodos = $('#btn-ler-todos');
   if(btnLerTodos){
     btnLerTodos.addEventListener('click', (e) => {
