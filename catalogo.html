@@ -10,7 +10,8 @@
   <header class="header-catalogo">
     <button id="menu-toggle" class="menu-hamburguer">☰</button>
     <h1 class="titulo-catalogo">Catálogo de Textos</h1>
-    </header>
+    <div class="lang-selector">Idioma: Português</div> 
+  </header>
 
   <nav id="menu" class="menu">
     <a href="index.html#inicio">Início</a>
@@ -43,6 +44,15 @@
   </div>
 
   <script src="textos.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js"></script> <script>
+    // Configuração do Menu Hamburguer (simples, nativo)
+    const menuToggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu");
+    if(menuToggle && menu) {
+        menuToggle.addEventListener("click", () => {
+          menu.classList.toggle("open");
+        });
+    }
+  </script>
 </body>
 </html>
