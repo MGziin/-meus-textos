@@ -1,216 +1,207 @@
-/* script.js — único script que alimenta home + catálogo.
-   Depende de textos.js (window.textos) — carregue textos.js antes deste arquivo (já feito nos HTMLs).
-*/
+// script.js — compartilha comportamento entre home e catálogo
+// depende de textos.js (carregado antes)
 
-(function(){
-  // helpers
-  const $ = sel => document.querySelector(sel);
-  const $$ = sel => Array.from(document.querySelectorAll(sel));
-  const htmlEncode = s => (s||"").replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+// helpers
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+const qs = k => new URLSearchParams(window.location.search).get(k);
 
-  // transforma quebras em <br>
-  function nl2br(text){ return htmlEncode(text).replace(/\n/g,'<br>'); }
+// transforma texto com quebras em HTML
+function toHtml(text){
+  return text.split('\n').map(ln => ln.trim()).join('\n\n').replace(/\n/g, '<br>');
+}
 
-  // extrai param
-  function qs(name){
-    const u = new URL(window.location.href);
-    return u.searchParams.get(name);
-  }
+// monta home (lista favoritos, tags, botão "ler todos")
+function montarHome(){
+  const favContainer = $('#lista-favoritos');
+  const tagsContainer = $('#lista-tags');
+  if(!favContainer || !tagsContainer) return;
 
-  // render home favorites + tags
-  function renderHome(){
-    const catalogoHome = $('#catalogo-home');
-    const tagsHome = $('#tags-home');
-    if(!catalogoHome || !tagsHome) return;
-
-    catalogoHome.innerHTML = '';
-    tagsHome.innerHTML = '';
-
-    // favorites: pick those with favorito true; if fewer than 2, show first two
-    let favoritos = window.textos.filter(t => t.favorito);
-    if(favoritos.length < 2) favoritos = window.textos.slice(0,2);
-
-    favoritos.forEach(t => {
-      const card = document.createElement('div');
-      card.className = 'texto-card';
-      if(t.favorito){
-        card.classList.add('favorite');
-        const border = document.createElement('div'); border.className='favorite-border'; card.appendChild(border);
-        const badge = document.createElement('div'); badge.className='favorite-badge'; badge.textContent='★'; card.appendChild(badge);
-      }
-      card.innerHTML = `
+  // favoritos: A Semente e Muros Falsos devem aparecer como favoritos
+  const favoritos = window.textos.filter(t => t.favorito);
+  favContainer.innerHTML = '';
+  favoritos.forEach(t => {
+    const card = document.createElement('div');
+    card.className = 'card-fav';
+    card.innerHTML = `
+      <div class="titulo-row">
         <h3>${t.titulo}</h3>
-        <div class="resumo">${t.resumo || ''}</div>
-        <div class="texto-excerpt">${nl2br(t.conteudo.split('\n').slice(0,6).join('\n'))}</div>
-        <div style="margin-top:10px">
-          <a class="btn-ler" href="catalogo.html?abrir=${encodeURIComponent(t.id)}&tag=${encodeURIComponent(t.categoria)}">Ler mais</a>
-        </div>
-      `;
-      catalogoHome.appendChild(card);
-    });
-
-    // tags (dinâmicas, só as categorias que existem)
-    const categorias = Array.from(new Set(window.textos.map(t => t.categoria))).filter(Boolean);
-    const tagTodos = document.createElement('a');
-    tagTodos.className='tag';
-    tagTodos.href = 'catalogo.html?tag=Todos';
-    tagTodos.textContent = 'Todos';
-    tagsHome.appendChild(tagTodos);
-
-    categorias.forEach(c => {
-      const a = document.createElement('a');
-      a.className='tag';
-      a.href = `catalogo.html?tag=${encodeURIComponent(c)}`;
-      a.textContent = c;
-      tagsHome.appendChild(a);
-    });
-  }
-
-  // render catálogo (cards grid) com filtro
-  function renderCatalogo(){
-    const container = $('#catalogo-todos');
-    const filtrosRow = $('#filtros-topo');
-    if(!container || !filtrosRow) return;
-
-    container.innerHTML = ''; filtrosRow.innerHTML = '';
-
-    const categorias = Array.from(new Set(window.textos.map(t => t.categoria))).filter(Boolean);
-    // add Todos
-    const todosBtn = document.createElement('button');
-    todosBtn.className='tag';
-    todosBtn.textContent='Todos';
-    todosBtn.addEventListener('click', ()=> applyFilter('Todos'));
-    filtrosRow.appendChild(todosBtn);
-    categorias.forEach(c => {
-      const b = document.createElement('button');
-      b.className='tag';
-      b.textContent = c;
-      b.addEventListener('click', ()=> applyFilter(c));
-      filtrosRow.appendChild(b);
-    });
-
-    function makeCard(t){
-      const art = document.createElement('div');
-      art.className='card-texto';
-      if(t.favorito){
-        art.classList.add('favorite');
-        const border = document.createElement('div'); border.className='favorite-border'; art.appendChild(border);
-        const badge = document.createElement('div'); badge.className='favorite-badge'; badge.textContent='★'; art.appendChild(badge);
-      }
-      art.innerHTML = `
-        <h3>${t.titulo}</h3>
-        <div style="margin-bottom:8px"><span class="tag">${t.categoria}</span></div>
-        <div class="card-texto-conteudo">${nl2br(t.conteudo)}</div>
-        <div style="margin-top:10px"><a class="btn-ler" data-id="${t.id}" href="#">Ler mais</a></div>
-      `;
-      // ler mais opens modal
-      const btn = art.querySelector('.btn-ler');
-      btn.addEventListener('click', (ev)=>{
-        ev.preventDefault();
-        openModal(t.id);
-        history.replaceState({},'',`catalogo.html?tag=${encodeURIComponent(t.categoria)}&abrir=${encodeURIComponent(t.id)}`);
-      });
-      return art;
-    }
-
-    // apply filter function
-    function applyFilter(tag){
-      container.innerHTML = '';
-      let lista = [];
-      if(!tag || tag === 'Todos') lista = window.textos.slice();
-      else lista = window.textos.filter(t=>t.categoria === tag);
-      if(lista.length === 0){
-        container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:18px;color:${'#6b5a25'}">Nenhum texto encontrado para essa categoria.</div>`;
-        return;
-      }
-      lista.forEach(t => container.appendChild(makeCard(t)));
-    }
-
-    // initial filter from query param
-    const tagParam = qs('tag');
-    const tagDecoded = tagParam ? decodeURIComponent(tagParam) : 'Todos';
-    applyFilter(tagDecoded);
-  }
-
-  // modal open/close
-  function openModal(id){
-    const modal = $('#modal-texto');
-    const body = $('#modal-body');
-    if(!modal || !body) return;
-    const t = window.textos.find(x => String(x.id) === String(id));
-    if(!t) return;
-    body.innerHTML = `<h3>${t.titulo}</h3><div class="modal-content">${nl2br(t.conteudo)}</div>`;
-    modal.style.display = 'flex';
-    modal.setAttribute('aria-hidden','false');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal(){
-    const modal = $('#modal-texto');
-    if(!modal) return;
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden','true');
-    document.body.style.overflow = '';
-  }
-
-  // hamburger menu in catalogo
-  function setupHamburger(){
-    const hambBtn = $('#hambBtn');
-    const menuPanel = $('#menuPanel');
-    if(!hambBtn || !menuPanel) return;
-    hambBtn.addEventListener('click', (e)=>{
-      e.stopPropagation();
-      menuPanel.classList.toggle('open');
-      menuPanel.setAttribute('aria-hidden', menuPanel.classList.contains('open') ? 'false' : 'true');
-    });
-    // close on outside click
-    window.addEventListener('click', (e)=>{
-      if(!menuPanel) return;
-      if(menuPanel.classList.contains('open') && !menuPanel.contains(e.target) && !hambBtn.contains(e.target)){
-        menuPanel.classList.remove('open');
-        menuPanel.setAttribute('aria-hidden','true');
-      }
-    });
-    // close on escape
-    window.addEventListener('keydown', (e)=>{
-      if(e.key === 'Escape' && menuPanel.classList.contains('open')){
-        menuPanel.classList.remove('open');
-        menuPanel.setAttribute('aria-hidden','true');
-      }
-    });
-  }
-
-  // wire modal close handlers
-  function setupModalHandlers(){
-    const modal = $('#modal-texto');
-    if(!modal) return;
-    modal.addEventListener('click', (e)=> { if(e.target === modal) closeModal(); });
-    const closeBtn = $('#modal-close');
-    if(closeBtn) closeBtn.addEventListener('click', closeModal);
-  }
-
-  // when clicking home "Ler mais" links (they point to catalogo.html?abrir=ID&tag=Cat)
-  // we rely on catalogo's code that reads ?abrir param
-
-  // initialization on DOM ready
-  document.addEventListener('DOMContentLoaded', ()=>{
-    try{
-      if(window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname.endsWith('cantinho') ){
-        // home
-        renderHome();
-      }
-      if(window.location.pathname.includes('catalogo.html')){
-        renderCatalogo();
-        setupHamburger();
-        setupModalHandlers();
-        // if URL has abrir param -> open modal after render
-        const abrir = qs('abrir');
-        if(abrir){
-          setTimeout(()=> openModal(abrir), 220);
-        }
-      }
-    }catch(err){
-      console.error('Erro inicializando script:', err);
-    }
+        <div class="star">★</div>
+      </div>
+      <div class="resumo">${escapeHtml(t.resumo)}</div>
+      <button class="btn-ler" data-id="${t.id}">Ler mais</button>
+    `;
+    favContainer.appendChild(card);
   });
 
-})();
+  // tags home — pegar categorias existentes (Crônica, Fábula, etc) e adicionar "Todos"
+  const cats = Array.from(new Set(window.textos.map(t => t.categoria)));
+  tagsContainer.innerHTML = '';
+  const allPill = document.createElement('a');
+  allPill.className = 'tag-pill';
+  allPill.href = `catalogo.html?tag=Todos`;
+  allPill.textContent = 'Todos';
+  tagsContainer.appendChild(allPill);
+
+  cats.forEach(cat => {
+    const a = document.createElement('a');
+    a.className = 'tag-pill';
+    a.href = `catalogo.html?tag=${encodeURIComponent(cat)}`;
+    a.textContent = cat;
+    tagsContainer.appendChild(a);
+  });
+
+  // botão "Ler todos os textos"
+  const btnTodos = $('#btn-ler-todos');
+  if(btnTodos){
+    btnTodos.href = `catalogo.html?tag=Todos`;
+  }
+
+  // adiciona eventos "Ler mais" na home — enviam para catalogo com abrir=<id>
+  $$('.btn-ler').forEach(b => {
+    b.addEventListener('click', (e) => {
+      const id = e.currentTarget.dataset.id;
+      // abre catálogo e indica abrir
+      window.location.href = `catalogo.html?abrir=${encodeURIComponent(id)}`;
+    });
+  });
+}
+
+// monta catálogo
+function montarCatalogo(){
+  const container = $('#lista-textos');
+  if(!container) return;
+  container.innerHTML = '';
+
+  // qual tag vem na URL?
+  const tagParam = qs('tag') || 'Todos';
+  const abrirParam = qs('abrir');
+
+  let lista = window.textos.slice();
+  if(tagParam && tagParam !== 'Todos'){
+    lista = lista.filter(t => t.categoria === tagParam);
+  }
+
+  if(lista.length === 0){
+    container.innerHTML = `<div style="padding:36px;text-align:center;color:#6b5314">Nenhum texto encontrado para essa categoria.</div>`;
+    return;
+  }
+
+  lista.forEach(t => {
+    const card = document.createElement('div');
+    card.className = 'texto-card';
+    if(t.favorito) card.classList.add('favorito');
+
+    // mostra resumo na listagem (limitado por CSS)
+    card.innerHTML = `
+      <h3>${t.titulo} ${t.favorito ? '<span class="selo">★</span>' : ''}</h3>
+      <p class="preview">${escapeHtml(t.resumo)}</p>
+      <button class="ler-mais" data-id="${t.id}">Ler mais</button>
+    `;
+    container.appendChild(card);
+  });
+
+  // ligar botões Ler mais: abrem modal com texto completo
+  $$('.ler-mais').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const id = e.currentTarget.dataset.id;
+      abrirModalPorId(id);
+      // atualiza URL sem recarregar para permitir voltar / copia do link
+      const u = new URL(window.location.href);
+      u.searchParams.set('abrir', id);
+      history.replaceState({}, '', u.toString());
+    });
+  });
+
+  // se veio ?abrir=..., abrir o modal automaticamente
+  if(abrirParam){
+    setTimeout(() => abrirModalPorId(abrirParam), 160);
+  }
+}
+
+// abrir modal por id (procura no window.textos)
+function abrirModalPorId(id){
+  const t = window.textos.find(x => x.id === id);
+  if(!t) return;
+  const overlay = $('.modal-overlay');
+  const box = $('.modal-box');
+  if(!overlay || !box) return;
+  $('.modal-box #modal-titulo')?.remove?.(); // small cleanup
+  // preencher
+  const tituloEl = document.getElementById('modal-titulo');
+  const conteudoEl = document.getElementById('modal-conteudo');
+  if(tituloEl && conteudoEl){
+    tituloEl.textContent = t.titulo;
+    conteudoEl.innerHTML = escapeHtml(t.conteudo).replace(/\n/g, '<br>');
+  }
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+// fechar modal
+function fecharModal(){
+  const overlay = $('.modal-overlay');
+  if(overlay) overlay.style.display = 'none';
+  document.body.style.overflow = '';
+  // limpa abrir param da URL (não necessário, mas útil)
+  const u = new URL(window.location.href);
+  u.searchParams.delete('abrir');
+  history.replaceState({}, '', u.toString());
+}
+
+// small util
+function escapeHtml(text){
+  if(text === null || text === undefined) return '';
+  return String(text)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+}
+
+/* ================== MENU HAMBURGUER (catalogo) ================== */
+function setupHamburguerCatalogo(){
+  const abrir = $('#abrir-menu');
+  const menu = $('.menu-lateral');
+  const fechar = $('#fechar-menu');
+  if(!abrir || !menu) return;
+  abrir.addEventListener('click', () => menu.classList.add('ativo'));
+  if(fechar) fechar.addEventListener('click', () => menu.classList.remove('ativo'));
+  // fecha ao clicar fora
+  window.addEventListener('click', (e) => {
+    if(menu.classList.contains('ativo') && !menu.contains(e.target) && e.target !== abrir){
+      menu.classList.remove('ativo');
+    }
+  });
+}
+
+/* ================== INICIALIZAÇÃO ================== */
+document.addEventListener('DOMContentLoaded', () => {
+  // montar home se houver elementos
+  if($('#lista-favoritos') || $('#lista-tags')){
+    montarHome();
+  }
+
+  // montar catálogo se houver
+  if($('#lista-textos')){
+    montarCatalogo();
+    setupHamburguerCatalogo();
+  }
+
+  // modal overlay close
+  const overlay = $('.modal-overlay');
+  if(overlay){
+    overlay.addEventListener('click', (e) => {
+      if(e.target === overlay) fecharModal();
+    });
+  }
+  const closeBtn = document.getElementById('modal-close-btn');
+  if(closeBtn) closeBtn.addEventListener('click', fecharModal);
+
+  // header nav links smoother scroll on home (if anchors exist)
+  $$('.header-nav a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      // standard anchor handles it — keep default; if on other page, link will navigate
+    });
+  });
+
+});
