@@ -211,3 +211,154 @@ a:hover {
   cursor: pointer;
   color: #b38b00;
 }
+
+/* ======== ADIÇÕES PARA UNIFICAÇÃO (Cole no final do style.css) ======== */
+
+/* --- Estilo da Foto de Perfil (Solução do Problema 1) --- */
+.foto-perfil {
+  width: 150px;           /* Largura fixa */
+  height: 150px;          /* Altura IGUAL à largura */
+  border-radius: 50%;       /* Deixa 100% redondo */
+  object-fit: cover;        /* Garante que a foto não distorça */
+  border: 3px solid #b38b00; 
+  margin-bottom: 15px;
+}
+
+/* --- Estilos do Menu Lateral (que script.js espera) --- */
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  left: -300px; /* Começa escondido fora da tela */
+  width: 250px;
+  height: 100%;
+  background-color: #fff7cc;
+  padding: 20px;
+  z-index: 100;
+  border-right: 3px solid #ffdb4d;
+  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  transition: left 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-lateral.ativo {
+  left: 0; /* Mostra o menu */
+}
+
+.menu-lateral a {
+  color: #b38b00;
+  text-decoration: none;
+  margin: 10px 0;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.menu-lateral a:hover {
+  text-decoration: underline;
+}
+
+.fechar-menu-btn {
+  font-size: 1.2rem;
+  color: #b38b00;
+  text-align: right;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* --- Estilos do Modal (que script.js espera) --- */
+.modal-overlay {
+  display: none; /* Começa escondido */
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.55);
+  z-index: 20;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto; /* Permite rolar se o texto for grande */
+}
+
+.modal-box {
+  background-color: #fffef2;
+  padding: 25px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 650px;
+  border: 2px solid #ffdb4d;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  position: relative; /* Para o botão fechar */
+  margin: 5% auto; /* Margem para não colar no topo */
+}
+
+#modal-titulo {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #b38b00;
+}
+
+#modal-conteudo {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #3b3b3b;
+  white-space: pre-line; /* Respeita as quebras de linha do seu texto! */
+  max-height: 60vh; /* Altura máxima */
+  overflow-y: auto; /* Adiciona scroll SÓ no texto se ele for longo */
+  padding-right: 10px; /* Espaço para a barra de rolagem */
+}
+
+/* --- Estilos dos Cards (que script.js gera) --- */
+.card-fav {
+  background: #fff8d1;
+  border: 2px solid gold;
+  border-radius: 15px;
+  padding: 18px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  max-width: 500px;
+  margin: 20px auto;
+  text-align: left;
+  position: relative;
+}
+
+.card-fav .titulo-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-fav .star {
+  color: gold;
+  font-size: 1.3em;
+}
+
+.btn-ler, .ler-mais {
+  background-color: #ffdb4d;
+  border: none;
+  color: #3b3b3b;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.btn-ler:hover, .ler-mais:hover {
+  background-color: #ffcc00;
+}
+
+/* Tags geradas pelo script */
+.tag-pill {
+  background-color: #fff7cc;
+  border: 2px solid #ffdb4d;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #3b3b3b;
+  transition: all 0.2s;
+  display: inline-block;
+  margin: 5px;
+  text-decoration: none;
+}
+.tag-pill:hover {
+  background-color: #ffdb4d;
+  text-decoration: none;
+}
