@@ -234,23 +234,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeBtn = document.getElementById('modal-close-btn');
   if(closeBtn) closeBtn.addEventListener('click', fecharModal);
 
-  // Home: corrige a função abrirCatalogo para ser compatível com o script.js
+  // Home: corrige a função abrirCatalogo (necessário para o index.html)
   const abrirCatalogoFunc = (parametro) => {
       if (parametro === 'todos') {
           window.location.href = `catalogo.html?tag=Todos`;
       } else {
-          // No index.html, os botões 'ver-mais' usavam o título.
           const texto = window.textos.find(t => t.titulo === parametro);
           if (texto) {
               window.location.href = `catalogo.html?abrir=${encodeURIComponent(texto.id)}`;
           } else {
-              // Se for uma tag
               window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
           }
       }
   };
   
-  // Se o index.html não tiver a função, a adicionamos globalmente
   if (typeof window.abrirCatalogo === 'undefined') {
       window.abrirCatalogo = abrirCatalogoFunc;
   }
