@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     montarCatalogo();
   }
 
-  // Ligar eventos de fechamento do modal (funciona em ambas as páginas)
+  // Ligar eventos de fechamento do modal
   const overlay = $('.modal-overlay');
   if(overlay){
     overlay.addEventListener('click', (e) => {
