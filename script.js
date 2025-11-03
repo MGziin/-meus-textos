@@ -42,7 +42,7 @@ function montarHome(){
   favContainer.innerHTML = '';
   favoritos.forEach(t => {
     const card = document.createElement('div');
-    card.className = 'card-fav';
+    card.className = 'card-fav'; // Usa card-fav para a Home
     card.innerHTML = `
       <div class="titulo-row">
         <h3>${escapeHtml(t.titulo)}</h3>
@@ -76,8 +76,8 @@ function montarHome(){
     tagsContainer.appendChild(a);
   });
 
-  // 3. LIGA EVENTOS
-  $$('.btn-ler').forEach(b => {
+  // 3. LIGA EVENTOS (Botões "Ler mais" nos cards de favoritos da Home)
+  $$('#lista-favoritos .btn-ler').forEach(b => {
     b.addEventListener('click', (e) => {
       const id = e.currentTarget.dataset.id;
       // Abre catálogo e indica para abrir o modal
@@ -145,7 +145,6 @@ function montarCatalogo(filtroBusca = '') {
     }
     
     tagEl.addEventListener('click', () => {
-        // Alterna o filtro: se clicar na mesma tag, desativa
         if (filtroTagAtual === tag) {
             filtroTagAtual = 'Todos';
         } else {
@@ -168,8 +167,15 @@ function montarCatalogo(filtroBusca = '') {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.dataset.id;
       abrirModalPorId(id);
+      // Atualiza a URL para refletir o texto aberto
       const u = new URL(window.location.href);
       u.searchParams.set('abrir', id);
+      // Mantém o filtro de tag na URL
+      if (filtroTagAtual !== 'Todos') {
+          u.searchParams.set('tag', filtroTagAtual);
+      } else {
+          u.searchParams.delete('tag');
+      }
       history.replaceState({}, '', u.toString());
     });
   });
@@ -177,15 +183,6 @@ function montarCatalogo(filtroBusca = '') {
   // 5. Abertura Automática do Modal (se veio da Home)
   const abrirParam = qs('abrir');
   if (abrirParam) {
-    // Isso garante que a tag correta será filtrada antes de abrir o modal.
-    const texto = window.textos.find(t => t.id === abrirParam);
-    if (texto && texto.categoria !== filtroTagAtual && filtroTagAtual === 'Todos') {
-         // Não faz nada se já está no 'Todos' para evitar filtro não desejado
-    } else if (texto && texto.categoria !== filtroTagAtual) {
-      // Se veio de um link que não filtra a tag, garante que o filtro 'Todos' esteja ativo antes de abrir.
-      filtroTagAtual = 'Todos';
-      montarCatalogo();
-    }
     setTimeout(() => abrirModalPorId(abrirParam), 160);
   }
 }
@@ -215,7 +212,7 @@ function abrirModalPorId(id){
   if(!overlay || !tituloEl || !conteudoEl) return;
   
   tituloEl.textContent = t.titulo;
-  // Escapa o HTML e substitui \n por <br>
+  // Usa t.conteudo e substitui \n por <br> para manter a formatação
   conteudoEl.innerHTML = escapeHtml(t.conteudo).replace(/\n/g, '<br>');
   
   overlay.style.display = 'flex';
@@ -246,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     montarCatalogo();
   }
 
-  // Ligar eventos de fechamento do modal
+  // Ligar eventos de fechamento do modal (funciona em ambas as páginas)
   const overlay = $('.modal-overlay');
   if(overlay){
     overlay.addEventListener('click', (e) => {
@@ -256,17 +253,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeBtn = document.getElementById('modal-close-btn');
   if(closeBtn) closeBtn.addEventListener('click', fecharModal);
 
-  // Home: Função global para links antigos funcionarem (apenas para manter compatibilidade)
+  // Home: Função global para links antigos (do index.html original) funcionarem
   if (typeof window.abrirCatalogo === 'undefined') {
       window.abrirCatalogo = (parametro) => {
           if (parametro === 'todos') {
               window.location.href = `catalogo.html?tag=Todos`;
           } else {
-              // Redireciona para o catálogo usando o primeiro ID que corresponda ao título
-              const texto = window.textos.find(t => t.titulo === parametro);
-              if (texto) {
-                 window.location.href = `catalogo.html?abrir=${encodeURIComponent(texto.id)}&tag=Todos`;
-              }
+              // assume que o parâmetro é uma tag
+              window.location.href = `catalogo.html?tag=${encodeURIComponent(parametro)}`;
           }
       };
   }
