@@ -36,33 +36,25 @@ a:hover {
     margin: 0 auto;
 }
 
-/* 🟢 CORREÇÃO: ESTILO PARA O NOVO CONTAINER (IMAGEM E CORES DE TEXTO) */
-#secao-destaque {
-    /* ATENÇÃO: Se o nome do seu arquivo for diferente, EDITE APENAS o 'perfil.jpg' abaixo */
+/* 🟢 CORREÇÃO: Aplicando a imagem de fundo na seção Sobre Mim */
+#sobre {
+    min-height: 400px; /* Altura mínima aumentada para a imagem aparecer */
+    
+    /* *** CORREÇÃO APLICADA *** */
+    /* Assumindo que o nome do arquivo é 'perfil.jpg' */
     background-image: url('perfil.jpg'); 
-    background-size: cover; 
+    
+    background-size: cover; /* Redimensiona para cobrir todo o espaço */
     background-repeat: no-repeat;
     background-position: center;
+    /* Ajustes para o texto ser legível sobre a imagem (se a imagem for escura) */
+    color: white; 
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
 }
 
-/* Garante que o texto dentro da seção da foto seja branco e legível */
-#secao-destaque h2, #secao-destaque p {
-    color: white; /* Cor da fonte branca para contraste com a foto */
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); 
+#sobre h2 {
+    color: white; /* A cor do título deve ser legível sobre a imagem */
 }
-
-/* Garante que as seções internas tenham altura suficiente para a foto */
-#secao-destaque .secao {
-    min-height: 200px; 
-    /* Remove a borda inferior padrão de todas as seções, pois queremos apenas uma no final */
-    border-bottom: none; 
-}
-
-/* Adiciona a borda apenas na última seção do destaque para separá-lo do resto do site */
-#secao-destaque #sobre {
-    border-bottom: 2px solid #ffeb99; 
-}
-/* 🟢 FIM DAS MUDANÇAS DE DESTAQUE */
 
 
 /* ===== HEADER HOME ===== */
@@ -198,7 +190,7 @@ a:hover {
 }
 
 
-/* ===== CONTATO (CORRIGIDO) ===== */
+/* ===== CONTATO ===== */
 .contato-links {
     display: flex; 
     flex-wrap: wrap; 
