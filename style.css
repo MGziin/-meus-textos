@@ -36,20 +36,21 @@ a:hover {
     margin: 0 auto;
 }
 
-/* CORRIGIDO: Garante que a seção "Sobre Mim" tenha altura suficiente e fundo configurado */
+/* 🟢 CORREÇÃO FINAL DA FOTO: Aplica o fundo e garante visibilidade */
 #sobre {
-    min-height: 400px; /* Altura mínima aumentada para a imagem aparecer */
-    /* *** IMPORTANTE ***: COLOQUE A URL DA SUA IMAGEM AQUI! */
-    /* EX: background-image: url('images/minha-foto.jpg'); */ 
+    min-height: 400px; /* Garante espaço para a foto aparecer */
+    /* ATENÇÃO: Se o nome do seu arquivo for diferente, EDITE APENAS o 'perfil.jpg' abaixo */
+    background-image: url('perfil.jpg'); 
     background-size: cover; /* Redimensiona para cobrir todo o espaço */
     background-repeat: no-repeat;
     background-position: center;
-    color: white; /* Ajustado para que o texto seja visível sobre a imagem (se a imagem for escura) */
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    /* Ajustes para o texto ser legível sobre a imagem */
+    color: white; 
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); /* Adiciona sombra para destaque */
 }
 
 #sobre h2 {
-    color: white; /* A cor do título deve ser legível sobre a imagem */
+    color: white; 
 }
 
 
@@ -87,7 +88,7 @@ a:hover {
   color: #ffcc00;
 }
 
-/* CORRIGIDO: Estilo para o seletor de idioma na Home */
+/* 🟢 CORREÇÃO: Estilo para o seletor de idioma na Home */
 .header-home .lang-selector {
     font-size: 0.95rem;
     font-weight: 500;
@@ -151,7 +152,7 @@ a:hover {
   background-color: #ffcc00;
 }
 
-/* ===== TAGS ===== */
+/* ===== TAGS (RENOVADAS PARA CATÁLOGO) ===== */
 .tags-container {
   display: flex;
   justify-content: center;
@@ -211,7 +212,7 @@ a:hover {
   padding: 0;
 }
 
-/* CORRIGIDO: Estilo para o seletor de idioma no Catálogo */
+/* 🟢 CORREÇÃO: Estilo para o seletor de idioma no Catálogo */
 .lang-selector {
   font-size: 0.95rem;
   color: #b38b00;
