@@ -16,7 +16,7 @@ body {
 }
 
 h1, h2, h3 {
-  color: #b38b00;
+  color: #b38b00; /* Cor padrão dos títulos (amarelo/marrom) */
 }
 
 a {
@@ -36,22 +36,33 @@ a:hover {
     margin: 0 auto;
 }
 
-/* 🟢 CORREÇÃO FINAL DA FOTO: Aplica o fundo e garante visibilidade */
-#sobre {
-    min-height: 400px; /* Garante espaço para a foto aparecer */
+/* 🟢 MUDANÇA 2: ESTILO PARA O NOVO CONTAINER (IMAGEM E CORES DE TEXTO) */
+#secao-destaque {
     /* ATENÇÃO: Se o nome do seu arquivo for diferente, EDITE APENAS o 'perfil.jpg' abaixo */
     background-image: url('perfil.jpg'); 
-    background-size: cover; /* Redimensiona para cobrir todo o espaço */
+    background-size: cover; 
     background-repeat: no-repeat;
     background-position: center;
-    /* Ajustes para o texto ser legível sobre a imagem */
-    color: white; 
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); /* Adiciona sombra para destaque */
 }
 
-#sobre h2 {
-    color: white; 
+/* Garante que o texto dentro da seção da foto seja branco e legível */
+#secao-destaque h2, #secao-destaque p {
+    color: white; /* Cor da fonte branca para contraste com a foto */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); 
 }
+
+/* Garante que as seções internas tenham altura suficiente para a foto */
+#secao-destaque .secao {
+    min-height: 200px; 
+    /* Remove a borda inferior padrão de todas as seções, pois queremos apenas uma no final */
+    border-bottom: none; 
+}
+
+/* Adiciona a borda apenas na última seção do destaque para separá-lo do resto do site */
+#secao-destaque #sobre {
+    border-bottom: 2px solid #ffeb99; 
+}
+/* 🟢 FIM DAS MUDANÇAS DE DESTAQUE */
 
 
 /* ===== HEADER HOME ===== */
@@ -88,7 +99,7 @@ a:hover {
   color: #ffcc00;
 }
 
-/* 🟢 CORREÇÃO: Estilo para o seletor de idioma na Home */
+/* Estilo para o seletor de idioma na Home */
 .header-home .lang-selector {
     font-size: 0.95rem;
     font-weight: 500;
@@ -212,7 +223,7 @@ a:hover {
   padding: 0;
 }
 
-/* 🟢 CORREÇÃO: Estilo para o seletor de idioma no Catálogo */
+/* Estilo para o seletor de idioma no Catálogo */
 .lang-selector {
   font-size: 0.95rem;
   color: #b38b00;
