@@ -36,7 +36,7 @@ a:hover {
     margin: 0 auto;
 }
 
-/* 🟢 MUDANÇA 2: ESTILO PARA O NOVO CONTAINER (IMAGEM E CORES DE TEXTO) */
+/* 🟢 CORREÇÃO: ESTILO PARA O NOVO CONTAINER (IMAGEM E CORES DE TEXTO) */
 #secao-destaque {
     /* ATENÇÃO: Se o nome do seu arquivo for diferente, EDITE APENAS o 'perfil.jpg' abaixo */
     background-image: url('perfil.jpg'); 
@@ -99,7 +99,7 @@ a:hover {
   color: #ffcc00;
 }
 
-/* Estilo para o seletor de idioma na Home */
+/* 🟢 CORREÇÃO: Estilo para o seletor de idioma na Home */
 .header-home .lang-selector {
     font-size: 0.95rem;
     font-weight: 500;
@@ -223,7 +223,7 @@ a:hover {
   padding: 0;
 }
 
-/* Estilo para o seletor de idioma no Catálogo */
+/* 🟢 CORREÇÃO: Estilo para o seletor de idioma no Catálogo */
 .lang-selector {
   font-size: 0.95rem;
   color: #b38b00;
