@@ -82,6 +82,7 @@ a:hover {
   font-size: 1.6rem;
   font-weight: bold;
   color: #b38b00;
+  margin-right: auto;
 }
 
 .atalhos {
@@ -99,7 +100,7 @@ a:hover {
   color: #ffcc00;
 }
 
-/* 🟢 CORREÇÃO: Estilo para o seletor de idioma na Home */
+/* Estilo para o seletor de idioma na Home */
 .header-home .lang-selector {
     font-size: 0.95rem;
     font-weight: 500;
@@ -157,10 +158,13 @@ a:hover {
   cursor: pointer;
   margin-top: 10px;
   transition: background-color 0.2s;
+  display: inline-block;
+  text-decoration: none;
 }
 
 .ver-mais:hover, .botao-catalogo:hover, .ler-mais:hover, .btn-ler:hover {
   background-color: #ffcc00;
+  transform: translateY(-2px);
 }
 
 /* ===== TAGS (RENOVADAS PARA CATÁLOGO) ===== */
@@ -183,19 +187,30 @@ a:hover {
   color: #3b3b3b;
   transition: all 0.2s;
   text-decoration: none;
+  display: inline-block;
+  margin: 5px;
 }
 
 .tag-pill:hover, .tag-pill.active {
   background-color: #ffdb4d;
   text-decoration: none;
+  transform: scale(1.05);
 }
 
 
-/* ===== CONTATO ===== */
-#contato a {
-  display: inline-block;
-  margin-top: 10px;
+/* ===== CONTATO (CORRIGIDO) ===== */
+.contato-links {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 15px;
+    margin-top: 15px;
+    justify-content: center; /* Centraliza os botões */
 }
+
+.link-contato {
+    display: inline-block; 
+}
+
 
 /* ===== ESTILOS DO CATÁLOGO (reuso) ===== */
 .header-catalogo {
@@ -215,20 +230,36 @@ a:hover {
 }
 
 .menu-hamburguer {
+  position: static;
   font-size: 1.6rem;
   background: none;
   border: none;
   cursor: pointer;
   color: #b38b00;
-  padding: 0;
+  z-index: 11;
+  order: -1;
 }
 
-/* 🟢 CORREÇÃO: Estilo para o seletor de idioma no Catálogo */
+/* Estilo do Seletor de Idioma (Comum para Home e Catálogo) */
 .lang-selector {
-  font-size: 0.95rem;
-  color: #b38b00;
-  font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #b38b00;
 }
+.home-lang-selector {
+    margin-left: 20px;
+}
+
+#lang-switch, #lang-switch-home {
+    padding: 5px 8px;
+    border-radius: 5px;
+    border: 1px solid #b38b00;
+    background-color: #fffef2;
+}
+
 
 .menu {
   display: none;
