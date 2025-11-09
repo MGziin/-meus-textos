@@ -24,11 +24,54 @@ function escapeHtml(text){
 
 /* ================== TRADUÇÃO ================== */
 
+// Adicionando traduções para Crônica/Chronicle, Conto/Short Story
+window.translations = {
+    pt: {
+        home: 'Início',
+        favorites: 'Textos Favoritos',
+        tags: 'Tags',
+        about: 'Sobre Mim',
+        contact: 'Contato',
+        read_more: 'Ler mais',
+        all_texts: 'Ver todos os textos',
+        catalogo_title: 'Catálogo de Textos',
+        filter_by_tag: 'Filtrar por Categoria:',
+        search_placeholder: 'Buscar por título, resumo ou conteúdo...',
+        no_texts_found: 'Nenhum texto encontrado.',
+        all_tags: 'Todos',
+        // Categorias (usadas no filter e display quando o idioma é PT)
+        'crônica': 'Crônica',
+        'conto': 'Conto',
+        'short story': 'Conto',
+        'chronicle': 'Crônica',
+    },
+    en: {
+        home: 'Home',
+        favorites: 'Favorite Texts',
+        tags: 'Tags',
+        about: 'About Me',
+        contact: 'Contact',
+        read_more: 'Read more',
+        all_texts: 'View all texts',
+        catalogo_title: 'Texts Catalog',
+        filter_by_tag: 'Filter by Category:',
+        search_placeholder: 'Search by title, summary, or content...',
+        no_texts_found: 'No texts found.',
+        all_tags: 'All',
+        // Categorias (usadas no filter e display quando o idioma é EN)
+        'crônica': 'Chronicle',
+        'conto': 'Short Story',
+        'short story': 'Short Story',
+        'chronicle': 'Chronicle',
+    }
+};
+
+
 function translate(key) {
     if (!window.translations || !window.translations[window.currentLang]) {
         return key;
     }
-    return window.translations[window.currentLang][key] || key;
+    return window.translations[window.currentLang][key.toLowerCase()] || window.translations[window.currentLang][key] || key;
 }
 
 // Aplica a tradução a todos os elementos com o atributo data-lang-key
@@ -43,15 +86,17 @@ function applyTranslations() {
     const tagsFiltroLabel = $('#tags-filtro-label');
     const barraBusca = $('#barra-busca');
     
-    if (catalogoPageTitle) catalogoPageTitle.textContent = t['catalogo_title'];
-    if (catalogoHeaderTitle) catalogoHeaderTitle.textContent = t['catalogo_title'];
-    if (tagsFiltroLabel) tagsFiltroLabel.textContent = t['filter_by_tag'];
-    if (barraBusca) barraBusca.placeholder = t['search_placeholder'];
+    // Elementos do Catálogo
+    if (catalogoPageTitle) catalogoPageTitle.textContent = translate('catalogo_title');
+    if (catalogoHeaderTitle) catalogoHeaderTitle.textContent = translate('catalogo_title');
+    if (tagsFiltroLabel) tagsFiltroLabel.textContent = translate('filter_by_tag');
+    if (barraBusca) barraBusca.placeholder = translate('search_placeholder');
     
+    // Elementos da Home
     const homePageTitle = $('#site-page-title');
-    if (homePageTitle) homePageTitle.textContent = t['site_title'];
+    if (homePageTitle) homePageTitle.textContent = translate('site_title') || 'Meu Cantinho Autoral';
     
-    // Conteúdo fixo da Home
+    // Conteúdo fixo da Home (usando fallback simples, pois não há chaves de tradução para eles)
     if ($('#inicio')) {
         $('#home-inicio-text').textContent = (lang === 'en') 
             ? 'Welcome to my little corner — here you will find all my texts, reflections, and stories. 💛' 
@@ -64,7 +109,7 @@ function applyTranslations() {
             : 'Quer conversar, trocar ideias ou sugerir algo? Entre em contato comigo! 💬';
     }
 
-    // 2. Navegação
+    // 2. Navegação e Textos com data-lang-key
     $$('[data-lang-key]').forEach(el => {
         const key = el.getAttribute('data-lang-key');
         if (t[key]) {
@@ -72,11 +117,9 @@ function applyTranslations() {
         }
     });
     
-    // 3. Re-renderizar conteúdo dinâmico
+    // 3. Re-renderizar conteúdo dinâmico (tags e cards)
     if ($('#lista-textos')) {
-        const busca = $('#barra-busca') ? $('#barra-busca').value : '';
-        // Não reseta filtroTagAtual aqui, pois o filtro pode ser baseado na tag em inglês (ex: 'Short Story')
-        montarCatalogo(busca);
+        montarCatalogo(qs('busca') || '');
     }
     if ($('#lista-favoritos')) {
         montarHome();
@@ -89,9 +132,13 @@ function setupLanguageSwitch(selectId) {
         selector.value = window.currentLang; 
         selector.addEventListener('change', (e) => {
             window.currentLang = e.target.value;
-            // Atualiza o parâmetro na URL
+            // Atualiza o parâmetro na URL para persistir o idioma
             const u = new URL(window.location.href);
             u.searchParams.set('lang', window.currentLang);
+            // Mantém o filtro de tag na URL
+            if (filtroTagAtual !== 'Todos') {
+                 u.searchParams.set('tag', filtroTagAtual);
+            }
             history.replaceState({}, '', u.toString());
             
             applyTranslations();
@@ -151,29 +198,28 @@ function montarHome() {
   });
   
   // 2. Tags da Home
-  // 🟢 CORREÇÃO DE TAGS HOME: Garantir unicidade usando o nome em minúsculas (em qualquer idioma)
-  const tagsMap = new Map(); // Key: tag em minúscula, Value: tag no idioma atual
+  // CORREÇÃO: Garante unicidade e exibe no idioma correto
+  const tagsMap = new Map(); // Key: tag em minúscula (do idioma atual ou fallback), Value: tag para exibição
   const langKey = window.currentLang === 'en' ? 'categoria_en' : 'categoria';
-  const defaultLangKey = 'categoria'; // Fallback para PT
+  const otherLangKey = window.currentLang === 'en' ? 'categoria' : 'categoria_en';
   
   window.textos.forEach(t => {
-      const currentTag = t[langKey] || t[defaultLangKey];
-      if (currentTag) {
-          const lowerCaseTag = currentTag.toLowerCase();
-          // Se ainda não temos essa tag (em minúsculas), ou se o nome atual é do idioma correto
-          if (!tagsMap.has(lowerCaseTag)) {
-              tagsMap.set(lowerCaseTag, currentTag);
-          }
+      // 1. Tenta usar a tag do idioma atual para exibição
+      let tagDisplay = t[langKey];
+      let tagLower = tagDisplay ? tagDisplay.toLowerCase() : null;
+
+      // 2. Se não houver tag no idioma atual, usa a tag do outro idioma para evitar duplicidade
+      if (!tagDisplay && t[otherLangKey]) {
+          tagDisplay = t[otherLangKey];
+          tagLower = tagDisplay.toLowerCase();
       }
-      // Adiciona também a tag do idioma oposto, se não for igual, para garantir a unicidade de tags
-      const otherLangKey = window.currentLang === 'en' ? 'categoria' : 'categoria_en';
-      const otherTag = t[otherLangKey];
-      if (otherTag && otherTag.toLowerCase() !== (t[langKey] || t[defaultLangKey]).toLowerCase()) {
-          const lowerCaseOtherTag = otherTag.toLowerCase();
-          if (!tagsMap.has(lowerCaseOtherTag)) {
-              // Usa o nome da tag do idioma atual como fallback para exibição no mapa
-              tagsMap.set(lowerCaseOtherTag, otherTag);
-          }
+      
+      if (tagDisplay) {
+          // Usa o nome traduzido para o display (ex: se o currentLang é PT e a tag é "Short Story", traduz para "Conto")
+          const translatedDisplay = translate(tagDisplay) || tagDisplay;
+          
+          // A chave do Map é o nome em minúsculas (do idioma de exibição)
+          tagsMap.set(translatedDisplay.toLowerCase(), translatedDisplay);
       }
   });
 
@@ -188,8 +234,8 @@ function montarHome() {
     // Pega o nome correto para exibição
     const displayTag = tagsMap.get(tagLower) || tagLower;
     
-    // Linka para a página de catálogo e passa o nome da tag em minúsculas como parâmetro
-    tagEl.href = `catalogo.html?tag=${encodeURIComponent(tagLower)}`; 
+    // Linka para a página de catálogo e passa o nome da tag em minúsculas como parâmetro para o filtro
+    tagEl.href = `catalogo.html?tag=${encodeURIComponent(tagLower)}&lang=${window.currentLang}`; 
     
     tagEl.textContent = `#${displayTag}`;
     
@@ -205,7 +251,7 @@ function montarHome() {
   // 4. Botão "Ver todos os textos"
   const lerTodosBtn = $('#btn-ler-todos');
   if (lerTodosBtn) {
-    lerTodosBtn.href = 'catalogo.html?tag=Todos';
+    lerTodosBtn.href = `catalogo.html?tag=Todos&lang=${window.currentLang}`;
   }
 }
 
@@ -258,7 +304,6 @@ function fecharModal() {
 function criarCardCatalogo(t) {
     const langSuffix = window.currentLang === 'en' ? '_en' : '';
     const titulo = t['titulo' + langSuffix] || t.titulo;
-    const categoria = t['categoria' + langSuffix] || t.categoria;
     const resumo = t['resumo' + langSuffix] || t.resumo;
     
     return `
@@ -284,11 +329,17 @@ function montarCatalogo(filtroBusca = '') {
   
   if (tagFilterValue !== 'todos') {
     textosFiltrados = textosFiltrados.filter(t => {
-      // Filtra usando a tag em minúsculas (igual ao que vem da URL/clique)
+      // O filtro é feito comparando o valor em minúsculas (da URL/clique)
       const ptMatch = t.categoria && t.categoria.toLowerCase() === tagFilterValue;
       const enMatch = t.categoria_en && t.categoria_en.toLowerCase() === tagFilterValue;
       
-      return ptMatch || enMatch;
+      // O filtro também deve funcionar se o nome da tag em PT traduzido para EN (ou vice-versa) for igual ao filtro
+      // Ex: filtroTagAtual = 'conto', deve achar 'Short Story' se a tradução de 'conto' for 'short story'
+      const translatedFilter = translate(tagFilterValue).toLowerCase();
+      const ptMatchTranslated = t.categoria && t.categoria.toLowerCase() === translatedFilter;
+      const enMatchTranslated = t.categoria_en && t.categoria_en.toLowerCase() === translatedFilter;
+      
+      return ptMatch || enMatch || ptMatchTranslated || enMatchTranslated;
     });
   }
   
@@ -315,30 +366,25 @@ function montarCatalogo(filtroBusca = '') {
   }
   
   // 3. Renderização e Eventos das Tags de Filtro
-  // 🟢 CORREÇÃO DE TAGS CATÁLOGO: Garante unicidade e exibe no idioma correto
-  const tagsMap = new Map(); // Key: tag em minúscula, Value: tag no idioma atual
+  // CORREÇÃO: Garante unicidade e exibe no idioma correto
+  const tagsMap = new Map(); 
   const langKey = window.currentLang === 'en' ? 'categoria_en' : 'categoria';
-  const defaultLangKey = 'categoria';
+  const otherLangKey = window.currentLang === 'en' ? 'categoria' : 'categoria_en';
   
   window.textos.forEach(t => {
-      // 1. Mapeia a tag no idioma atual para exibição
-      const currentTag = t[langKey] || t[defaultLangKey];
-      if (currentTag) {
-          const lowerCaseTag = currentTag.toLowerCase();
-          // Garante que a tag no idioma atual seja usada como o nome a ser exibido
-          tagsMap.set(lowerCaseTag, currentTag);
-      }
+      let tagDisplay = t[langKey]; 
 
-      // 2. Mapeia a tag no idioma alternativo (se houver), usando-a como nome
-      // Isso garante que se uma tag só existir em 'en', ela seja exibida em 'en'
-      const otherLangKey = window.currentLang === 'en' ? 'categoria' : 'categoria_en';
-      const otherTag = t[otherLangKey];
-      if (otherTag) {
-          const lowerCaseOtherTag = otherTag.toLowerCase();
-          // Só adiciona se o nome em minúsculas ainda não foi mapeado (para evitar duplicatas)
-          if (!tagsMap.has(lowerCaseOtherTag)) {
-              tagsMap.set(lowerCaseOtherTag, otherTag);
-          }
+      if (!tagDisplay) {
+          // Se não há tag no idioma atual, usa a do outro idioma (mas armazena a tradução)
+          tagDisplay = t[otherLangKey];
+      }
+      
+      if (tagDisplay) {
+          // Usa o nome traduzido para o display. Ex: Se currentLang=PT, traduz 'Short Story' para 'Conto'
+          const translatedDisplay = translate(tagDisplay) || tagDisplay;
+          
+          // A chave do Map é o nome traduzido em minúsculas (para garantir unicidade de exibição)
+          tagsMap.set(translatedDisplay.toLowerCase(), translatedDisplay);
       }
   });
 
@@ -351,7 +397,9 @@ function montarCatalogo(filtroBusca = '') {
   allPill.className = 'tag-pill';
   allPill.href = 'javascript:void(0);';
   allPill.textContent = translate('all_tags') || 'Todos'; 
-  if (tagFilterValue === 'todos') {
+  
+  // A classe 'active' é baseada no filtroTagAtual (em minúsculas)
+  if (filtroTagAtual.toLowerCase() === 'todos') {
       allPill.classList.add('active');
   }
   allPill.addEventListener('click', () => {
@@ -365,25 +413,23 @@ function montarCatalogo(filtroBusca = '') {
     tagEl.className = 'tag-pill';
     tagEl.href = 'javascript:void(0);'; 
     
-    // Pega o nome correto para exibição (nome mapeado)
+    // Pega o nome correto para exibição (nome mapeado/traduzido)
     const displayTag = tagsMap.get(tagLower) || tagLower;
     
-    // O filtro ativo deve corresponder ao valor em minúsculas (tagLower)
-    if (tagFilterValue === tagLower) {
+    // O filtro ativo corresponde ao nome em minúsculas da tag que está sendo exibida (displayTag)
+    if (filtroTagAtual.toLowerCase() === displayTag.toLowerCase()) {
         tagEl.classList.add('active');
     }
     
     tagEl.textContent = `#${displayTag}`;
     
     tagEl.addEventListener('click', () => {
-        const novoFiltro = (filtroTagAtual.toLowerCase() === tagLower) ? 'Todos' : displayTag;
-        
-        // Se for "Todos", a variável interna deve ser 'Todos'. Senão, usa o nome do display (que é no idioma correto)
-        if (novoFiltro === 'Todos') {
+        // Se a tag clicada for a tag ativa (comparada pelo nome de exibição em minúsculas), desativa
+        if (filtroTagAtual.toLowerCase() === displayTag.toLowerCase()) {
             filtroTagAtual = 'Todos';
         } else {
-            // Usa o nome em minúsculas (tagLower) para o filtro interno, pois a comparação no filtro (1a) usa ele
-            filtroTagAtual = tagLower;
+            // Define o filtroTagAtual como o nome de exibição (traduzido), que é o que deve ser comparado
+            filtroTagAtual = displayTag;
         }
 
         montarCatalogo(document.getElementById('barra-busca').value); 
