@@ -24,9 +24,9 @@ function escapeHtml(text){
 
 /* ================== TRADUÇÃO ================== */
 
-// Adicionando traduções para Crônica/Chronicle, Conto/Short Story
 window.translations = {
     pt: {
+        site_title: 'Meu Cantinho',
         home: 'Início',
         favorites: 'Textos Favoritos',
         tags: 'Tags',
@@ -46,6 +46,7 @@ window.translations = {
         'chronicle': 'Crônica',
     },
     en: {
+        site_title: 'My Author Corner',
         home: 'Home',
         favorites: 'Favorite Texts',
         tags: 'Tags',
@@ -71,17 +72,21 @@ function translate(key) {
     if (!window.translations || !window.translations[window.currentLang]) {
         return key;
     }
+    // Tenta encontrar a chave exata ou a chave em minúsculas
     return window.translations[window.currentLang][key.toLowerCase()] || window.translations[window.currentLang][key] || key;
 }
 
-// Aplica a tradução a todos os elementos com o atributo data-lang-key
+// Aplica a tradução a todos os elementos com o atributo data-lang-key e dinâmicos
 function applyTranslations() {
     const lang = window.currentLang;
     const t = window.translations[lang];
     if (!t) return;
 
     // 1. Títulos principais e Placeholders
-    const catalogoPageTitle = $('#catalogo-page-title');
+    const sitePageTitle = $('#site-page-title'); // Título da aba Home
+    if (sitePageTitle) sitePageTitle.textContent = translate('site_title') || 'Meu Cantinho';
+
+    const catalogoPageTitle = $('#catalogo-page-title'); // Título da aba Catálogo
     const catalogoHeaderTitle = $('#catalogo-header-title');
     const tagsFiltroLabel = $('#tags-filtro-label');
     const barraBusca = $('#barra-busca');
@@ -92,11 +97,15 @@ function applyTranslations() {
     if (tagsFiltroLabel) tagsFiltroLabel.textContent = translate('filter_by_tag');
     if (barraBusca) barraBusca.placeholder = translate('search_placeholder');
     
-    // Elementos da Home
-    const homePageTitle = $('#site-page-title');
-    if (homePageTitle) homePageTitle.textContent = translate('site_title') || 'Meu Cantinho Autoral';
+    // 2. Navegação e Textos com data-lang-key
+    $$('[data-lang-key]').forEach(el => {
+        const key = el.getAttribute('data-lang-key');
+        if (t[key]) {
+            el.textContent = t[key];
+        }
+    });
     
-    // Conteúdo fixo da Home (usando fallback simples, pois não há chaves de tradução para eles)
+    // 3. Conteúdo fixo da Home (para as frases mais longas)
     if ($('#inicio')) {
         $('#home-inicio-text').textContent = (lang === 'en') 
             ? 'Welcome to my little corner — here you will find all my texts, reflections, and stories. 💛' 
@@ -109,15 +118,7 @@ function applyTranslations() {
             : 'Quer conversar, trocar ideias ou sugerir algo? Entre em contato comigo! 💬';
     }
 
-    // 2. Navegação e Textos com data-lang-key
-    $$('[data-lang-key]').forEach(el => {
-        const key = el.getAttribute('data-lang-key');
-        if (t[key]) {
-            el.textContent = t[key];
-        }
-    });
-    
-    // 3. Re-renderizar conteúdo dinâmico (tags e cards)
+    // 4. Re-renderizar conteúdo dinâmico (tags e cards)
     if ($('#lista-textos')) {
         montarCatalogo(qs('busca') || '');
     }
@@ -135,26 +136,35 @@ function setupLanguageSwitch(selectId) {
             // Atualiza o parâmetro na URL para persistir o idioma
             const u = new URL(window.location.href);
             u.searchParams.set('lang', window.currentLang);
-            // Mantém o filtro de tag na URL
-            if (filtroTagAtual !== 'Todos') {
+            
+            // Redireciona para a Home ou Catálogo, mantendo o filtro de tag se estiver no Catálogo
+            if (window.location.pathname.includes('catalogo.html')) {
                  u.searchParams.set('tag', filtroTagAtual);
+            } else {
+                 u.searchParams.delete('tag');
             }
             history.replaceState({}, '', u.toString());
             
+            // Re-aplica as traduções e re-monta o conteúdo dinâmico
             applyTranslations();
         });
     }
 }
 
 function setupInitialLanguage() {
-    // Tenta obter o idioma do seletor de idioma na URL ou usa 'pt'
+    // 1. Tenta obter o idioma da URL
     const langFromUrl = qs('lang');
-    const langSelect = $('#lang-switch') || $('#lang-switch-home');
+    
+    // 2. Se não houver, tenta obter do seletor da Home ou Catálogo
+    const langSelectHome = $('#lang-switch-home');
+    const langSelectCatalogo = $('#lang-switch');
     
     if (langFromUrl && ['pt', 'en'].includes(langFromUrl)) {
         window.currentLang = langFromUrl;
-    } else if (langSelect) {
-        window.currentLang = langSelect.value;
+    } else if (langSelectHome) {
+        window.currentLang = langSelectHome.value;
+    } else if (langSelectCatalogo) {
+        window.currentLang = langSelectCatalogo.value;
     } else {
         window.currentLang = 'pt';
     }
@@ -171,6 +181,7 @@ function setupInitialLanguage() {
 
 // HELPER: Cria o HTML do card favorito
 function criarCardFavorito(t) {
+    // Tenta buscar o texto no idioma atual, senão usa o PT como fallback
     const langSuffix = window.currentLang === 'en' ? '_en' : '';
     const titulo = t['titulo' + langSuffix] || t.titulo;
     const resumo = t['resumo' + langSuffix] || t.resumo;
@@ -198,27 +209,24 @@ function montarHome() {
   });
   
   // 2. Tags da Home
-  // CORREÇÃO: Garante unicidade e exibe no idioma correto
-  const tagsMap = new Map(); // Key: tag em minúscula (do idioma atual ou fallback), Value: tag para exibição
+  // Usa um Map para garantir unicidade e exibir no idioma correto
+  const tagsMap = new Map(); // Key: tag em minúscula (do idioma atual), Value: tag para exibição
   const langKey = window.currentLang === 'en' ? 'categoria_en' : 'categoria';
   const otherLangKey = window.currentLang === 'en' ? 'categoria' : 'categoria_en';
   
   window.textos.forEach(t => {
-      // 1. Tenta usar a tag do idioma atual para exibição
       let tagDisplay = t[langKey];
-      let tagLower = tagDisplay ? tagDisplay.toLowerCase() : null;
-
-      // 2. Se não houver tag no idioma atual, usa a tag do outro idioma para evitar duplicidade
+      
+      // Se a tag do idioma atual não existe, usa o PT (ou EN)
       if (!tagDisplay && t[otherLangKey]) {
           tagDisplay = t[otherLangKey];
-          tagLower = tagDisplay.toLowerCase();
       }
       
       if (tagDisplay) {
-          // Usa o nome traduzido para o display (ex: se o currentLang é PT e a tag é "Short Story", traduz para "Conto")
+          // Traduz para o idioma atual (ex: se currentLang=PT, traduz 'Short Story' para 'Conto')
           const translatedDisplay = translate(tagDisplay) || tagDisplay;
           
-          // A chave do Map é o nome em minúsculas (do idioma de exibição)
+          // A chave do Map é o nome traduzido em minúsculas (para unicidade)
           tagsMap.set(translatedDisplay.toLowerCase(), translatedDisplay);
       }
   });
@@ -231,7 +239,7 @@ function montarHome() {
     const tagEl = document.createElement('a');
     tagEl.className = 'tag-pill';
     
-    // Pega o nome correto para exibição
+    // Pega o nome correto para exibição (valor do Map)
     const displayTag = tagsMap.get(tagLower) || tagLower;
     
     // Linka para a página de catálogo e passa o nome da tag em minúsculas como parâmetro para o filtro
@@ -264,6 +272,7 @@ function abrirModalPorId(id) {
   const overlay = $('.modal-overlay');
   if (!overlay) return;
 
+  // Seleciona o título e conteúdo no idioma atual
   const langSuffix = window.currentLang === 'en' ? '_en' : '';
   const titulo = t['titulo' + langSuffix] || t.titulo;
   const conteudo = t['conteudo' + langSuffix] || t.conteudo;
@@ -280,10 +289,11 @@ function abrirModalPorId(id) {
   overlay.style.display = 'flex';
   document.body.style.overflow = 'hidden';
   
-  const u = new URL(window.location.href);
-  u.searchParams.set('abrir', id);
+  // Atualiza o parâmetro 'abrir' na URL apenas se estiver no catálogo
   if (window.location.pathname.includes('catalogo.html')) {
-    history.replaceState({}, '', u.toString());
+      const u = new URL(window.location.href);
+      u.searchParams.set('abrir', id);
+      history.replaceState({}, '', u.toString());
   }
 }
 
@@ -293,6 +303,7 @@ function fecharModal() {
     overlay.style.display = 'none';
     document.body.style.overflow = '';
   }
+  // Limpa o parâmetro 'abrir' da URL
   const u = new URL(window.location.href);
   u.searchParams.delete('abrir');
   history.replaceState({}, '', u.toString());
@@ -302,6 +313,7 @@ function fecharModal() {
 
 // HELPER: Cria o HTML do card de texto para o catálogo
 function criarCardCatalogo(t) {
+    // Tenta buscar o texto no idioma atual, senão usa o PT como fallback
     const langSuffix = window.currentLang === 'en' ? '_en' : '';
     const titulo = t['titulo' + langSuffix] || t.titulo;
     const resumo = t['resumo' + langSuffix] || t.resumo;
@@ -334,10 +346,9 @@ function montarCatalogo(filtroBusca = '') {
       const enMatch = t.categoria_en && t.categoria_en.toLowerCase() === tagFilterValue;
       
       // O filtro também deve funcionar se o nome da tag em PT traduzido para EN (ou vice-versa) for igual ao filtro
-      // Ex: filtroTagAtual = 'conto', deve achar 'Short Story' se a tradução de 'conto' for 'short story'
       const translatedFilter = translate(tagFilterValue).toLowerCase();
-      const ptMatchTranslated = t.categoria && t.categoria.toLowerCase() === translatedFilter;
-      const enMatchTranslated = t.categoria_en && t.categoria_en.toLowerCase() === translatedFilter;
+      const ptMatchTranslated = t.categoria && translate(t.categoria).toLowerCase() === translatedFilter;
+      const enMatchTranslated = t.categoria_en && translate(t.categoria_en).toLowerCase() === translatedFilter;
       
       return ptMatch || enMatch || ptMatchTranslated || enMatchTranslated;
     });
@@ -347,6 +358,7 @@ function montarCatalogo(filtroBusca = '') {
   if (filtroBusca) {
     const termo = filtroBusca.toLowerCase();
     textosFiltrados = textosFiltrados.filter(t => {
+      // Busca em PT e EN
       const ptMatch = (t.titulo && t.titulo.toLowerCase().includes(termo)) || 
                       (t.resumo && t.resumo.toLowerCase().includes(termo)) || 
                       (t.conteudo && t.conteudo.toLowerCase().includes(termo));
@@ -366,7 +378,7 @@ function montarCatalogo(filtroBusca = '') {
   }
   
   // 3. Renderização e Eventos das Tags de Filtro
-  // CORREÇÃO: Garante unicidade e exibe no idioma correto
+  // CORREÇÃO: Garante unicidade e exibe no idioma correto (a lógica foi refeita no prompt anterior e está mantida)
   const tagsMap = new Map(); 
   const langKey = window.currentLang === 'en' ? 'categoria_en' : 'categoria';
   const otherLangKey = window.currentLang === 'en' ? 'categoria' : 'categoria_en';
@@ -375,15 +387,14 @@ function montarCatalogo(filtroBusca = '') {
       let tagDisplay = t[langKey]; 
 
       if (!tagDisplay) {
-          // Se não há tag no idioma atual, usa a do outro idioma (mas armazena a tradução)
           tagDisplay = t[otherLangKey];
       }
       
       if (tagDisplay) {
-          // Usa o nome traduzido para o display. Ex: Se currentLang=PT, traduz 'Short Story' para 'Conto'
+          // Traduz para o idioma atual
           const translatedDisplay = translate(tagDisplay) || tagDisplay;
           
-          // A chave do Map é o nome traduzido em minúsculas (para garantir unicidade de exibição)
+          // Chave do Map é o nome traduzido em minúsculas (para unicidade)
           tagsMap.set(translatedDisplay.toLowerCase(), translatedDisplay);
       }
   });
@@ -398,7 +409,6 @@ function montarCatalogo(filtroBusca = '') {
   allPill.href = 'javascript:void(0);';
   allPill.textContent = translate('all_tags') || 'Todos'; 
   
-  // A classe 'active' é baseada no filtroTagAtual (em minúsculas)
   if (filtroTagAtual.toLowerCase() === 'todos') {
       allPill.classList.add('active');
   }
@@ -416,7 +426,6 @@ function montarCatalogo(filtroBusca = '') {
     // Pega o nome correto para exibição (nome mapeado/traduzido)
     const displayTag = tagsMap.get(tagLower) || tagLower;
     
-    // O filtro ativo corresponde ao nome em minúsculas da tag que está sendo exibida (displayTag)
     if (filtroTagAtual.toLowerCase() === displayTag.toLowerCase()) {
         tagEl.classList.add('active');
     }
@@ -424,11 +433,9 @@ function montarCatalogo(filtroBusca = '') {
     tagEl.textContent = `#${displayTag}`;
     
     tagEl.addEventListener('click', () => {
-        // Se a tag clicada for a tag ativa (comparada pelo nome de exibição em minúsculas), desativa
         if (filtroTagAtual.toLowerCase() === displayTag.toLowerCase()) {
             filtroTagAtual = 'Todos';
         } else {
-            // Define o filtroTagAtual como o nome de exibição (traduzido), que é o que deve ser comparado
             filtroTagAtual = displayTag;
         }
 
@@ -474,13 +481,24 @@ function setupHamburguerCatalogo(){
   const fechar = $('#fechar-menu');
   if(!abrir || !menu) return;
 
-  abrir.addEventListener('click', () => menu.classList.add('ativo'));
-  if(fechar) fechar.addEventListener('click', () => menu.classList.remove('ativo'));
+  // Lógica de Abrir/Fechar
+  const toggleMenu = (open) => {
+    if (open) {
+        menu.classList.add('ativo');
+        document.body.style.overflow = 'hidden';
+    } else {
+        menu.classList.remove('ativo');
+        document.body.style.overflow = '';
+    }
+  };
+
+  abrir.addEventListener('click', () => toggleMenu(true));
+  if(fechar) fechar.addEventListener('click', () => toggleMenu(false));
   
+  // Fecha o menu ao clicar fora
   window.addEventListener('click', (e) => {
-    // Fecha o menu se ele estiver ativo E se o clique não foi no próprio menu ou no botão de abrir
     if(menu.classList.contains('ativo') && !menu.contains(e.target) && e.target !== abrir){
-      menu.classList.remove('ativo');
+      toggleMenu(false);
     }
   });
 }
@@ -519,6 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Se houver parâmetro 'abrir' na URL, abre o modal
   const openId = qs('abrir');
   if (openId) {
-      abrirModalPorId(openId);
+    // Timeout para garantir que o DOM esteja carregado/renderizado antes de abrir
+    setTimeout(() => abrirModalPorId(openId), 50); 
   }
 });
