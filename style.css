@@ -73,12 +73,12 @@ a:hover {
   margin-bottom: 0;
 }
 
-/* ===== HEADER HOME (NOVO LAYOUT) ===== */
+/* ===== HEADER HOME (Layout Corrigido) ===== */
 .header-home {
   display: flex;
   align-items: center;
-  /* MUDANÇA 1: Alinha tudo à esquerda para usarmos o flex-grow no .header-right */
-  justify-content: flex-start;
+  /* Alinha os itens na horizontal */
+  justify-content: flex-start; 
   background-color: #fff3b3;
   padding: 12px 20px;
   border-bottom: 3px solid #ffdb4d;
@@ -87,25 +87,23 @@ a:hover {
   z-index: 10;
 }
 
-/* NOVO: Container para Atalhos e Seletor de Idioma */
-.header-right {
+/* NOVO: Container para Atalhos (Centro) e Idioma (Direita) */
+.header-content {
     display: flex;
     align-items: center;
-    /* MUDANÇA 2: Coloca atalhos à esquerda (centro) e idioma à direita */
-    justify-content: space-between; 
-    /* MUDANÇA 3: Ocupa todo o espaço restante para centralizar a nav */
-    flex-grow: 1; 
+    justify-content: space-between; /* Espaçamento entre Nav e Seletor */
+    flex-grow: 1; /* Ocupa todo o espaço restante para centralizar a nav */
 }
 
 .header-home .titulo-site {
   /* Mantém o h1 no canto esquerdo */
   font-size: 1.5rem;
-  margin: 0 30px 0 0; /* Espaço após o título */
+  margin: 0 30px 0 0; /* Espaço após o título para separar do nav */
   color: #b38b00;
 }
 
 .header-home .atalhos {
-  /* Atalhos centralizados dentro do .header-right */
+  /* Atalhos centralizados dentro do .header-content */
   display: flex;
   gap: 20px;
   font-size: 1rem;
@@ -116,7 +114,7 @@ a:hover {
     font-size: 0.95rem;
     font-weight: 500;
     color: #b38b00;
-    /* A margin-left foi removida pois o space-between no .header-right faz o espaçamento */
+    /* A margem foi removida ou é gerenciada pelo .header-content */
 }
 
 
@@ -393,24 +391,4 @@ a:hover {
   cursor: pointer;
   text-align: right;
   padding: 10px 0 20px;
-}
-
-/* ===== RESPONSIVIDADE ===== */
-
-@media (max-width: 768px) {
-  /* Oculta os atalhos da Home em telas pequenas */
-  .header-home .atalhos {
-    display: none;
-  }
-  
-  /* Ajusta o .header-right para ocupar o espaço e mover o idioma para a direita */
-  .header-home .header-right {
-      justify-content: flex-end; /* Move o seletor de idioma para a extrema direita */
-  }
-
-  /* Centraliza o título no Catálogo quando o menu hamburger está visível */
-  .header-catalogo .titulo-catalogo {
-    margin: 0 auto;
-    padding-left: 0;
-  }
 }
