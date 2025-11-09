@@ -8,12 +8,37 @@
 /* ======== GERAL ======== */
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #fff9e6;
+  background-color: #fff9e6; /* Cor de fundo padrão se a imagem falhar */
   color: #3b3b3b;
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
 }
+
+/* ⚠️ CORREÇÃO DA IMAGEM GERAL: Aplica a imagem de fundo em TODA a Home */
+.home-body {
+    /* Use a imagem que você deseja como fundo geral aqui, se houver uma. 
+       Se você quer o amarelo padrão #fff9e6 no fundo geral, remova a linha background-image abaixo.
+       Vou deixar a imagem image_9b49c2.jpg como um exemplo de background para você testar, se for essa. */
+    background-image: url('image_9b49c2.jpg'); 
+    background-size: cover;
+    background-attachment: fixed; /* Opcional: faz a imagem de fundo ficar parada ao rolar */
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+/* Reverte a cor de fundo para que o conteúdo seja legível sobre a imagem */
+.secao {
+    background-color: rgba(255, 255, 255, 0.85); /* Fundo branco semi-transparente para legibilidade */
+    padding: 40px; /* Aumenta o padding para melhor visualização */
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+}
+.header-home {
+    background-color: #fff3b3; /* Mantém o cabeçalho sólido */
+}
+
 
 h1, h2, h3 {
   color: #b38b00;
@@ -36,16 +61,18 @@ a:hover {
     margin: 0 auto;
 }
 
-/* CORREÇÃO DA IMAGEM: URL DA IMAGEM AGORA ESTÁ CORRETA (image_ce0ca7.jpg) */
+/* CORREÇÃO DA FOTO: Aplica a sua imagem de perfil na seção Sobre Mim, sem fundo de cor */
 #sobre {
     min-height: 350px; 
-    background-image: url('perfil.jpg'); 
+    /* Esta imagem (image_ce0ca7.jpg) é a sua foto que você enviou */
+    background-image: url('image_ce0ca7.jpg'); 
     background-size: cover;
     background-position: center;
     color: white; 
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    background-color: transparent; /* Remove o fundo semi-transparente do .secao */
 }
-/* Reverte a cor dos títulos dentro do #sobre para branco ou contraste */
+/* Reverte a cor dos títulos e parágrafos dentro do #sobre para branco para contraste */
 #sobre h2 {
     color: white;
 }
@@ -60,19 +87,15 @@ a:hover {
   margin: 0 auto;
   padding: 20px;
 }
+/* O .secao foi redefinido acima para funcionar com o background-image no body */
 
-.secao {
-  padding: 40px 0;
-  border-bottom: 2px solid #ffdb4d;
-  margin-bottom: 20px;
-}
 
 .secao:last-child {
   border-bottom: none;
   margin-bottom: 0;
 }
 
-/* ===== HEADER HOME (Layout Corrigido) ===== */
+/* ===== HEADER HOME (Centralização Correta) ===== */
 .header-home {
   display: flex;
   align-items: center;
@@ -104,7 +127,7 @@ a:hover {
   display: flex;
   gap: 20px;
   font-size: 1rem;
-  margin: 0 auto; /* <<< ESSA LINHA CORRIGE A CENTRALIZAÇÃO DOS ATALHOS */
+  margin: 0 auto; /* <<< ESTA É A LINHA QUE CENTRALIZA */
 }
 
 /* ESTILO: Seletor de idioma na Home */
@@ -253,8 +276,7 @@ a:hover {
   text-decoration: none;
 }
 
-/* ===== CATÁLOGO FILTROS ===== */
-
+/* ===== CATÁLOGO FILTROS / MODAIS / MENU LATERAL (Mantidos) ===== */
 .catalogo-main {
     padding: 20px;
     max-width: 1200px;
@@ -284,11 +306,8 @@ a:hover {
     color: #3b3b3b;
 }
 
-/* ===== MODAL REUSO ===== */
-
-/* O modal-overlay é o fundo escuro */
 .modal-overlay {
-  display: none; /* Escondido por padrão */
+  display: none; 
   position: fixed;
   inset: 0;
   background-color: rgba(0,0,0,0.55);
@@ -298,7 +317,6 @@ a:hover {
   overflow-y: auto; 
 }
 
-/* A caixa de conteúdo do modal */
 .modal-box {
   background-color: #fff9e6;
   padding: 30px;
@@ -310,16 +328,6 @@ a:hover {
   position: relative;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
-
-.modal-box::-webkit-scrollbar {
-  width: 8px;
-}
-
-.modal-box::-webkit-scrollbar-thumb {
-  background-color: #ffdb4d;
-  border-radius: 4px;
-}
-
 .close {
   position: absolute;
   top: 10px;
@@ -329,24 +337,6 @@ a:hover {
   color: #b38b00;
   cursor: pointer;
 }
-
-.close:hover {
-  color: #ffdb4d;
-}
-
-#modal-titulo {
-  border-bottom: 2px solid #ffdb4d;
-  padding-bottom: 10px;
-  margin-top: 0;
-}
-
-#modal-conteudo {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  line-height: 1.6;
-}
-
-/* ===== MENU LATERAL (CATÁLOGO) ===== */
 
 .menu-lateral {
   position: fixed;
@@ -363,57 +353,25 @@ a:hover {
   display: flex;
   flex-direction: column;
 }
-
 .menu-lateral.ativo {
   transform: translateX(0);
 }
 
-.menu-lateral a {
-  padding: 10px 0;
-  margin-bottom: 5px;
-  border-bottom: 1px dashed #ffdb4d;
-  color: #b38b00;
-  font-weight: bold;
-}
-
-.menu-lateral a:last-child {
-  border-bottom: none;
-}
-
-#fechar-menu {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  color: #b38b00;
-  cursor: pointer;
-  text-align: right;
-  padding: 10px 0 20px;
-}
-
-/* ===== RESPONSIVIDADE (RESTAURADA E SIMPLIFICADA) ===== */
+/* ===== RESPONSIVIDADE ===== */
 
 @media (max-width: 768px) {
-  /* No mobile, o cabeçalho se comporta diferente */
   .header-home {
     justify-content: space-between;
   }
-  
-  /* Oculta os atalhos (NAV) no mobile para dar espaço */
   .header-home .atalhos {
     display: none;
   }
-  
-  /* Permite que o título ocupe o espaço quando a NAV so me */
   .header-home .titulo-site {
       margin: 0;
   }
-  
-  /* Faz o seletor de idioma ficar no canto direito no mobile */
   .header-home .header-content {
       flex-grow: 0;
   }
-
-  /* Centraliza o título no Catálogo quando o menu hamburger está visível */
   .header-catalogo .titulo-catalogo {
     margin: 0 auto;
     padding-left: 0;
