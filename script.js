@@ -75,7 +75,7 @@ function applyTranslations() {
     // 3. Re-renderizar conteúdo dinâmico
     if ($('#lista-textos')) {
         const busca = $('#barra-busca') ? $('#barra-busca').value : '';
-        filtroTagAtual = 'Todos'; // Resetar tag ao mudar de idioma
+        // Não reseta filtroTagAtual aqui, pois o filtro pode ser baseado na tag em inglês (ex: 'Short Story')
         montarCatalogo(busca);
     }
     if ($('#lista-favoritos')) {
@@ -86,9 +86,14 @@ function applyTranslations() {
 function setupLanguageSwitch(selectId) {
     const selector = $(selectId);
     if (selector) {
-        selector.value = window.currentLang; // Define o valor inicial
+        selector.value = window.currentLang; 
         selector.addEventListener('change', (e) => {
             window.currentLang = e.target.value;
+            // Atualiza o parâmetro na URL
+            const u = new URL(window.location.href);
+            u.searchParams.set('lang', window.currentLang);
+            history.replaceState({}, '', u.toString());
+            
             applyTranslations();
         });
     }
@@ -146,28 +151,46 @@ function montarHome() {
   });
   
   // 2. Tags da Home
-  const todasCategorias = [
-    ...window.textos.map(t => t.categoria).filter(Boolean),
-    ...window.textos.map(t => t.categoria_en).filter(Boolean)
-  ];
-  const tagsUnicas = [...new Set(todasCategorias.map(t => t.toLowerCase()))].sort(); 
+  // 🟢 CORREÇÃO DE TAGS HOME: Garantir unicidade usando o nome em minúsculas (em qualquer idioma)
+  const tagsMap = new Map(); // Key: tag em minúscula, Value: tag no idioma atual
+  const langKey = window.currentLang === 'en' ? 'categoria_en' : 'categoria';
+  const defaultLangKey = 'categoria'; // Fallback para PT
+  
+  window.textos.forEach(t => {
+      const currentTag = t[langKey] || t[defaultLangKey];
+      if (currentTag) {
+          const lowerCaseTag = currentTag.toLowerCase();
+          // Se ainda não temos essa tag (em minúsculas), ou se o nome atual é do idioma correto
+          if (!tagsMap.has(lowerCaseTag)) {
+              tagsMap.set(lowerCaseTag, currentTag);
+          }
+      }
+      // Adiciona também a tag do idioma oposto, se não for igual, para garantir a unicidade de tags
+      const otherLangKey = window.currentLang === 'en' ? 'categoria' : 'categoria_en';
+      const otherTag = t[otherLangKey];
+      if (otherTag && otherTag.toLowerCase() !== (t[langKey] || t[defaultLangKey]).toLowerCase()) {
+          const lowerCaseOtherTag = otherTag.toLowerCase();
+          if (!tagsMap.has(lowerCaseOtherTag)) {
+              // Usa o nome da tag do idioma atual como fallback para exibição no mapa
+              tagsMap.set(lowerCaseOtherTag, otherTag);
+          }
+      }
+  });
+
+  const tagsUnicasSorted = Array.from(tagsMap.keys()).sort();
   
   tagsContainer.innerHTML = '';
 
-  tagsUnicas.forEach(tag => {
+  tagsUnicasSorted.forEach(tagLower => {
     const tagEl = document.createElement('a');
     tagEl.className = 'tag-pill';
-    // Linka para a página de catálogo e passa a tag como parâmetro na URL
-    tagEl.href = `catalogo.html?tag=${tag}`; 
     
-    // Tenta exibir o nome da categoria no idioma atual (se disponível)
-    const tagDisplayName = window.textos.find(t => 
-        (t.categoria && t.categoria.toLowerCase() === tag) || 
-        (t.categoria_en && t.categoria_en.toLowerCase() === tag)
-    );
-    const langKey = window.currentLang === 'en' ? 'categoria_en' : 'categoria';
-    const displayTag = tagDisplayName ? (tagDisplayName[langKey] || tagDisplayName.categoria) : tag;
-
+    // Pega o nome correto para exibição
+    const displayTag = tagsMap.get(tagLower) || tagLower;
+    
+    // Linka para a página de catálogo e passa o nome da tag em minúsculas como parâmetro
+    tagEl.href = `catalogo.html?tag=${encodeURIComponent(tagLower)}`; 
+    
     tagEl.textContent = `#${displayTag}`;
     
     tagsContainer.appendChild(tagEl);
@@ -205,7 +228,7 @@ function abrirModalPorId(id) {
   if (tituloEl && conteudoEl) {
     tituloEl.textContent = titulo;
     conteudoEl.innerHTML = escapeHtml(conteudo).replace(/\n/g, '<br>');
-    conteudoEl.scrollTop = 0; // Rola o modal para o topo
+    conteudoEl.scrollTop = 0; 
   }
 
   overlay.style.display = 'flex';
@@ -213,7 +236,6 @@ function abrirModalPorId(id) {
   
   const u = new URL(window.location.href);
   u.searchParams.set('abrir', id);
-  // Usa replaceState para não encher o histórico do navegador
   if (window.location.pathname.includes('catalogo.html')) {
     history.replaceState({}, '', u.toString());
   }
@@ -259,11 +281,15 @@ function montarCatalogo(filtroBusca = '') {
   
   // 1a. Filtro por Categoria (Tag)
   const tagFilterValue = filtroTagAtual.toLowerCase();
+  
   if (tagFilterValue !== 'todos') {
-    textosFiltrados = textosFiltrados.filter(t => 
-      (t.categoria && t.categoria.toLowerCase() === tagFilterValue) ||
-      (t.categoria_en && t.categoria_en.toLowerCase() === tagFilterValue)
-    );
+    textosFiltrados = textosFiltrados.filter(t => {
+      // Filtra usando a tag em minúsculas (igual ao que vem da URL/clique)
+      const ptMatch = t.categoria && t.categoria.toLowerCase() === tagFilterValue;
+      const enMatch = t.categoria_en && t.categoria_en.toLowerCase() === tagFilterValue;
+      
+      return ptMatch || enMatch;
+    });
   }
   
   // 1b. Filtro por Busca
@@ -289,22 +315,34 @@ function montarCatalogo(filtroBusca = '') {
   }
   
   // 3. Renderização e Eventos das Tags de Filtro
-  // CORREÇÃO DE TAGS: Garante a unicidade e exibe no idioma correto
-  const tagsSet = new Set();
-  const tagMap = new Map(); 
+  // 🟢 CORREÇÃO DE TAGS CATÁLOGO: Garante unicidade e exibe no idioma correto
+  const tagsMap = new Map(); // Key: tag em minúscula, Value: tag no idioma atual
+  const langKey = window.currentLang === 'en' ? 'categoria_en' : 'categoria';
+  const defaultLangKey = 'categoria';
   
   window.textos.forEach(t => {
-    // Adiciona as categorias em minúsculas ao Set (para unicidade)
-    if (t.categoria) tagsSet.add(t.categoria.toLowerCase());
-    if (t.categoria_en) tagsSet.add(t.categoria_en.toLowerCase());
+      // 1. Mapeia a tag no idioma atual para exibição
+      const currentTag = t[langKey] || t[defaultLangKey];
+      if (currentTag) {
+          const lowerCaseTag = currentTag.toLowerCase();
+          // Garante que a tag no idioma atual seja usada como o nome a ser exibido
+          tagsMap.set(lowerCaseTag, currentTag);
+      }
 
-    // Mapeia o nome da tag em minúscula para o nome exibível no idioma atual
-    const langKey = window.currentLang === 'en' ? 'categoria_en' : 'categoria';
-    const currentTag = t[langKey] || t.categoria;
-    if (currentTag) tagMap.set(currentTag.toLowerCase(), currentTag);
+      // 2. Mapeia a tag no idioma alternativo (se houver), usando-a como nome
+      // Isso garante que se uma tag só existir em 'en', ela seja exibida em 'en'
+      const otherLangKey = window.currentLang === 'en' ? 'categoria' : 'categoria_en';
+      const otherTag = t[otherLangKey];
+      if (otherTag) {
+          const lowerCaseOtherTag = otherTag.toLowerCase();
+          // Só adiciona se o nome em minúsculas ainda não foi mapeado (para evitar duplicatas)
+          if (!tagsMap.has(lowerCaseOtherTag)) {
+              tagsMap.set(lowerCaseOtherTag, otherTag);
+          }
+      }
   });
 
-  const tagsUnicas = Array.from(tagsSet).sort();
+  const tagsUnicasSorted = Array.from(tagsMap.keys()).sort();
   
   tagContainer.innerHTML = '';
   
@@ -322,32 +360,38 @@ function montarCatalogo(filtroBusca = '') {
   });
   tagContainer.appendChild(allPill);
 
-  tagsUnicas.forEach(tag => {
+  tagsUnicasSorted.forEach(tagLower => {
     const tagEl = document.createElement('a');
     tagEl.className = 'tag-pill';
     tagEl.href = 'javascript:void(0);'; 
     
-    // Usa o nome mapeado ou a tag em si
-    const displayTag = tagMap.get(tag) || tag;
+    // Pega o nome correto para exibição (nome mapeado)
+    const displayTag = tagsMap.get(tagLower) || tagLower;
     
-    if (filtroTagAtual.toLowerCase() === tag) {
+    // O filtro ativo deve corresponder ao valor em minúsculas (tagLower)
+    if (tagFilterValue === tagLower) {
         tagEl.classList.add('active');
     }
     
     tagEl.textContent = `#${displayTag}`;
     
     tagEl.addEventListener('click', () => {
-        if (filtroTagAtual.toLowerCase() === tag) {
+        const novoFiltro = (filtroTagAtual.toLowerCase() === tagLower) ? 'Todos' : displayTag;
+        
+        // Se for "Todos", a variável interna deve ser 'Todos'. Senão, usa o nome do display (que é no idioma correto)
+        if (novoFiltro === 'Todos') {
             filtroTagAtual = 'Todos';
         } else {
-            filtroTagAtual = displayTag; 
+            // Usa o nome em minúsculas (tagLower) para o filtro interno, pois a comparação no filtro (1a) usa ele
+            filtroTagAtual = tagLower;
         }
+
         montarCatalogo(document.getElementById('barra-busca').value); 
     });
     tagContainer.appendChild(tagEl);
   });
   
-  // 4. Reaplicar eventos de clique dos botões "Ler mais" (Fix do problema anterior)
+  // 4. Reaplicar eventos de clique dos botões "Ler mais"
   setupCatalogoInteractions();
 }
 
@@ -407,10 +451,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Lógica de Inicialização do Catálogo
   if($('#lista-textos')){
-    // Obtém o filtro de tag da URL, se existir (usado quando se clica em uma tag na Home)
+    // Obtém o filtro de tag da URL
     const tagFromUrl = qs('tag');
     if (tagFromUrl) {
-      filtroTagAtual = tagFromUrl;
+      filtroTagAtual = decodeURIComponent(tagFromUrl);
     }
     montarCatalogo(qs('busca') || ''); 
     setupHamburguerCatalogo(); 
