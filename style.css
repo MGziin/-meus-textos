@@ -36,14 +36,14 @@ a:hover {
     margin: 0 auto;
 }
 
-/* CORREÇÃO DA FOTO: Garante que a seção "Sobre Mim" tenha altura suficiente */
+/* RESTAURADO: Garante que a seção "Sobre Mim" tenha altura suficiente e a imagem de fundo */
 #sobre {
-    min-height: 350px; /* Altura mínima aumentada */
+    min-height: 350px; 
     /* ATENÇÃO: Adicione a URL da sua imagem de fundo/banner aqui: */
     background-image: url('CAMINHO_PARA_SUA_IMAGEM.jpg'); 
     background-size: cover;
     background-position: center;
-    color: white; /* Cor do texto em contraste com a imagem de fundo */
+    color: white; 
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 /* Reverte a cor dos títulos dentro do #sobre para branco ou contraste */
@@ -211,6 +211,7 @@ a:hover {
     padding-left: 5px;
 }
 
+/* RESTAURADO: Estilo para o botão de e-mail */
 .botao-catalogo {
     display: block;
     width: fit-content;
@@ -391,4 +392,34 @@ a:hover {
   cursor: pointer;
   text-align: right;
   padding: 10px 0 20px;
+}
+
+/* ===== RESPONSIVIDADE (RESTAURADA E SIMPLIFICADA) ===== */
+
+@media (max-width: 768px) {
+  /* No mobile, o cabeçalho se comporta diferente */
+  .header-home {
+    justify-content: space-between;
+  }
+  
+  /* Oculta os atalhos (NAV) no mobile para dar espaço */
+  .header-home .atalhos {
+    display: none;
+  }
+  
+  /* Permite que o título ocupe o espaço quando a NAV some */
+  .header-home .titulo-site {
+      margin: 0;
+  }
+  
+  /* Faz o seletor de idioma ficar no canto direito no mobile */
+  .header-home .header-content {
+      flex-grow: 0;
+  }
+
+  /* Centraliza o título no Catálogo quando o menu hamburger está visível */
+  .header-catalogo .titulo-catalogo {
+    margin: 0 auto;
+    padding-left: 0;
+  }
 }
