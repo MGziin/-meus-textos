@@ -36,25 +36,30 @@ a:hover {
     margin: 0 auto;
 }
 
-/* 🟢 CORREÇÃO: Aplicando a imagem de fundo na seção Sobre Mim */
-#sobre {
-    min-height: 400px; /* Altura mínima aumentada para a imagem aparecer */
-    
-    /* *** CORREÇÃO APLICADA *** */
-    /* Assumindo que o nome do arquivo é 'perfil.jpg' */
+/* 🟢 CORREÇÃO: FOTO DE FUNDO PARA INÍCIO E SOBRE */
+#secao-destaque {
+    /* Use 'perfil.jpg', 'foto-perfil.jpg' ou 'foto-perfil.png' */
     background-image: url('perfil.jpg'); 
-    
-    background-size: cover; /* Redimensiona para cobrir todo o espaço */
+    background-size: cover; 
     background-repeat: no-repeat;
     background-position: center;
-    /* Ajustes para o texto ser legível sobre a imagem (se a imagem for escura) */
-    color: white; 
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
 }
 
-#sobre h2 {
-    color: white; /* A cor do título deve ser legível sobre a imagem */
+/* Texto branco sobre a foto */
+#secao-destaque h2, #secao-destaque p {
+    color: white; 
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); 
 }
+
+#secao-destaque .secao {
+    min-height: 200px; 
+    border-bottom: none; 
+}
+
+#secao-destaque #sobre {
+    border-bottom: 2px solid #ffeb99; 
+}
+/* 🟢 FIM DAS MUDANÇAS DE DESTAQUE */
 
 
 /* ===== HEADER HOME ===== */
@@ -252,31 +257,47 @@ a:hover {
     background-color: #fffef2;
 }
 
-
-.menu {
-  display: none;
-  flex-direction: column;
-  background: #fff7cc;
-  padding: 10px 20px;
-  border-bottom: 2px solid #ffdb4d;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.menu.open {
+/* 🟢 CORREÇÃO: ESTILOS DO MENU HAMBURGUER (CATÁLOGO) */
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  left: -300px; /* Começa escondido */
+  width: 250px;
+  height: 100%;
+  background-color: #fff7cc;
+  padding: 20px;
+  z-index: 100;
+  border-right: 3px solid #ffdb4d;
+  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  transition: left 0.3s ease;
   display: flex;
+  flex-direction: column;
 }
 
-.menu a {
+.menu-lateral.ativo {
+  left: 0; /* Move para a tela */
+}
+
+.menu-lateral a {
   color: #b38b00;
   text-decoration: none;
-  margin: 6px 0;
+  margin: 10px 0;
   font-weight: bold;
+  font-size: 1.1rem;
 }
 
-.menu a:hover {
+.menu-lateral a:hover {
   text-decoration: underline;
 }
+
+.fechar-menu-btn {
+  font-size: 1.2rem;
+  color: #b38b00;
+  text-align: right;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+/* 🟢 FIM DOS ESTILOS DO MENU */
 
 .catalogo-main {
     padding: 20px;
@@ -348,6 +369,9 @@ a:hover {
     line-height: 1.6;
     text-align: left;
     white-space: pre-wrap;
+    /* Garante que o modal tenha scroll interno se o texto for muito longo */
+    max-height: 60vh; 
+    overflow-y: auto;
 }
 
 #modal-titulo {
