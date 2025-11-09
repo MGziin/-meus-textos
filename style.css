@@ -16,7 +16,7 @@ body {
 }
 
 h1, h2, h3 {
-  color: #b38b00; /* Cor padrão dos títulos (amarelo/marrom) */
+  color: #b38b00;
 }
 
 a {
@@ -36,34 +36,92 @@ a:hover {
     margin: 0 auto;
 }
 
-/* 🟢 CORREÇÃO: FOTO DE FUNDO PARA INÍCIO E SOBRE */
-#secao-destaque {
-    /* Use 'perfil.jpg', 'foto-perfil.jpg' ou 'foto-perfil.png' */
-    background-image: url('perfil.jpg'); 
-    background-size: cover; 
-    background-repeat: no-repeat;
+/* CORREÇÃO DA FOTO: Garante que a seção "Sobre Mim" tenha altura suficiente */
+#sobre {
+    min-height: 350px; /* Altura mínima aumentada */
+    /* ATENÇÃO: Adicione a URL da sua imagem de fundo/banner aqui: */
+    background-image: url('CAMINHO_PARA_SUA_IMAGEM.jpg'); 
+    background-size: cover;
     background-position: center;
+    color: white; /* Cor do texto em contraste com a imagem de fundo */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+/* Reverte a cor dos títulos dentro do #sobre para branco ou contraste */
+#sobre h2 {
+    color: white;
+}
+#sobre p {
+    color: white;
 }
 
-/* Texto branco sobre a foto */
-#secao-destaque h2, #secao-destaque p {
-    color: white; 
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); 
+
+/* ======== LAYOUT BASE ======== */
+.conteudo {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-#secao-destaque .secao {
-    min-height: 200px; 
-    border-bottom: none; 
+.secao {
+  padding: 40px 0;
+  border-bottom: 2px solid #ffdb4d;
+  margin-bottom: 20px;
 }
 
-#secao-destaque #sobre {
-    border-bottom: 2px solid #ffeb99; 
+.secao:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
 }
-/* 🟢 FIM DAS MUDANÇAS DE DESTAQUE */
 
-
-/* ===== HEADER HOME ===== */
+/* ===== HEADER HOME (NOVO LAYOUT) ===== */
 .header-home {
+  display: flex;
+  align-items: center;
+  /* MUDANÇA 1: Alinha tudo à esquerda para usarmos o flex-grow no .header-right */
+  justify-content: flex-start;
+  background-color: #fff3b3;
+  padding: 12px 20px;
+  border-bottom: 3px solid #ffdb4d;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* NOVO: Container para Atalhos e Seletor de Idioma */
+.header-right {
+    display: flex;
+    align-items: center;
+    /* MUDANÇA 2: Coloca atalhos à esquerda (centro) e idioma à direita */
+    justify-content: space-between; 
+    /* MUDANÇA 3: Ocupa todo o espaço restante para centralizar a nav */
+    flex-grow: 1; 
+}
+
+.header-home .titulo-site {
+  /* Mantém o h1 no canto esquerdo */
+  font-size: 1.5rem;
+  margin: 0 30px 0 0; /* Espaço após o título */
+  color: #b38b00;
+}
+
+.header-home .atalhos {
+  /* Atalhos centralizados dentro do .header-right */
+  display: flex;
+  gap: 20px;
+  font-size: 1rem;
+}
+
+/* ESTILO: Seletor de idioma na Home (agora no canto direito) */
+.header-home .lang-selector {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #b38b00;
+    /* A margin-left foi removida pois o space-between no .header-right faz o espaçamento */
+}
+
+
+/* ===== HEADER CATÁLOGO (Mantido) ===== */
+.header-catalogo {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -75,232 +133,137 @@ a:hover {
   z-index: 10;
 }
 
-.titulo-site {
-  font-size: 1.6rem;
-  font-weight: bold;
+.header-catalogo .titulo-catalogo {
+  font-size: 1.5rem;
+  margin: 0 auto 0 0; /* Mantém o título à esquerda e o espaço ao centro */
+  padding-left: 10px;
+}
+
+.header-catalogo .menu-hamburguer {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
   color: #b38b00;
-  margin-right: auto;
 }
 
-.atalhos {
-    display: flex;
-    align-items: center;
-}
-
-.atalhos a {
-  margin: 0 10px;
-  font-weight: bold;
-  font-size: 0.95rem;
-}
-
-.atalhos a:hover {
-  color: #ffcc00;
-}
-
-/* Estilo para o seletor de idioma na Home */
-.header-home .lang-selector {
+/* ESTILO: Seletor de idioma no Catálogo */
+.header-catalogo .lang-selector {
     font-size: 0.95rem;
     font-weight: 500;
     color: #b38b00;
-    margin-left: 20px; 
 }
 
-/* ===== SEÇÕES ===== */
-.secao {
-  padding: 40px 20px;
-  border-bottom: 2px solid #ffeb99;
-  text-align: center;
+/* ===== ESTILOS DOS CARDS (HOME E CATÁLOGO) ===== */
+.catalogo-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
-.secao h2 {
-  margin-bottom: 10px;
-  font-size: 1.4rem;
+.card-fav, .card-texto {
+  background-color: #fffef2;
+  border: 2px solid #ffdb4d;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-/* ===== TEXTOS FAVORITOS E CATÁLOGO CARDS ===== */
-.card-texto, .card-fav { 
-  background: #fffdf4;
-  border: 2px solid #ffeb99;
-  border-radius: 15px;
-  padding: 18px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-  max-width: 500px;
-  margin: 20px auto;
-  text-align: left;
+.card-fav:hover, .card-texto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
 }
 
-.card-texto.favorito, .card-fav.favorito {
-  border: 2px solid gold;
-  position: relative;
-  background-color: #fff8d1;
+.card-fav h3, .card-texto h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
 }
 
-.card-texto.favorito::after, .card-fav.favorito::after {
-  content: "★";
-  color: gold;
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 1.3em;
+.card-fav .resumo, .card-texto .resumo {
+  font-size: 0.95rem;
+  color: #6b5314;
+  flex-grow: 1;
+  margin-bottom: 15px;
 }
 
-/* Estiliza todos os botões de ação com o amarelo */
-.ver-mais, .botao-catalogo, .ler-mais, .btn-ler {
+.btn-ler, .ler-mais {
   background-color: #ffdb4d;
+  color: #b38b00;
   border: none;
-  color: #3b3b3b;
-  font-weight: bold;
-  padding: 10px 18px;
-  border-radius: 8px;
+  padding: 10px 15px;
+  border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
+  font-weight: bold;
   transition: background-color 0.2s;
-  display: inline-block;
-  text-decoration: none;
 }
 
-.ver-mais:hover, .botao-catalogo:hover, .ler-mais:hover, .btn-ler:hover {
-  background-color: #ffcc00;
-  transform: translateY(-2px);
+.btn-ler:hover, .ler-mais:hover {
+  background-color: #fccc00;
 }
 
-/* ===== TAGS (RENOVADAS PARA CATÁLOGO) ===== */
+.selo {
+    color: #fccc00;
+    font-size: 1.2em;
+    padding-left: 5px;
+}
+
+.botao-catalogo {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 0;
+    background-color: #ffdb4d;
+    color: #b38b00;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.botao-catalogo:hover {
+    background-color: #fccc00;
+    text-decoration: none;
+}
+
+/* ===== ESTILOS DAS TAGS (Geral) ===== */
 .tags-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
-/* Estilo para as tags de filtro no Catálogo (tag-pill) */
 .tag-pill {
-  background-color: #fff7cc;
-  border: 2px solid #ffdb4d;
-  border-radius: 20px;
-  padding: 8px 16px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #3b3b3b;
-  transition: all 0.2s;
-  text-decoration: none;
-  display: inline-block;
-  margin: 5px;
+  background-color: #fffef2;
+  border: 1px solid #ffdb4d;
+  color: #b38b00;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background-color 0.2s, border-color 0.2s;
+  white-space: nowrap;
 }
 
 .tag-pill:hover, .tag-pill.active {
   background-color: #ffdb4d;
+  border-color: #b38b00;
   text-decoration: none;
-  transform: scale(1.05);
 }
 
-
-/* ===== CONTATO ===== */
-.contato-links {
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 15px;
-    margin-top: 15px;
-    justify-content: center; /* Centraliza os botões */
-}
-
-.link-contato {
-    display: inline-block; 
-}
-
-
-/* ===== ESTILOS DO CATÁLOGO (reuso) ===== */
-.header-catalogo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #fff3b3;
-  padding: 12px 20px;
-  border-bottom: 3px solid #ffdb4d;
-}
-
-.titulo-catalogo {
-  flex-grow: 1;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
-.menu-hamburguer {
-  position: static;
-  font-size: 1.6rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #b38b00;
-  z-index: 11;
-  order: -1;
-}
-
-/* Estilo do Seletor de Idioma (Comum para Home e Catálogo) */
-.lang-selector {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #b38b00;
-}
-.home-lang-selector {
-    margin-left: 20px;
-}
-
-#lang-switch, #lang-switch-home {
-    padding: 5px 8px;
-    border-radius: 5px;
-    border: 1px solid #b38b00;
-    background-color: #fffef2;
-}
-
-/* 🟢 CORREÇÃO: ESTILOS DO MENU HAMBURGUER (CATÁLOGO) */
-.menu-lateral {
-  position: fixed;
-  top: 0;
-  left: -300px; /* Começa escondido */
-  width: 250px;
-  height: 100%;
-  background-color: #fff7cc;
-  padding: 20px;
-  z-index: 100;
-  border-right: 3px solid #ffdb4d;
-  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
-  transition: left 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.menu-lateral.ativo {
-  left: 0; /* Move para a tela */
-}
-
-.menu-lateral a {
-  color: #b38b00;
-  text-decoration: none;
-  margin: 10px 0;
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-
-.menu-lateral a:hover {
-  text-decoration: underline;
-}
-
-.fechar-menu-btn {
-  font-size: 1.2rem;
-  color: #b38b00;
-  text-align: right;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-/* 🟢 FIM DOS ESTILOS DO MENU */
+/* ===== CATÁLOGO FILTROS ===== */
 
 .catalogo-main {
     padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .secao-filtros {
@@ -340,41 +303,114 @@ a:hover {
   overflow-y: auto; 
 }
 
-/* O modal-box é o container do conteúdo */
+/* A caixa de conteúdo do modal */
 .modal-box {
-  background-color: #fffef2;
-  margin: 40px 10px;
-  padding: 25px;
-  border-radius: 15px;
+  background-color: #fff9e6;
+  padding: 30px;
+  border-radius: 10px;
   width: 90%;
-  max-width: 650px;
-  border: 2px solid #ffdb4d;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
   position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-box::-webkit-scrollbar-thumb {
+  background-color: #ffdb4d;
+  border-radius: 4px;
 }
 
 .close {
   position: absolute;
   top: 10px;
-  right: 20px;
-  font-size: 1.8rem;
-  cursor: pointer;
+  right: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
   color: #b38b00;
-  line-height: 1;
+  cursor: pointer;
 }
 
-/* Estilo para o conteúdo do modal */
-#modal-conteudo {
-    margin-top: 15px;
-    line-height: 1.6;
-    text-align: left;
-    white-space: pre-wrap;
-    /* Garante que o modal tenha scroll interno se o texto for muito longo */
-    max-height: 60vh; 
-    overflow-y: auto;
+.close:hover {
+  color: #ffdb4d;
 }
 
 #modal-titulo {
-    margin-top: 0;
-    text-align: left;
+  border-bottom: 2px solid #ffdb4d;
+  padding-bottom: 10px;
+  margin-top: 0;
+}
+
+#modal-conteudo {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.6;
+}
+
+/* ===== MENU LATERAL (CATÁLOGO) ===== */
+
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #fff3b3;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-lateral.ativo {
+  transform: translateX(0);
+}
+
+.menu-lateral a {
+  padding: 10px 0;
+  margin-bottom: 5px;
+  border-bottom: 1px dashed #ffdb4d;
+  color: #b38b00;
+  font-weight: bold;
+}
+
+.menu-lateral a:last-child {
+  border-bottom: none;
+}
+
+#fechar-menu {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #b38b00;
+  cursor: pointer;
+  text-align: right;
+  padding: 10px 0 20px;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+
+@media (max-width: 768px) {
+  /* Oculta os atalhos da Home em telas pequenas */
+  .header-home .atalhos {
+    display: none;
+  }
+  
+  /* Ajusta o .header-right para ocupar o espaço e mover o idioma para a direita */
+  .header-home .header-right {
+      justify-content: flex-end; /* Move o seletor de idioma para a extrema direita */
+  }
+
+  /* Centraliza o título no Catálogo quando o menu hamburger está visível */
+  .header-catalogo .titulo-catalogo {
+    margin: 0 auto;
+    padding-left: 0;
+  }
 }
