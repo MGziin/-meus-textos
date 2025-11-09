@@ -44,6 +44,7 @@ window.translations = {
         'conto': 'Conto',
         'short story': 'Conto',
         'chronicle': 'Crônica',
+        'enviar e-mail': 'Enviar e-mail', // Adicionado para o botão de contato
     },
     en: {
         site_title: 'My Author Corner',
@@ -64,6 +65,7 @@ window.translations = {
         'conto': 'Short Story',
         'short story': 'Short Story',
         'chronicle': 'Chronicle',
+        'enviar e-mail': 'Send email', // Adicionado para o botão de contato
     }
 };
 
@@ -118,7 +120,16 @@ function applyTranslations() {
             : 'Quer conversar, trocar ideias ou sugerir algo? Entre em contato comigo! 💬';
     }
 
-    // 4. Re-renderizar conteúdo dinâmico (tags e cards)
+    // 4. Tradução do botão de contato (que não tem data-lang-key no seu HTML)
+    const emailButton = $('.secao a.botao-catalogo');
+    if (emailButton) {
+        // Assume que o botão de email está na seção de contato
+        if (emailButton.getAttribute('href') && emailButton.getAttribute('href').startsWith('mailto')) {
+            emailButton.textContent = translate('enviar e-mail');
+        }
+    }
+
+    // 5. Re-renderizar conteúdo dinâmico (tags e cards)
     if ($('#lista-textos')) {
         montarCatalogo(qs('busca') || '');
     }
