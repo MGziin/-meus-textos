@@ -1,119 +1,57 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-
   <meta charset="UTF-8" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title id="catalogo-page-title">Catálogo de Textos</title>
-
   <link rel="stylesheet" href="style.css" />
-
-  <link rel="icon" type="image/png" href="favicon.png"> 
-
+  <link rel="icon" href="favicon.ico" type="image/x-icon"> 
 </head>
-
 <body class="catalogo-body">
-
-
-
   <header class="header-catalogo">
-
-    <button id="abrir-menu" class="menu-hamburguer">☰</button>
-
-    <h1 id="catalogo-header-title" class="titulo-catalogo">Catálogo de Textos</h1>
-
-    
-
+    <button id="abrir-menu" class="menu-hamburguer">☰</button> 
+    <h1 id="catalogo-header-title" class="titulo-catalogo">Catálogo de Textos</h1> 
     <div class="lang-selector">
-
         <label for="lang-switch">Idioma:</label>
-
         <select id="lang-switch">
-
             <option value="pt">Português</option>
-
             <option value="en">English</option>
-
         </select>
-
     </div>
-
   </header>
 
-
-
   <nav id="menu" class="menu-lateral">
-
-    <a href="javascript:void(0)" id="fechar-menu" class="fechar-menu-btn">&times; Fechar</a>
-
-    <a href="index.html#inicio" data-lang-key="home">Início</a>
-
+    <button id="fechar-menu">x Fechar</button>
+    <a href="index.html?lang=pt" data-lang-key="home">Início</a>
     <a href="index.html#favoritos" data-lang-key="favorites">Textos Favoritos</a>
-
     <a href="index.html#tags" data-lang-key="tags">Tags</a>
-
     <a href="index.html#sobre" data-lang-key="about">Sobre Mim</a>
-
     <a href="index.html#contato" data-lang-key="contact">Contato</a>
-
   </nav>
 
-
-
   <main class="catalogo-main">
-
     <section id="catalogo-filtros" class="secao-filtros">
-
         <input type="text" id="barra-busca" placeholder="Buscar por título, resumo ou conteúdo...">
-
         
-
         <div class="tags-filtro-container">
-
             <h3 id="tags-filtro-label">Filtrar por Categoria:</h3>
-
             <div id="lista-tags-catalogo" class="tags-container">
-
                 </div>
-
         </div>
-
     </section>
 
-
-
     <section id="lista-textos" class="catalogo-container"></section>
-
   </main>
 
-
-
   <div class="modal-overlay">
-
     <div class="modal-box">
-
       <span id="modal-close-btn" class="close">&times;</span>
-
       <h2 id="modal-titulo"></h2>
-
       <div id="modal-conteudo"></div>
-
     </div>
-
   </div>
 
-
-
   <script src="textos.js"></script>
-
   <script src="script.js"></script>
-
-
-
 </body>
-
 </html>
