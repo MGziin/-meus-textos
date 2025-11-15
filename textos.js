@@ -37,7 +37,25 @@ Tantas respostas pra uma única pergunta:
 por que é tão difícil ficar sem celular?
 
 Às vezes nem é o celular que faz falta em si,
-e sim o que ele escondia só por estar ali na nossa mão.`,
+e sim o que ele escondia só por estar ali na nossa mão.
+Sabe?
+
+Talvez seja porque, sem ele, o vazio grita na cara da gente:
+“E aí? Vai fazer o quê?”
+
+— não porque não tem nada pra fazer…
+mas porque a gente não faz ideia do que fazer.
+
+E… talvez, no final das contas,
+o que me incomoda nem seja estar sem celular…
+e sim a falta da cortina de fumaça que ele jogava por cima desse vazio quieto que é estar sem celular.
+
+Contraditório, né?
+
+E aí você fica olhando pro nada…
+só olhando…
+e pensando que, no fim…
+talvez o tempo seja o que mais dá falta.`,
     conteudo_en: `Why is it so hard to live without a mobile phone?
 
 It's been a few weeks since I've been without mine,
@@ -65,7 +83,31 @@ So many answers to a single question:
 why is it so hard to live without a phone?
 
 Sometimes it's not the phone itself that's missing,
-but what it was hiding just by being there in our hand.`,
+but what it was hiding just by being there in our hand.
+You know?
+
+Maybe it's because, without it, the emptiness screams in our faces:
+
+"So? What are you going to do?"
+
+—not because there's nothing to do…
+
+but because we have no idea what to do.
+
+And… maybe, in the end,
+what bothers me isn't even being without a cell phone…
+
+but rather the lack of the smokescreen it threw over this quiet emptiness that is being without a cell phone.
+
+Contradictory, right?
+
+And then you're left staring into nothingness…
+
+just staring…
+
+and thinking that, in the end…
+
+maybe time is what you miss the most.`,
   },
   {
     id: "a-semente",
@@ -259,4 +301,5 @@ window.translations = {
 };
 
 window.currentLang = 'pt'; // Define o idioma inicial
+
 
