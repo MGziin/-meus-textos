@@ -20,7 +20,7 @@ body {
     /* Use a imagem que você deseja como fundo geral aqui, se houver uma. 
        Se você quer o amarelo padrão #fff9e6 no fundo geral, remova a linha background-image abaixo.
        Vou deixar a imagem image_9b49c2.jpg como um exemplo de background para você testar, se for essa. */
-    background-image: url('image_9b49c2.jpg'); 
+    background-image: url('perfil.png'); 
     background-size: cover;
     background-attachment: fixed; /* Opcional: faz a imagem de fundo ficar parada ao rolar */
     background-repeat: no-repeat;
@@ -377,3 +377,4 @@ a:hover {
     padding-left: 0;
   }
 }
+
