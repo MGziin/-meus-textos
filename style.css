@@ -40,16 +40,16 @@ a:hover {
 
 /* 1. O container de destaque (que segura Início e Sobre) tem a imagem fixa */
 #secao-destaque {
-    /* Use 'perfil.jpg', 'foto-perfil.jpg' ou 'foto-perfil.png' */
-    /* Usando a imagem que você enviou: image_9b49c2.jpg */
-    background-image: url('perfil.png'); 
+    /* *** ADICIONE A URL DA SUA FOTO DE FUNDO AQUI *** */
+    background-image: url('sua foto aqui'); 
     background-size: cover; 
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed; /* ISSO CRIA O EFEITO PARALLAX */
-    /* Remove padding/margin do container para que as seções internas controlem o espaço */
     padding: 0; 
     margin: 0;
+    /* Garante que o container não tenha a cor de fundo padrão do body */
+    background-color: #3b3b3b; 
 }
 
 /* 2. O texto DENTRO do container de destaque fica branco */
