@@ -1,52 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title id="site-page-title">Meu Cantinho</title> 
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="site-page-title">Meu Cantinho Autoral</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="favicon.png"> 
 </head>
 <body class="home-body">
-  <header class="header-home">
-    <h1 class="titulo-site" data-lang-key="site_title">Meu Cantinho</h1> 
-    
-    <div class="header-content">
-        <nav class="atalhos">
-          <a href="#inicio" data-lang-key="home">Início</a>
-          <a href="#sobre" data-lang-key="about">Sobre Mim</a>
-          <a href="#favoritos" data-lang-key="favorites">Textos Favoritos</a>
-          <a href="#tags" data-lang-key="tags">Tags</a>
-          <a href="#contato" data-lang-key="contact">Contato</a>
-          <a href="https://linktr.ee/seulink" target="_blank">Linktree</a>
-        </nav>
-        
-        <div class="lang-selector">
-            <label for="lang-switch-home">Idioma:</label>
-            <select id="lang-switch-home">
-                <option value="pt">Português</option>
-                <option value="en">English</option>
-            </select>
-        </div>
-    </div>
-  </header>
+  <header class="header-home header-nav">
+    <h1 class="titulo-site">Meu Cantinho</h1>
+    
+    <div class="lang-selector home-lang-selector">
+        <label for="lang-switch-home">Idioma:</label>
+        <select id="lang-switch-home">
+            <option value="pt">Português</option>
+            <option value="en">English</option>
+        </select>
+    </div>
+    
+    <nav class="atalhos">
+      <a href="#inicio" data-lang-key="home">Início</a>
+      <a href="#sobre" data-lang-key="about">Sobre Mim</a>
+      <a href="#favoritos" data-lang-key="favorites">Textos Favoritos</a>
+      <a href="#tags" data-lang-key="tags">Tags</a>
+      <a href="#contato" data-lang-key="contact">Contato</a>
+    </nav>
+  </header>
 
   <main class="conteudo">
-    <section id="inicio" class="secao">
-      <h2 data-lang-key="home">Início</h2> 
-      <p id="home-inicio-text">Bem-vindo(a) ao meu cantinho — aqui você encontra todos os meus textos, reflexões e histórias. 💛</p>
-    </section>
+    
+    <div id="secao-destaque">
+      <section id="inicio" class="secao">
+        <h2 data-lang-key="home">Início</h2>
+        <p id="home-inicio-text">Bem-vindo(a) ao meu cantinho — aqui você encontra todos os meus textos, reflexões e histórias. 💛</p>
+      </section>
 
-    <section id="sobre" class="secao">
-      <h2 data-lang-key="about">Sobre Mim</h2>
-      <p id="home-sobre-text">Sou alguém que transforma pensamentos em palavras. Cada texto aqui é uma parte do que vivi, senti e aprendi.</p>
-    </section>
-
+      <section id="sobre" class="secao">
+        <h2 data-lang-key="about">Sobre Mim</h2>
+        <p id="home-sobre-text">Sou alguém que transforma pensamentos em palavras. Cada texto aqui é uma parte do que vivi, senti e aprendi.</p>
+      </section>
+    </div>
     <section id="favoritos" class="secao">
       <h2 data-lang-key="favorites">Textos Favoritos</h2>
-      <div id="lista-favoritos" class="catalogo-container">
+      <div id="lista-favoritos">
         </div>
-      <a id="btn-ler-todos" class="botao-catalogo" href="catalogo.html?tag=Todos" data-lang-key="all_texts">Ver todos os textos</a>
+      <a href="#" id="btn-ler-todos" class="botao-catalogo" data-lang-key="all_texts">Ver todos os textos</a>
     </section>
 
     <section id="tags" class="secao">
@@ -58,13 +57,24 @@
     <section id="contato" class="secao">
       <h2 data-lang-key="contact">Contato</h2>
       <p id="home-contato-text">Quer conversar, trocar ideias ou sugerir algo? Entre em contato comigo! 💬</p>
-      <a href="mailto:seuemail@exemplo.com" class="botao-catalogo">Enviar e-mail</a>
+      
+      <div class="contato-links">
+          <a href="https://linktr.ee/mgziin" target="_blank" class="botao-catalogo link-contato">🔗 Meu Linktree</a>
+          <a href="mailto:brendonph.trabalho@gmail.com" class="botao-catalogo link-contato">📧 Enviar E-mail</a>
+      </div>
     </section>
   </main>
 
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <span id="modal-close-btn" class="close">&times;</span>
+      <h2 id="modal-titulo"></h2>
+      <div id="modal-conteudo"></div>
+    </div>
+  </div>
+
+
   <script src="textos.js"></script>
-  <script src="script.js"></script> 
+  <script src="script.js"></script>
 </body>
 </html>
-
-
