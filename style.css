@@ -38,38 +38,74 @@ a:hover {
 
 /* 🟢 CORREÇÃO: EFEITO PARALLAX (JANELA) 🟢 */
 
-/* 1. O container de destaque (que segura Início e Sobre) tem a imagem fixa */
-#secao-destaque {
-    /* *** ADICIONE A URL DA SUA FOTO DE FUNDO AQUI *** */
-    background-image: url('sua foto aqui'); 
-    background-size: cover; 
-    background-repeat: no-repeat;
+/* 1. O Wrapper de Parallax (tem a imagem fixa) */
+.parallax-wrapper {
+    /* Define o efeito parallax */
+    background-attachment: fixed;
     background-position: center;
-    background-attachment: fixed; /* ISSO CRIA O EFEITO PARALLAX */
-    padding: 0; 
-    margin: 0;
-    /* Garante que o container não tenha a cor de fundo padrão do body */
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    /* Garante altura mínima caso o conteúdo seja pequeno */
+    min-height: 400px; 
+    
+    /* Cor de fundo caso a imagem falhe */
     background-color: #3b3b3b; 
+    
+    /* Espaçamento entre as seções parallax */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ffeb99;
 }
 
-/* 2. O texto DENTRO do container de destaque fica branco */
-#secao-destaque h2, #secao-destaque p {
+/* 2. O conteúdo da seção (é a "janela" transparente) */
+.secao-parallax {
+    background-color: transparent !important; /* !important força a transparência sobre a regra .secao */
+    box-shadow: none !important;
+    border-bottom: none !important;
+    
+    /* Faz o texto ser legível sobre as fotos */
     color: white; 
     text-shadow: 1px 1px 3px rgba(0,0,0,0.7); 
 }
 
-/* 3. As seções DENTRO do destaque (Início e Sobre) são a "JANELA" */
-#secao-destaque .secao {
-    background-color: transparent; /* Ficam transparentes para ver o fundo */
-    box-shadow: none; /* Remove a sombra das seções */
-    border-bottom: none; 
-    min-height: 200px; 
+.secao-parallax h2 {
+    color: white;
+}
+.secao-parallax p {
+    color: white;
+}
+/* Faz os botões se destacarem no fundo parallax */
+.secao-parallax .botao-catalogo,
+.secao-parallax .btn-ler {
+    background-color: #ffdb4d;
+    color: #3b3b3b;
+    border: none;
+}
+.secao-parallax .tag-pill {
+    background-color: #fff7cc;
+    border-color: #ffdb4d;
+    color: #3b3b3b;
 }
 
-/* 4. A última seção DENTRO do destaque (Sobre) ganha a borda de volta */
-#secao-destaque #sobre {
-    border-bottom: 2px solid #ffeb99; 
+
+/* 3. Definindo as imagens (SUAS FOTOS AQUI) */
+
+#wrapper-inicio-sobre {
+    background-image: url('perfil.png'); 
 }
+
+#wrapper-favoritos {
+    background-image: url('textosfavoritos.png'); 
+}
+
+#wrapper-tags {
+    background-image: url('tags.png'); 
+}
+
+#wrapper-contato {
+    background-image: url('contato.png'); 
+}
+
 /* 🟢 FIM DAS MUDANÇAS DE DESTAQUE 🟢 */
 
 
@@ -117,12 +153,11 @@ a:hover {
 }
 
 /* ===== SEÇÕES ===== */
-/* 5. As seções FORA do destaque (Favoritos, Tags, Contato) são a "PAREDE" */
 .secao {
   padding: 40px 20px;
   border-bottom: 2px solid #ffeb99;
   text-align: center;
-  /* Garante que o fundo seja sólido para cobrir a imagem parallax */
+  /* Fundo sólido padrão (usado no catalogo.html e seções normais) */
   background-color: #fff9e6; 
 }
 
@@ -224,6 +259,7 @@ a:hover {
 
 
 /* ===== ESTILOS DO CATÁLOGO (reuso) ===== */
+/* O .secao do catálogo usará o fundo sólido padrão #fff9e6 */
 .header-catalogo {
   display: flex;
   align-items: center;
