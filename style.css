@@ -15,6 +15,15 @@ body {
   scroll-behavior: smooth;
 }
 
+/* 🟢 NOVO: FUNDO PARALLAX PARA O CATÁLOGO 🟢 */
+.catalogo-body {
+    background-image: url('textosfavoritos.png');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 h1, h2, h3 {
   color: #b38b00; /* Cor padrão dos títulos (amarelo/marrom) */
 }
@@ -36,34 +45,25 @@ a:hover {
     margin: 0 auto;
 }
 
-/* 🟢 CORREÇÃO: EFEITO PARALLAX (JANELA) 🟢 */
+/* 🟢 EFEITO PARALLAX (JANELA) DA HOME 🟢 */
 
 /* 1. O Wrapper de Parallax (tem a imagem fixa) */
 .parallax-wrapper {
-    /* Define o efeito parallax */
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    
-    /* Garante altura mínima caso o conteúdo seja pequeno */
     min-height: 400px; 
-    
-    /* Cor de fundo caso a imagem falhe */
     background-color: #3b3b3b; 
-    
-    /* Espaçamento entre as seções parallax */
     margin-bottom: 20px;
     border-bottom: 2px solid #ffeb99;
 }
 
 /* 2. O conteúdo da seção (é a "janela" transparente) */
 .secao-parallax {
-    background-color: transparent !important; /* !important força a transparência sobre a regra .secao */
+    background-color: transparent !important; 
     box-shadow: none !important;
     border-bottom: none !important;
-    
-    /* Faz o texto ser legível sobre as fotos */
     color: white; 
     text-shadow: 1px 1px 3px rgba(0,0,0,0.7); 
 }
@@ -74,7 +74,6 @@ a:hover {
 .secao-parallax p {
     color: white;
 }
-/* Faz os botões se destacarem no fundo parallax */
 .secao-parallax .botao-catalogo,
 .secao-parallax .btn-ler {
     background-color: #ffdb4d;
@@ -348,8 +347,15 @@ a:hover {
   margin-bottom: 10px;
 }
 
+/* 🟢 CORREÇÃO: FUNDO SÓLIDO PARA O CONTEÚDO DO CATÁLOGO 🟢 */
 .catalogo-main {
     padding: 20px;
+    /* Adiciona o fundo sólido para rolar sobre a imagem do body */
+    background-color: #fff9e6;
+    /* Garante que o conteúdo principal não se estenda pela largura total */
+    max-width: 1200px; 
+    margin: 20px auto; /* Adiciona margem para descolar do header */
+    border-radius: 10px;
 }
 
 .secao-filtros {
@@ -357,6 +363,7 @@ a:hover {
     margin-bottom: 20px;
     border-bottom: none;
     text-align: center;
+    background-color: transparent; /* O fundo já está no .catalogo-main */
 }
 
 .tags-filtro-container h3 {
