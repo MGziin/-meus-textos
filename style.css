@@ -8,40 +8,15 @@
 /* ======== GERAL ======== */
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #fff9e6; /* Cor de fundo padrão se a imagem falhar */
+  background-color: #fff9e6;
   color: #3b3b3b;
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
 }
 
-/* ⚠️ CORREÇÃO DA IMAGEM GERAL: Aplica a imagem de fundo em TODA a Home */
-.home-body {
-    /* Use a imagem que você deseja como fundo geral aqui, se houver uma. 
-       Se você quer o amarelo padrão #fff9e6 no fundo geral, remova a linha background-image abaixo.
-       Vou deixar a imagem image_9b49c2.jpg como um exemplo de background para você testar, se for essa. */
-    background-image: url('perfil.png'); 
-    background-size: cover;
-    background-attachment: fixed; /* Opcional: faz a imagem de fundo ficar parada ao rolar */
-    background-repeat: no-repeat;
-    background-position: center center;
-}
-/* Reverte a cor de fundo para que o conteúdo seja legível sobre a imagem */
-.secao {
-    background-color: rgba(255, 255, 255, 0.85); /* Fundo branco semi-transparente para legibilidade */
-    padding: 40px; /* Aumenta o padding para melhor visualização */
-    margin: 20px auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 1000px;
-}
-.header-home {
-    background-color: #fff3b3; /* Mantém o cabeçalho sólido */
-}
-
-
 h1, h2, h3 {
-  color: #b38b00;
+  color: #b38b00; /* Cor padrão dos títulos (amarelo/marrom) */
 }
 
 a {
@@ -61,45 +36,48 @@ a:hover {
     margin: 0 auto;
 }
 
-/* CORREÇÃO DA FOTO: Aplica a sua imagem de perfil na seção Sobre Mim, sem fundo de cor */
-#sobre {
-    min-height: 350px; 
-    /* Esta imagem (image_ce0ca7.jpg) é a sua foto que você enviou */
-    background-image: url('image_ce0ca7.jpg'); 
-    background-size: cover;
+/* 🟢 CORREÇÃO: EFEITO PARALLAX (JANELA) 🟢 */
+
+/* 1. O container de destaque (que segura Início e Sobre) tem a imagem fixa */
+#secao-destaque {
+    /* Use 'perfil.jpg', 'foto-perfil.jpg' ou 'foto-perfil.png' */
+    /* Usando a imagem que você enviou: image_9b49c2.jpg */
+    background-image: url('perfil.png'); 
+    background-size: cover; 
+    background-repeat: no-repeat;
     background-position: center;
+    background-attachment: fixed; /* ISSO CRIA O EFEITO PARALLAX */
+    /* Remove padding/margin do container para que as seções internas controlem o espaço */
+    padding: 0; 
+    margin: 0;
+}
+
+/* 2. O texto DENTRO do container de destaque fica branco */
+#secao-destaque h2, #secao-destaque p {
     color: white; 
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    background-color: transparent; /* Remove o fundo semi-transparente do .secao */
-}
-/* Reverte a cor dos títulos e parágrafos dentro do #sobre para branco para contraste */
-#sobre h2 {
-    color: white;
-}
-#sobre p {
-    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); 
 }
 
-
-/* ======== LAYOUT BASE ======== */
-.conteudo {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-/* O .secao foi redefinido acima para funcionar com o background-image no body */
-
-
-.secao:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
+/* 3. As seções DENTRO do destaque (Início e Sobre) são a "JANELA" */
+#secao-destaque .secao {
+    background-color: transparent; /* Ficam transparentes para ver o fundo */
+    box-shadow: none; /* Remove a sombra das seções */
+    border-bottom: none; 
+    min-height: 200px; 
 }
 
-/* ===== HEADER HOME (Centralização Correta) ===== */
+/* 4. A última seção DENTRO do destaque (Sobre) ganha a borda de volta */
+#secao-destaque #sobre {
+    border-bottom: 2px solid #ffeb99; 
+}
+/* 🟢 FIM DAS MUDANÇAS DE DESTAQUE 🟢 */
+
+
+/* ===== HEADER HOME ===== */
 .header-home {
   display: flex;
   align-items: center;
-  justify-content: flex-start; 
+  justify-content: space-between;
   background-color: #fff3b3;
   padding: 12px 20px;
   border-bottom: 3px solid #ffdb4d;
@@ -108,37 +86,144 @@ a:hover {
   z-index: 10;
 }
 
-/* Container para Atalhos (Centro) e Idioma (Direita) */
-.header-content {
+.titulo-site {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #b38b00;
+  margin-right: auto;
+}
+
+.atalhos {
     display: flex;
     align-items: center;
-    justify-content: space-between; 
-    flex-grow: 1; 
 }
 
-.header-home .titulo-site {
-  font-size: 1.5rem;
-  margin: 0 30px 0 0; 
-  color: #b38b00;
+.atalhos a {
+  margin: 0 10px;
+  font-weight: bold;
+  font-size: 0.95rem;
 }
 
-/* FIX DA CENTRALIZAÇÃO: A propriedade margin: 0 auto; centraliza a NAV */
-.header-home .atalhos {
-  display: flex;
-  gap: 20px;
-  font-size: 1rem;
-  margin: 0 auto; /* <<< ESTA É A LINHA QUE CENTRALIZA */
+.atalhos a:hover {
+  color: #ffcc00;
 }
 
-/* ESTILO: Seletor de idioma na Home */
+/* Estilo para o seletor de idioma na Home */
 .header-home .lang-selector {
     font-size: 0.95rem;
     font-weight: 500;
     color: #b38b00;
+    margin-left: 20px; 
+}
+
+/* ===== SEÇÕES ===== */
+/* 5. As seções FORA do destaque (Favoritos, Tags, Contato) são a "PAREDE" */
+.secao {
+  padding: 40px 20px;
+  border-bottom: 2px solid #ffeb99;
+  text-align: center;
+  /* Garante que o fundo seja sólido para cobrir a imagem parallax */
+  background-color: #fff9e6; 
+}
+
+.secao h2 {
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+}
+
+/* ===== TEXTOS FAVORITOS E CATÁLOGO CARDS ===== */
+.card-texto, .card-fav { 
+  background: #fffdf4;
+  border: 2px solid #ffeb99;
+  border-radius: 15px;
+  padding: 18px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  max-width: 500px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+.card-texto.favorito, .card-fav.favorito {
+  border: 2px solid gold;
+  position: relative;
+  background-color: #fff8d1;
+}
+
+.card-texto.favorito::after, .card-fav.favorito::after {
+  content: "★";
+  color: gold;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.3em;
+}
+
+/* Estiliza todos os botões de ação com o amarelo */
+.ver-mais, .botao-catalogo, .ler-mais, .btn-ler {
+  background-color: #ffdb4d;
+  border: none;
+  color: #3b3b3b;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.ver-mais:hover, .botao-catalogo:hover, .ler-mais:hover, .btn-ler:hover {
+  background-color: #ffcc00;
+  transform: translateY(-2px);
+}
+
+/* ===== TAGS (RENOVADAS PARA CATÁLOGO) ===== */
+.tags-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+/* Estilo para as tags de filtro no Catálogo (tag-pill) */
+.tag-pill {
+  background-color: #fff7cc;
+  border: 2px solid #ffdb4d;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #3b3b3b;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  margin: 5px;
+}
+
+.tag-pill:hover, .tag-pill.active {
+  background-color: #ffdb4d;
+  text-decoration: none;
+  transform: scale(1.05);
 }
 
 
-/* ===== HEADER CATÁLOGO (Mantido) ===== */
+/* ===== CONTATO (Estilo para os botões Lado a Lado) ===== */
+.contato-links {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 15px;
+    margin-top: 15px;
+    justify-content: center; /* Centraliza os botões */
+}
+
+.link-contato {
+    display: inline-block; 
+}
+
+
+/* ===== ESTILOS DO CATÁLOGO (reuso) ===== */
 .header-catalogo {
   display: flex;
   align-items: center;
@@ -146,141 +231,89 @@ a:hover {
   background-color: #fff3b3;
   padding: 12px 20px;
   border-bottom: 3px solid #ffdb4d;
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 
-.header-catalogo .titulo-catalogo {
-  font-size: 1.5rem;
-  margin: 0 auto 0 0; 
-  padding-left: 10px;
+.titulo-catalogo {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
-.header-catalogo .menu-hamburguer {
+.menu-hamburguer {
+  position: static;
+  font-size: 1.6rem;
   background: none;
   border: none;
-  font-size: 2rem;
   cursor: pointer;
   color: #b38b00;
+  z-index: 11;
+  order: -1;
 }
 
-/* ESTILO: Seletor de idioma no Catálogo */
-.header-catalogo .lang-selector {
-    font-size: 0.95rem;
+/* Estilo do Seletor de Idioma (Comum para Home e Catálogo) */
+.lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
     font-weight: 500;
     color: #b38b00;
 }
-
-/* ===== ESTILOS DOS CARDS (HOME E CATÁLOGO) ===== */
-.catalogo-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+.home-lang-selector {
+    margin-left: 20px;
 }
 
-.card-fav, .card-texto {
-  background-color: #fffef2;
-  border: 2px solid #ffdb4d;
-  border-radius: 10px;
+#lang-switch, #lang-switch-home {
+    padding: 5px 8px;
+    border-radius: 5px;
+    border: 1px solid #b38b00;
+    background-color: #fffef2;
+}
+
+/* ESTILOS DO MENU HAMBURGUER (CATÁLOGO) */
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  left: -300px; 
+  width: 250px;
+  height: 100%;
+  background-color: #fff7cc;
   padding: 20px;
-  width: 300px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  z-index: 100;
+  border-right: 3px solid #ffdb4d;
+  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  transition: left 0.3s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
-.card-fav:hover, .card-texto:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+.menu-lateral.ativo {
+  left: 0; 
 }
 
-.card-fav h3, .card-texto h3 {
-  margin-top: 0;
-  font-size: 1.25rem;
-}
-
-.card-fav .resumo, .card-texto .resumo {
-  font-size: 0.95rem;
-  color: #6b5314;
-  flex-grow: 1;
-  margin-bottom: 15px;
-}
-
-.btn-ler, .ler-mais {
-  background-color: #ffdb4d;
+.menu-lateral a {
   color: #b38b00;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s;
-}
-
-.btn-ler:hover, .ler-mais:hover {
-  background-color: #fccc00;
-}
-
-.selo {
-    color: #fccc00;
-    font-size: 1.2em;
-    padding-left: 5px;
-}
-
-.botao-catalogo {
-    display: block;
-    width: fit-content;
-    margin: 20px auto 0;
-    background-color: #ffdb4d;
-    color: #b38b00;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-    transition: background-color 0.2s;
-}
-
-.botao-catalogo:hover {
-    background-color: #fccc00;
-    text-decoration: none;
-}
-
-/* ===== ESTILOS DAS TAGS (Geral) ===== */
-.tags-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.tag-pill {
-  background-color: #fffef2;
-  border: 1px solid #ffdb4d;
-  color: #b38b00;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  transition: background-color 0.2s, border-color 0.2s;
-  white-space: nowrap;
-}
-
-.tag-pill:hover, .tag-pill.active {
-  background-color: #ffdb4d;
-  border-color: #b38b00;
   text-decoration: none;
+  margin: 10px 0;
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
-/* ===== CATÁLOGO FILTROS / MODAIS / MENU LATERAL (Mantidos) ===== */
+.menu-lateral a:hover {
+  text-decoration: underline;
+}
+
+.fechar-menu-btn {
+  font-size: 1.2rem;
+  color: #b38b00;
+  text-align: right;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
 .catalogo-main {
     padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 .secao-filtros {
@@ -306,6 +339,8 @@ a:hover {
     color: #3b3b3b;
 }
 
+/* ===== MODAL REUSO ===== */
+
 .modal-overlay {
   display: none; 
   position: fixed;
@@ -318,63 +353,37 @@ a:hover {
 }
 
 .modal-box {
-  background-color: #fff9e6;
-  padding: 30px;
-  border-radius: 10px;
+  background-color: #fffef2;
+  margin: 40px 10px;
+  padding: 25px;
+  border-radius: 15px;
   width: 90%;
-  max-width: 600px;
-  max-height: 80vh;
-  overflow-y: auto;
+  max-width: 650px;
+  border: 2px solid #ffdb4d;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
   position: relative;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
+
 .close {
   position: absolute;
   top: 10px;
-  right: 15px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #b38b00;
+  right: 20px;
+  font-size: 1.8rem;
   cursor: pointer;
+  color: #b38b00;
+  line-height: 1;
 }
 
-.menu-lateral {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 250px;
-  background-color: #fff3b3;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
-  z-index: 15;
-  display: flex;
-  flex-direction: column;
-}
-.menu-lateral.ativo {
-  transform: translateX(0);
+#modal-conteudo {
+    margin-top: 15px;
+    line-height: 1.6;
+    text-align: left;
+    white-space: pre-wrap;
+    max-height: 60vh; 
+    overflow-y: auto;
 }
 
-/* ===== RESPONSIVIDADE ===== */
-
-@media (max-width: 768px) {
-  .header-home {
-    justify-content: space-between;
-  }
-  .header-home .atalhos {
-    display: none;
-  }
-  .header-home .titulo-site {
-      margin: 0;
-  }
-  .header-home .header-content {
-      flex-grow: 0;
-  }
-  .header-catalogo .titulo-catalogo {
-    margin: 0 auto;
-    padding-left: 0;
-  }
+#modal-titulo {
+    margin-top: 0;
+    text-align: left;
 }
-
