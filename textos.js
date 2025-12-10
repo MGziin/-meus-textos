@@ -1,4 +1,4 @@
-// textos.js — dados dos textos
+// textos.js — dados dos textos (usar exatamente este arquivo)
 window.textos = [
   {
     id: "celular",
@@ -119,7 +119,7 @@ maybe time is what you miss the most.`,
     resumo_en: "A farmer sacrifices everything he has, including his land and his tools, to buy a special seed, only to realize he has nothing left to plant it.",
     favorito: true,
     data: "05/11/2025",
-    conteudo: `Essa é a história de um fazendeiro que tinha um sonho: conseguir uma semente 
+    conteudo: `Essa é a história de um fazendeiro que tinha um sonho: conseguir uma semente 
 especial.
 Pensava nela todos os dias, mas o preço era alto demais para o seu bolso.
 Um dia, decidido a realizá-lo, vende todas as sementes que possuía, na esperança de comprar a tão sonhada semente.
@@ -166,52 +166,52 @@ Hmm... this story sounds familiar.`,
     favorito: true,
     data: "10/10/2025",
     conteudo: `Eu odeio os muros falsos que aqui existem.
- Essa sensação ilusória de segurança, esses muros gigantes que, vistos de fora, lembram um castelo imponente, mas que, por dentro, não passam de uma cabana abandonada.
- Às vezes, minha vontade é de quebrar essas paredes e expor ao mundo — e a eles mesmos — o que realmente são.
- Mas, no fundo, o que eu mais quero é paz.
- Quero pavimentar meu próprio caminho para fora dessa fortaleza enganosa, sem ter alguém, de tempos em tempos, destruindo tudo o que tento construir.
+Essa sensação ilusória de segurança, esses muros gigantes que, vistos de fora, lembram um castelo imponente, mas que, por dentro, não passam de uma cabana abandonada.
+Às vezes, minha vontade é de quebrar essas paredes e expor ao mundo — e a eles mesmos — o que realmente são.
+Mas, no fundo, o que eu mais quero é paz.
+Quero pavimentar meu próprio caminho para fora dessa fortaleza enganosa, sem ter alguém, de tempos em tempos, destruindo tudo o que tento construir.
 
 E como todo castelo, seja ele verdadeiro ou falso, há sempre seus moradores: figuras que se esforçam para parecer superiores, sábias e inatingíveis.
- Admito que, nesse aspecto, cumprem bem o papel que lhes cabe.
- Mas como toda família real, também possuem deveres — deveres que a própria plebe lhes confia, na esperança de que ajam com discernimento e justiça.
- Infelizmente, quando a realeza é apenas uma imitação, o resultado é previsível: pessoas cheias de esperanças sendo amargamente decepcionadas, percebendo tarde demais que até um cão abandonado tomaria decisões mais sensatas.
+Admito que, nesse aspecto, cumprem bem o papel que lhes cabe.
+Mas como toda família real, também possuem deveres — deveres que a própria plebe lhes confia, na esperança de que ajam com discernimento e justiça.
+Infelizmente, quando a realeza é apenas uma imitação, o resultado é previsível: pessoas cheias de esperanças sendo amargamente decepcionadas, percebendo tarde demais que até um cão abandonado tomaria decisões mais sensatas.
 Falo agora sobre o Rei, figura que deveria inspirar respeito e confiança, mas que, em verdade, mais se assemelha a uma criança desorientada.
- Usa a coroa como um adorno de brincadeira e fala com a solenidade de quem acredita possuir autoridade, quando, na realidade, ninguém o leva a sério.
- Suas palavras são ocas; sua presença, frágil; seu reinado, mera formalidade.
+Usa a coroa como um adorno de brincadeira e fala com a solenidade de quem acredita possuir autoridade, quando, na realidade, ninguém o leva a sério.
+Suas palavras são ocas; sua presença, frágil; seu reinado, mera formalidade.
 Cada decisão que toma parece fruto de um capricho, não de sabedoria.
- Quer parecer firme, mas tropeça em suas próprias certezas.
- Deseja ser ouvido, mas sua voz ecoa em vão pelos corredores do castelo.
- E assim, o que deveria ser o alicerce da realeza se torna apenas um lembrete de que o trono, por si só, não faz um rei — principalmente quando quem o ocupa ainda não aprendeu a ser homem.
+Quer parecer firme, mas tropeça em suas próprias certezas.
+Deseja ser ouvido, mas sua voz ecoa em vão pelos corredores do castelo.
+E assim, o que deveria ser o alicerce da realeza se torna apenas um lembrete de que o trono, por si só, não faz um rei — principalmente quando quem o ocupa ainda não aprendeu a ser homem.
 A Rainha, matriarca do castelo, deveria ser o farol da razão, a mediadora dos conflitos, a guardiã da serenidade.
- Entretanto, o que se encontra sob a coroa é uma alma em constante tormenta, presa a um passado que não cessa de feri-la.
- Sua bondade existe, sim, mas é abafada por uma moral deturpada, que crê que os fins justificam os meios — mesmo quando esses meios corroem os próprios valores que ela julga proteger.
+Entretanto, o que se encontra sob a coroa é uma alma em constante tormenta, presa a um passado que não cessa de feri-la.
+Sua bondade existe, sim, mas é abafada por uma moral deturpada, que crê que os fins justificam os meios — mesmo quando esses meios corroem os próprios valores que ela julga proteger.
 É difícil confiar-lhe o leme da embarcação, pois sua mente é terreno de batalhas invisíveis.
- Quer transmitir paz, mas espalha desordem; quer ensinar sabedoria, mas repete enganos.
- E, ainda assim, há algo de triste em julgá-la, pois dentro dela vive o desejo sincero de acertar, sufocado apenas pela falta de direção.
- É uma rainha que jamais aprendeu a reinar sobre si mesma.
+Quer transmitir paz, mas espalha desordem; quer ensinar sabedoria, mas repete enganos.
+E, ainda assim, há algo de triste em julgá-la, pois dentro dela vive o desejo sincero de acertar, sufocado apenas pela falta de direção.
+É uma rainha que jamais aprendeu a reinar sobre si mesma.
 Chego, então, aos herdeiros deste trono fraturado: os príncipes, destinados a perpetuar o legado da família, mas moldados pelos mesmos erros que os antecederam.
 Lady Glinda, a primogênita, reflete o espelho da matriarca — com suas virtudes distorcidas e sua paz sempre interrompida.
- Deveria ser a segunda lâmina da espada da razão, mas tornou-se o eco das mesmas falhas: transmite caos onde deveria haver ordem, e incerteza onde se esperava clareza.
- Repete, sem perceber, o ciclo que um dia a feriu.
+Deveria ser a segunda lâmina da espada da razão, mas tornou-se o eco das mesmas falhas: transmite caos onde deveria haver ordem, e incerteza onde se esperava clareza.
+Repete, sem perceber, o ciclo que um dia a feriu.
 O príncipe Lockwoody, por outro lado, é um ser engolido pela própria amargura.
- Faltou-lhe afeto, sobrou-lhe desatenção.
- E assim aprendeu a usar a raiva como norte, a insegurança como conselheira.
- É o resultado vivo de uma família que o abandonou à própria sorte, mesmo estando presente.
- Agora, sem rei de verdade para guiá-lo, veste o manto do comando — não por vocação, mas por desespero.
- E, nesse papel forçado, se perde entre o dever e o vazio.
+Faltou-lhe afeto, sobrou-lhe desatenção.
+E assim aprendeu a usar a raiva como norte, a insegurança como conselheira.
+É o resultado vivo de uma família que o abandonou à própria sorte, mesmo estando presente.
+Agora, sem rei de verdade para guiá-lo, veste o manto do comando — não por vocação, mas por desespero.
+E, nesse papel forçado, se perde entre o dever e o vazio.
 E por fim, restou a mim, o observador silencioso desta dinastia de ilusões.
- Aquele que compreendeu, tarde, que tentar reparar o que já nasceu rachado é um esforço vão.
- Entendi que a verdadeira grandeza está na simplicidade, e que o amor genuíno não precisa de tronos, apenas de espaço para florescer.
+Aquele que compreendeu, tarde, que tentar reparar o que já nasceu rachado é um esforço vão.
+Entendi que a verdadeira grandeza está na simplicidade, e que o amor genuíno não precisa de tronos, apenas de espaço para florescer.
 Eis-me novamente dentro do castelo, cercado pelas mesmas paredes que aprendi a decifrar.
- Por um tempo, estive fora — livre, ainda que sem rumo — e foi lá, entre a incerteza e a solidão, que encontrei respostas que jamais teria descoberto aqui dentro.
- Percebi o valor da calma, da rotina simples, do afeto sem pretensão.
- Aprendi que a paz não nasce de grandes muros, mas da leveza de poder existir sem precisar provar nada a ninguém.
+Por um tempo, estive fora — livre, ainda que sem rumo — e foi lá, entre a incerteza e a solidão, que encontrei respostas que jamais teria descoberto aqui dentro.
+Percebi o valor da calma, da rotina simples, do afeto sem pretensão.
+Aprendi que a paz não nasce de grandes muros, mas da leveza de poder existir sem precisar provar nada a ninguém.
 Mas o destino, por ora, obrigou-me a retornar.
- E aqui estou, ciente do que quero, mas ainda preso ao que me cerca.
- Trago comigo a esperança de um novo lar — um lar que não precise se parecer com este, que não herde seus vícios nem suas vaidades.
- Quero construir algo do zero, onde cada membro saiba o seu lugar, o seu valor e o seu propósito, sem precisar de coroas ou brasões para ser digno de amor.
+E aqui estou, ciente do que quero, mas ainda preso ao que me cerca.
+Trago comigo a esperança de um novo lar — um lar que não precise se parecer com este, que não herde seus vícios nem suas vaidades.
+Quero construir algo do zero, onde cada membro saiba o seu lugar, o seu valor e o seu propósito, sem precisar de coroas ou brasões para ser digno de amor.
 Talvez um dia eu consiga partir de vez.
- Mas até lá, sigo aqui, entre as muralhas falsas, alimentando o sonho de um castelo meu — simples, pequeno, mas verdadeiro`,
+Mas até lá, sigo aqui, entre as muralhas falsas, alimentando o sonho de um castelo meu — simples, pequeno, mas verdadeiro`,
     conteudo_en: `I hate the false walls that exist here.
 That illusory sense of security, those giant walls that, seen from the outside, resemble an imposing castle, but which, inside, are nothing more than an abandoned shack.
 Sometimes, I want to break down those walls and expose to the world—and to themselves—what they really are.
@@ -265,6 +265,69 @@ I carry with me the hope of a new home—a home that doesn't need to resemble th
 I want to build something from scratch, where each member knows their place, their value, and their purpose, without needing crowns or coats of arms to be worthy of love.
 Maybe one day I'll be able to leave for good.
 But until then, I'll stay here, between the false walls, nurturing the dream of my own castle—simple, small, but real.`,
+  },
+  {
+    id: "a-flor",
+    titulo: "🌸 A Flor",
+    titulo_en: "🌸 The Flower",
+    categoria: "Crônica",
+    categoria_en: "Chronicle",
+    resumo: "Um diálogo sobre um amor perdido e o cuidado com uma flor que se transformou em uma lição..",
+    resumo_en: "A dialogue about a lost love and the care for a flower that turned into a lesson.",
+    favorito: true,
+    data: "10/12/2025",
+    conteudo: `— Cara, eu não sei o que fiz de errado.
+— Ué como assim? Você não disse que fez de tudo pra vocês darem certo? Que você era um cara legal e que ela podia confiar em você, que você era diferente dos outros e aquela coisa toda?
+— Sim mas...
+— Mesmo assim ela não quis ne?
+— Sim. Você ja passou por isso?
+— Ixi, várias vezes...
+— E o que você fez?
+— Ta vendo aquela flor? (diz apontando pra janela enquanto o sol ilumina uma flor muito linda)
+— Sim. O que que tem?
+— Então, a historia dessa flor é bem engraçada. Eu plantei essa flor.
+— Sério?
+— SIm! Nem da pra acreditar que aquela sementezinha ia virar essa flor linda ai, mas virou, mas eu não comprei ela atoa, eu tinha um plano.
+— Que plano?
+— Eu queria plantar e cultivar ela, ate ficar desse jeito, as vezes parece que ela saiu da minha cabeça porque é exatamente com eu idealizei, e então, eu iria dar pra minha ex.
+— Sua ex?
+— É, a gente tava juntos na época.
+— Ah sim.
+— E essa seria a minha maior prova de amor, pois quando eu a entregasse eu iria dizer: "Todos os dias que eu cuidei dela eu pensava em você, e essa é a maior prova de que você nunca saiu da minha cabeça".
+— Nossa sinto muito!
+— Ue, por quê?
+— Bom, ja que ela ainda esta ai, imagino que vocês terminaram antes mesmo da flor brotar ne?
+— Ah não, nós terminamos a uns 6 meses, essa flor eu plantei a 2 anos.
+— Ue, e por que você não entregou a flor pra ela?
+— Sabe, é que depois de um tempo, eu comecei a me importar muito com essa flor, não sei se foi por causa do hábito que eu criei de todos os dias acordar e cuidar dela, de ficar naquela expectativa de que um dia ela seria tão linda quanto é hoje, ou por saber que a minha ex iria amar esse presente, não sei mesmo, mas o fato é que depois disso, eu não tive coragem de dar ela de presente. Na minha cabeça não era justo todo aquele tempo cuidando dela, só pra eu arrancar e dar de presente e em dois dias ela morrer. E olha, não sei você mas acho que ela ta bem melhor assim do que se eu tivesse dado de presente! Você não acha?
+— Acho... obrigado!
+— Por nada!`,
+    conteudo_en: `— Dude, I don't know what I did wrong.
+— What do you mean? Didn't you say you did everything for you guys to work out? That you were a nice guy and she could trust you, that you were different from the others and all that?
+— Yes, but...
+— Even so, she didn't want to, right?
+— Yes. Have you ever been through this?
+— Whoa, several times...
+— And what did you do?
+— Do you see that flower? (he says pointing to the window as the sun illuminates a very beautiful flower)
+— Yes. What about it?
+— So, the story of this flower is quite funny. I planted this flower.
+— Really?
+— YES! It's hard to believe that that little seed would turn into this beautiful flower, but it did, but I didn't buy it for nothing, I had a plan.
+— What plan?
+— I wanted to plant and cultivate it, until it looked like this, sometimes it seems like it came out of my head because it is exactly as I idealized, and then, I was going to give it to my ex.
+— Your ex?
+— Yeah, we were together at the time.
+— Ah, yes.
+— And this would be my greatest proof of love, because when I gave it to her I would say: "Every day I took care of it I thought of you, and this is the greatest proof that you never left my head".
+— Wow, I'm sorry!
+— Why?
+— Well, since it's still there, I imagine you broke up before the flower even sprouted, right?
+— Ah no, we broke up about 6 months ago, I planted this flower 2 years ago.
+— Why didn't you give the flower to her?
+— You know, it's just that after a while, I started to care a lot about this flower, I don't know if it was because of the habit I created of waking up every day and taking care of it, of being in that expectation that one day it would be as beautiful as it is today, or because I knew my ex would love this gift, I really don't know, but the fact is that after that, I didn't have the courage to give it as a gift. In my head, it wasn't fair all that time taking care of it, just for me to pluck it and give it as a gift and in two days it would die. And look, I don't know about you but I think she is much better this way than if I had given her as a gift! Don't you think?
+— I think so... thanks!
+— You're welcome!`,
   }
 ];
 
@@ -301,5 +364,3 @@ window.translations = {
 };
 
 window.currentLang = 'pt'; // Define o idioma inicial
-
-
