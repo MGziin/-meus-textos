@@ -272,7 +272,7 @@ But until then, I'll stay here, between the false walls, nurturing the dream of 
     titulo_en: "🌸 The Flower",
     categoria: "Crônica",
     categoria_en: "Chronicle",
-    resumo: "Um diálogo sobre um amor perdido e o cuidado com uma flor que se transformou em uma lição..",
+    resumo: "Um diálogo sobre um amor perdido e o cuidado com uma flor que se transformou em uma lição.",
     resumo_en: "A dialogue about a lost love and the care for a flower that turned into a lesson.",
     favorito: true,
     data: "10/12/2025",
@@ -364,3 +364,4 @@ window.translations = {
 };
 
 window.currentLang = 'pt'; // Define o idioma inicial
+
