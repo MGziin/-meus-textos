@@ -431,61 +431,64 @@ a:hover {
     text-align: left;
 }
 
-/* ======= CORREÇÃO DA FOTO DE PERFIL ======= */
-.foto-perfil {
-    width: 150px;           /* Tamanho fixo da largura */
-    height: 150px;          /* Tamanho fixo da altura (igual à largura para ser um círculo) */
-    border-radius: 50%;      /* Deixa a foto redonda */
-    object-fit: cover;       /* CRUCIAL: Mantém a proporção da imagem sem achatar ou esticar */
-    border: 4px solid #ffdb4d; 
-    margin: 0 auto 20px auto; /* Centraliza e dá espaço para o título */
-    display: block;
-}
+/* ======= (O bloco da .foto-perfil foi removido) ======= */
 
-/* ======= RESPONSIVIDADE (CELULAR) ======= */
+/* ======= RESOLVENDO O PROBLEMA DO MENU E LAYOUT NO CELULAR ======= */
+/* Este bloco é essencial para arrumar os prints que você mandou */
 @media (max-width: 768px) {
-    /* Faz o cabeçalho empilhar os itens verticalmente */
+    /* Impede o site de "fugir" para o lado criando espaço branco */
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    /* O Header agora empilha os itens (Título em cima, menu embaixo) */
     .header-home {
-        flex-direction: column;
-        padding: 15px 10px;
-        text-align: center;
-    }
-
-    .titulo-site {
-        margin: 0 0 10px 0; /* Remove a margem automática e dá espaço abaixo */
-        font-size: 1.4rem;
-    }
-
-    /* Ajusta o seletor de idioma no mobile */
-    .home-lang-selector {
-        margin: 0 0 15px 0;
-    }
-
-    /* Faz os links do menu ficarem em duas linhas ou colunas para não esmagar */
-    .atalhos {
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: column !important; 
+        height: auto !important;
+        padding: 15px 5px !important;
         gap: 10px;
     }
 
+    .titulo-site {
+        margin: 0 auto !important; /* Centraliza o título */
+        font-size: 1.4rem;
+    }
+
+    .home-lang-selector {
+        margin: 0 auto 10px auto !important; /* Centraliza o idioma */
+    }
+
+    /* Menu de links se organiza para caber na tela pequena */
+    .atalhos {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        width: 100%;
+        gap: 8px;
+        margin-top: 5px;
+    }
+
     .atalhos a {
-        margin: 5px;
-        font-size: 0.85rem; /* Diminui levemente a fonte no celular */
+        margin: 5px !important;
+        font-size: 0.9rem;
+        display: inline-block;
     }
 
-    /* Ajusta as seções para não ficarem tão "altas" no celular */
+    /* Ajusta a altura dos parallax para não ficarem gigantes no celular */
     .parallax-wrapper {
-        min-height: 300px;
-        background-attachment: scroll; /* Melhora o desempenho em celulares antigos */
+        min-height: 300px !important;
+        background-attachment: scroll !important; /* Melhora o funcionamento no celular */
+    }
+    
+    .secao-parallax {
+         padding: 50px 15px !important; /* Mais espaço para o texto não colar nas bordas */
     }
 
-    .secao {
-        padding: 30px 15px;
-    }
-
-    /* Garante que os cards não ocupem a tela inteira com erro de margem */
+    /* Garante que os cards de texto não ultrapassem a largura da tela */
     .card-texto, .card-fav {
-        width: 90%;
-        max-width: none;
+        width: 94% !important;
+        max-width: 94% !important;
+        margin: 20px auto !important;
+        box-sizing: border-box; 
     }
 }
