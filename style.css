@@ -430,3 +430,62 @@ a:hover {
     margin-top: 0;
     text-align: left;
 }
+
+/* ======= CORREÇÃO DA FOTO DE PERFIL ======= */
+.foto-perfil {
+    width: 150px;           /* Tamanho fixo da largura */
+    height: 150px;          /* Tamanho fixo da altura (igual à largura para ser um círculo) */
+    border-radius: 50%;      /* Deixa a foto redonda */
+    object-fit: cover;       /* CRUCIAL: Mantém a proporção da imagem sem achatar ou esticar */
+    border: 4px solid #ffdb4d; 
+    margin: 0 auto 20px auto; /* Centraliza e dá espaço para o título */
+    display: block;
+}
+
+/* ======= RESPONSIVIDADE (CELULAR) ======= */
+@media (max-width: 768px) {
+    /* Faz o cabeçalho empilhar os itens verticalmente */
+    .header-home {
+        flex-direction: column;
+        padding: 15px 10px;
+        text-align: center;
+    }
+
+    .titulo-site {
+        margin: 0 0 10px 0; /* Remove a margem automática e dá espaço abaixo */
+        font-size: 1.4rem;
+    }
+
+    /* Ajusta o seletor de idioma no mobile */
+    .home-lang-selector {
+        margin: 0 0 15px 0;
+    }
+
+    /* Faz os links do menu ficarem em duas linhas ou colunas para não esmagar */
+    .atalhos {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .atalhos a {
+        margin: 5px;
+        font-size: 0.85rem; /* Diminui levemente a fonte no celular */
+    }
+
+    /* Ajusta as seções para não ficarem tão "altas" no celular */
+    .parallax-wrapper {
+        min-height: 300px;
+        background-attachment: scroll; /* Melhora o desempenho em celulares antigos */
+    }
+
+    .secao {
+        padding: 30px 15px;
+    }
+
+    /* Garante que os cards não ocupem a tela inteira com erro de margem */
+    .card-texto, .card-fav {
+        width: 90%;
+        max-width: none;
+    }
+}
