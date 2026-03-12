@@ -552,3 +552,23 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => abrirModalPorId(openId), 50); 
   }
 });
+
+// No final do script.js
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-theme');
+        if (themeToggleBtn) themeToggleBtn.textContent = '☀️';
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            const isDark = body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
+        });
+    }
+});
