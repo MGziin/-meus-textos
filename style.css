@@ -567,3 +567,55 @@ body.dark-theme .tag-pill.active {
     background-color: #b38b00;
     color: #fff;
 }
+
+/* Container para alinhar botão e idioma */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Estilização robusta para o botão de tema */
+.btn-theme {
+    background: #fdf5e6;
+    border: 2px solid #b38b00;
+    border-radius: 50%;
+    width: 45px; /* Tamanho fixo para não sumir */
+    height: 45px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1001; /* Garante que fique acima de outros elementos */
+}
+
+/* Ajuste do cabeçalho para ser flexível */
+.header-home, .header-catalogo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    flex-wrap: wrap; /* Isso impede que os itens fujam da tela */
+}
+
+/* Quando a tela for estreita (como nos seus prints de 50% ou janela pequena) */
+@media (max-width: 800px) {
+    .header-home, .header-catalogo {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .titulo-site, .titulo-catalogo {
+        width: 100%;
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .header-controls {
+        width: 100%;
+        justify-content: center;
+    }
+}
