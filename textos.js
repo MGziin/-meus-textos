@@ -349,15 +349,15 @@ But until then, I'll stay here, between the false walls, nurturing the dream of 
 
 Ela o encarou. Havia uma lucidez triste nos olhos dela.
 
-— E o que você sugere? Que a gente simplesmente pare de tentar? Que tipo de vida você quer tener, então?
+— E o que você sugere? Que a gente simplesmente pare de tentar? Que tipo de vida você quer ter, então?
 — Uma sem o peso do "e se". Eu quero chegar na minha maca de hospital, no meu último suspiro, olhar para trás e não sentir que fui um espectador da minha própria história. Quero saber que, se tivesse a chance de viver tudo de novo, eu aceitaria, porque fiz as escolhas que faziam sentido para o meu coração, não para o meu currículo.
 
 Ela desviou o olhar para os livros empilhados no canto da sala.
 
 — Você fala como se estudar fosse um desperdício, mas para mim, é a única ponte que eu conheço para não cair no abismo. Você quer viver o agora, mas o "agora" não paga o aluguel de amanhã. Eu não estudo porque amo as fórmulas, eu estudo porque tenho pavor de não ter escolha. Meu medo de me arrepender no futuro é o que me faz sacrificar o presente.
-— Eu sei — ele disse, com uma suavidade que doía mais que um grito. — Mas enquanto você constrói essa ponte, você esquece de caminhar. Você está tão ocupada garantindo que teremos um teto daqui a dez anos que não percebeu que o teto que temos hoje já desabou. Eu não quero te controlar, eu só queria que você estivesse aqui... comigo. Mas você já partiu faz tempo, para algum lugar no futuro onde eu não consigo te alcançar.
+— Eu sei — ele diz com uma suavidade que doía mais que um grito. — Mas enquanto você constrói essa ponte, você esquece de caminhar. Você está tão ocupada garantindo que teremos um teto daqui a dez anos que não percebeu que o teto que temos hoje já desabou. Eu não quero te controlar, eu só queria que você estivesse aqui... comigo. Mas você já partiu faz tempo, para algum lugar no futuro onde eu não consigo te alcançar.
 
-Ela sentiu o impacto. A maturidade daquela constatação era o ponto final que nenhum dos dois queria escrever. 
+Ela sentiu o impacto. A maturidade daquela constatação era o ponto final que nenhum dos dois queria ter que admitir. 
 
 — E então? — Ela perguntou, a voz embargada. — O que a gente faz agora?
 
@@ -425,5 +425,6 @@ window.translations = {
 };
 
 window.currentLang = 'pt'; // Define o idioma inicial
+
 
 
