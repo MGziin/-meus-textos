@@ -328,6 +328,67 @@ But until then, I'll stay here, between the false walls, nurturing the dream of 
 — You know, it's just that after a while, I started to care a lot about this flower, I don't know if it was because of the habit I created of waking up every day and taking care of it, of being in that expectation that one day it would be as beautiful as it is today, or because I knew my ex would love this gift, I really don't know, but the fact is that after that, I didn't have the courage to give it as a gift. In my head, it wasn't fair all that time taking care of it, just for me to pluck it and give it as a gift and in two days it would die. And look, I don't know about you but I think she is much better this way than if I had given her as a gift! Don't you think?
 — I think so... thanks!
 — You're welcome!`,
+  },
+  {
+    id: "eu-cansei",
+    titulo: "☕ Eu cansei",
+    titulo_en: "☕ I'm tired",
+    categoria: "Crônica",
+    categoria_en: "Chronicle",
+    resumo: "Um diálogo profundo sobre as frustrações da vida adulta, o sistema educacional e o medo de sacrificar o presente.",
+    resumo_en: "A deep dialogue about the frustrations of adulthood, the education system, and the fear of sacrificing the present.",
+    favorito: false,
+    data: "03/02/2026",
+    conteudo: `O café já estava frio entre os dois. Não havia gritos, apenas o som do relógio na parede que parecia contar os segundos que eles não recuperariam mais.
+
+— Eu cansei, sabe? — Ele quebrou o silêncio, sem tirar os olhos da xícara.
+— Como assim?
+— É tudo tão injusto. A gente entrega doze anos de juventude pra a escola e, quando entramos na vida adulta, não sabemos pagar um boleto ou limpar um nome sujo. Perdemos tempo calculando a área de um triângulo ou decorando fórmulas estruturais de elementos que nunca vamos tocar, enquanto a vida real exige coisas que ninguém ensinou.
+— Não é bem assim... — Ela tentou intervir, mas ele continuou, a voz calma, porém carregada.
+— É exatamente assim. Se quisermos o emprego que realmente desejamos, são mais quatro ou cinco anos de faculdade. E o prêmio? No melhor dos casos, ganhar por mês menos do que custava a mensalidade. No pior, e mais realista, ter um diploma na parede e a mochila do iFood nas costas. A conta não fecha.
+
+Ela o encarou. Havia uma lucidez triste nos olhos dela.
+
+— E o que você sugere? Que a gente simplesmente pare de tentar? Que tipo de vida você quer tener, então?
+— Uma sem o peso do "e se". Eu quero chegar na minha maca de hospital, no meu último suspiro, olhar para trás e não sentir que fui um espectador da minha própria história. Quero saber que, se tivesse a chance de viver tudo de novo, eu aceitaria, porque fiz as escolhas que faziam sentido para o meu coração, não para o meu currículo.
+
+Ela desviou o olhar para os livros empilhados no canto da sala.
+
+— Você fala como se estudar fosse um desperdício, mas para mim, é a única ponte que eu conheço para não cair no abismo. Você quer viver o agora, mas o "agora" não paga o aluguel de amanhã. Eu não estudo porque amo as fórmulas, eu estudo porque tenho pavor de não ter escolha. Meu medo de me arrepender no futuro é o que me faz sacrificar o presente.
+— Eu sei — ele disse, com uma suavidade que doía mais que um grito. — Mas enquanto você constrói essa ponte, você esquece de caminhar. Você está tão ocupada garantindo que teremos um teto daqui a dez anos que não percebeu que o teto que temos hoje já desabou. Eu não quero te controlar, eu só queria que você estivesse aqui... comigo. Mas você já partiu faz tempo, para algum lugar no futuro onde eu não consigo te alcançar.
+
+Ela sentiu o impacto. A maturidade daquela constatação era o ponto final que nenhum dos dois queria escrever. 
+
+— E então? — Ela perguntou, a voz embargada. — O que a gente faz agora?
+
+Ele se levantou, deixou o café intocado e sorriu triste. 
+
+— Não sei. Me diz você. Afinal, você planejou tudo até aqui... mas esqueceu de planejar o nós.`,
+    conteudo_en: `The coffee was already cold between them. There were no screams, only the sound of the clock on the wall that seemed to count the seconds they would never get back.
+
+— I'm tired, you know? — He broke the silence, without taking his eyes off the cup.
+— What do you mean?
+— It's all so unfair. We give twelve years of youth to school and, when we enter adult life, we don't know how to pay a bill or clear a dirty name. We waste time calculating the area of a triangle or memorizing structural formulas of elements we'll never touch, while real life demands things no one taught.
+— It's not quite like that... — She tried to intervene, but he continued, his voice calm, yet heavy.
+— It's exactly like that. If we want the job we really desire, it's four or five more years of college. And the prize? In the best case, earning less per month than the tuition cost. In the worst, and more realistic case, having a diploma on the wall and an iFood backpack on your back. The math doesn't add up.
+
+She stared at him. There was a sad lucidity in her eyes.
+
+— And what do you suggest? That we just stop trying? What kind of life do you want to have then?
+— One without the weight of "what if". I want to reach my hospital bed, in my last breath, look back and not feel like I was a spectator of my own story. I want to know that if I had the chance to live it all over again, I would accept it, because I made the choices that made sense to my heart, not to my resume.
+
+She looked away at the books piled in the corner of the room.
+
+— You talk as if studying were a waste, but to me, it's the only bridge I know not to fall into the abyss. You want to live for the now, but "now" doesn't pay tomorrow's rent. I don't study because I love formulas, I study because I'm terrified of having no choice. My fear of regretting it in the future is what makes me sacrifice the present.
+— I know — he said, with a softness that hurt more than a scream. — But while you build this bridge, you forget to walk. You're so busy ensuring we'll have a roof ten years from now that you haven't realized the roof we have today has already collapsed. I don't want to control you, I just wanted you to be here... with me. But you left a long time ago, to some place in the future where I can't reach you.
+
+She felt the impact. The maturity of that realization was the final point neither of them wanted to write.
+
+— And then? — She asked, her voice choking up. — What do we do now?
+
+He stood up, left the coffee untouched, and smiled sadly.
+
+— I don't know. You tell me. After all, you planned everything up to here... but you forgot to plan us.`,
   }
 ];
 
@@ -364,4 +425,5 @@ window.translations = {
 };
 
 window.currentLang = 'pt'; // Define o idioma inicial
+
 
