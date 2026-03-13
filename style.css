@@ -544,3 +544,29 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Botão 'theme-toggle' não encontrado no HTML!");
     }
 });
+
+/* Isso garante que o modo escuro tenha prioridade total */
+body.dark-theme {
+    background-color: #1a1a1a !important;
+    background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('sua-imagem-de-fundo.png') !important;
+    color: #e0e0e0 !important;
+}
+
+/* Garante que os títulos fiquem visíveis no escuro */
+body.dark-theme h1, 
+body.dark-theme h2, 
+body.dark-theme .titulo-catalogo {
+    color: #f1c40f !important; /* Um tom de dourado para as crônicas */
+}
+
+/* Ajuste para os cards de texto */
+body.dark-theme .card-texto {
+    background-color: #262626 !important;
+    border: 1px solid #444 !important;
+    color: #ddd !important;
+}
+
+/* Destaque para as Crônicas como 'Muros Falsos' */
+body.dark-theme .card-texto[data-categoria="Crônica"] {
+    border-left: 5px solid #b38b00;
+}
