@@ -131,49 +131,80 @@ a { color: #b38b00; text-decoration: none; }
 .close { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: #b38b00; }
 
 /* ======== MODO ESCURO ======== */
-body.dark-theme { background-color: #000000 !important; color: #ffffff !important; }
+body.dark-theme { 
+    background-color: #000000 !important; 
+    background-image: url('textosfavoritos.png'); /* Mantém o fundo de livros */
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    color: #ffffff !important; 
+}
 
 body.dark-theme .header-home, 
-body.dark-theme .header-catalogo { background-color: #121212 !important; border-bottom: 1px solid #333; }
+body.dark-theme .header-catalogo { 
+    background-color: rgba(18, 18, 18, 0.95) !important; 
+    border-bottom: 1px solid #333; 
+}
 
 body.dark-theme .titulo-site, 
 body.dark-theme .titulo-catalogo,
 body.dark-theme .nav-links a,
 body.dark-theme .lang-selector label,
-body.dark-theme .menu-hamburguer { color: #ffffff !important; }
+body.dark-theme .menu-hamburguer { 
+    color: #ffffff !important; 
+}
 
-body.dark-theme .parallax-wrapper { background-color: #000000 !important; }
+/* O Quadrado do Fundo - Agora Semitransparente */
+body.dark-theme .catalogo-main { 
+    background-color: rgba(26, 26, 26, 0.85) !important; /* 85% de opacidade */
+    border: 1px solid rgba(255, 219, 77, 0.3); 
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5); 
+    backdrop-filter: blur(8px); /* Efeito de vidro fosco */
+}
+
+body.dark-theme .parallax-wrapper { background-color: transparent !important; }
 
 body.dark-theme .secao-parallax { 
-    background-color: rgba(0, 0, 0, 0.7) !important; /* Faixa escura agora cobre a imagem toda */
+    background-color: rgba(0, 0, 0, 0.7) !important; 
 }
-
-body.dark-theme .catalogo-main { background-color: #1a1a1a !important; border: 1px solid #333; box-shadow: none; }
 
 body.dark-theme #barra-busca, 
-body.dark-theme select { background-color: #262626 !important; color: white !important; border: 1px solid #555; }
+body.dark-theme select { 
+    background-color: rgba(40, 40, 40, 0.9) !important; 
+    color: white !important; 
+    border: 1px solid #555; 
+}
 
-body.dark-theme .tag-pill { background-color: #2c2c2c !important; color: white !important; border: 1px solid #555 !important; }
-body.dark-theme .tag-pill.active { background-color: #ffffff !important; color: #121212 !important; }
+body.dark-theme .tag-pill { 
+    background-color: rgba(44, 44, 44, 0.8) !important; 
+    color: white !important; 
+    border: 1px solid #555 !important; 
+}
+
+body.dark-theme .tag-pill.active { 
+    background-color: #ffdb4d !important; 
+    color: #121212 !important; 
+}
 
 body.dark-theme .card-texto, 
-body.dark-theme .card-fav { background-color: #1e1e1e !important; border: 1px solid #333 !important; }
-
-body.dark-theme .modal-box { background-color: #1a1a1a !important; color: #ffffff !important; border: 1px solid #ffdb4d; }
-
-body.dark-theme .menu-lateral { background-color: #121212 !important; border-right: 1px solid #333; }
-body.dark-theme .menu-lateral a { color: white !important; border-bottom: 1px solid #333; }
-
-/* ======== CELULAR ======== */
-@media (max-width: 768px) {
-    .header-home { flex-direction: column; padding: 15px; gap: 10px; }
-    .nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; }
-    .parallax-wrapper { background-attachment: scroll; min-height: 350px; }
-    .header-catalogo { flex-wrap: wrap; justify-content: center; gap: 10px;}
-    .titulo-catalogo { width: 100%; order: -1; margin-bottom: 10px;}
+body.dark-theme .card-fav { 
+    background-color: rgba(30, 30, 30, 0.9) !important; 
+    border: 1px solid #444 !important; 
 }
-/* Para o Modo Escuro */
-body.dark-mode .seu-container-principal {
-    background-color: rgba(30, 30, 30, 0.8); /* O '0.8' define a opacidade */
-    backdrop-filter: blur(5px); /* Opcional: dá um efeito de vidro fosco elegante */
+
+body.dark-theme .modal-box { 
+    background-color: #1a1a1a !important; 
+    color: #ffffff !important; 
+    border: 1px solid #ffdb4d; 
+}
+
+body.dark-theme .menu-lateral { 
+    background-color: rgba(18, 18, 18, 0.9) !important; 
+    border-right: 1px solid #333; 
+    backdrop-filter: blur(10px);
+}
+
+body.dark-theme .menu-lateral a { 
+    color: white !important; 
+    border-bottom: 1px solid #333; 
 }
