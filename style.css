@@ -159,19 +159,34 @@ body.dark-theme .catalogo-main {
     max-width: 1200px; /* Opcional: aumenta a largura do conteúdo */
 }
 
-/* Ajuste dos Botões "Ler Mais" e outros botões no Modo Escuro */
+/* ======== AJUSTE DOS BOTÕES NO MODO ESCURO ======== */
+
+/* Forçando a cor amarela no botão Ler Mais */
 body.dark-theme .btn-ler, 
 body.dark-theme .botao-catalogo,
 body.dark-theme .botao-geral { 
-    background-color: #ffdb4d !important; /* Mantém o amarelo vivo para destaque */
-    color: #121212 !important; 
-    border: none;
-    transition: transform 0.2s;
+    background-color: #ffdb4d !important; /* Amarelo principal */
+    color: #3b3b3b !important; /* Texto escuro para contraste */
+    border: none !important;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    text-shadow: none !important; /* Remove sombras que podem deixar o texto cinza */
 }
 
-body.dark-theme .btn-ler:hover {
-    background-color: #ffcc00 !important;
+/* Efeito ao passar o mouse */
+body.dark-theme .btn-ler:hover, 
+body.dark-theme .botao-catalogo:hover {
+    background-color: #ffcc00 !important; /* Amarelo um pouco mais escuro */
     transform: scale(1.05);
+}
+
+/* Caso o botão seja um link <a>, garantimos que não mude de cor */
+body.dark-theme a.btn-ler,
+body.dark-theme a.botao-catalogo {
+    color: #3b3b3b !important;
 }
 
 /* Cores de Texto e Títulos */
