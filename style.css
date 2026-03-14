@@ -647,3 +647,74 @@ body.dark-theme #barra-busca {
     color: #ffffff !important;
     border: 1px solid #444 !important;
 }
+/* ======= MENU LATERAL NO MODO ESCURO ======= */
+body.dark-theme .menu-lateral {
+    background-color: #121212 !important; /* Fundo preto/cinza muito escuro */
+    border-right: 1px solid #333 !important;
+}
+
+/* Links do menu lateral no Modo Escuro */
+body.dark-theme .menu-lateral a {
+    color: #ffffff !important;
+    border-bottom: 1px solid #262626; /* Linha sutil entre os links */
+}
+
+body.dark-theme .menu-lateral a:hover {
+    background-color: #1e1e1e;
+    color: #f1c40f !important; /* Destaque dourado ao passar o mouse */
+}
+
+/* ======= ESTILIZAÇÃO DO BOTÃO "X" ======= */
+.btn-fechar {
+    background: none !important; /* Remove o fundo cinza */
+    border: none !important;     /* Remove a borda de botão */
+    color: #b38b00;              /* Cor dourada no modo claro */
+    font-size: 2rem;             /* Deixa o X grande e elegante */
+    cursor: pointer;
+    padding: 10px 20px;
+    display: block;
+    text-align: right;
+    width: 100%;
+}
+
+/* "X" no Modo Escuro */
+body.dark-theme .btn-fechar {
+    color: #ffffff !important;   /* X branco no modo escuro */
+}
+
+body.dark-theme .btn-fechar:hover {
+    color: #ff0000 !important;   /* Fica vermelho ao passar o mouse para indicar fechar */
+}
+/* ======= MODAIS (TEXTO ABERTO) NO MODO ESCURO ======= */
+
+/* Fundo da caixa do modal */
+body.dark-theme .modal-conteudo {
+    background-color: #1e1e1e !important; /* Cinza escuro para combinar com os cards */
+    color: #ffffff !important;           /* Texto totalmente branco */
+    border: 1px solid #333 !important;   /* Borda sutil */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5) !important;
+}
+
+/* Título e parágrafos dentro do modal */
+body.dark-theme .modal-conteudo h2, 
+body.dark-theme .modal-conteudo h3, 
+body.dark-theme .modal-conteudo p {
+    color: #ffffff !important;
+}
+
+/* O "X" de fechar dentro do modal */
+body.dark-theme .fechar-modal,
+body.dark-theme .close-button {
+    color: #ffffff !important;
+    opacity: 0.8;
+}
+
+body.dark-theme .fechar-modal:hover {
+    color: #ff4444 !important; /* Vermelho ao passar o mouse para facilitar a saída */
+    opacity: 1;
+}
+
+/* Ajuste para a barra de rolagem dentro do modal no modo escuro */
+body.dark-theme .modal-conteudo::-webkit-scrollbar-thumb {
+    background: #444 !important;
+}
