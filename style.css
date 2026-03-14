@@ -797,3 +797,40 @@ body.dark-theme .nav-links a,
 body.dark-theme .titulo-site {
     color: #ffffff !important;
 }
+/* Organização da Direita: Botão em cima, Dropdown embaixo */
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Reduzi o seletor para caber melhor na lateral */
+#lang-switch-home {
+    font-size: 0.8rem;
+    padding: 2px;
+    cursor: pointer;
+}
+
+/* ======= CORREÇÃO DAS DIVISÓRIAS (PARALLAX) ======= */
+
+/* No modo claro, elas geralmente mostram o fundo do body */
+body {
+    background-color: #ffffff; /* Fundo padrão claro */
+}
+
+/* No modo escuro, o fundo entre as seções deve ser escuro */
+body.dark-theme {
+    background-color: #000000 !important; /* Cor da divisória no modo escuro */
+}
+
+/* Garante que o wrapper do parallax não force cores claras */
+body.dark-theme .parallax-wrapper {
+    background-color: transparent !important;
+}
+
+/* Se as suas seções tiverem margens que criam o espaço branco */
+body.dark-theme .secao-parallax {
+    border-top: 10px solid #000000; /* Substitui o espaço branco por uma borda preta */
+    border-bottom: 10px solid #000000;
+}
