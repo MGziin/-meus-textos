@@ -172,3 +172,8 @@ body.dark-theme .menu-lateral a { color: white !important; border-bottom: 1px so
     .header-catalogo { flex-wrap: wrap; justify-content: center; gap: 10px;}
     .titulo-catalogo { width: 100%; order: -1; margin-bottom: 10px;}
 }
+/* Para o Modo Escuro */
+body.dark-mode .seu-container-principal {
+    background-color: rgba(30, 30, 30, 0.8); /* O '0.8' define a opacidade */
+    backdrop-filter: blur(5px); /* Opcional: dá um efeito de vidro fosco elegante */
+}
