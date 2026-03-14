@@ -625,3 +625,25 @@ body.dark-theme .tag-pill.active {
     background-color: #ffffff !important;
     color: #121212 !important;
 }
+/* ======= CABEÇALHO NO MODO ESCURO ======= */
+body.dark-theme .header-catalogo,
+body.dark-theme .header-home {
+    background-color: #121212 !important; /* Preto/Cinza quase total */
+    border-bottom: 1px solid #333 !important; /* Linha sutil para separar do fundo */
+}
+
+/* Título e Botões do Cabeçalho */
+body.dark-theme .titulo-catalogo,
+body.dark-theme .titulo-site,
+body.dark-theme .menu-hamburguer,
+body.dark-theme .lang-selector label {
+    color: #ffffff !important; /* Letras brancas */
+}
+
+/* Ajuste para o fundo do Seletor de Idioma e Busca no Modo Escuro */
+body.dark-theme select,
+body.dark-theme #barra-busca {
+    background-color: #262626 !important;
+    color: #ffffff !important;
+    border: 1px solid #444 !important;
+}
