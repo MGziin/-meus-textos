@@ -8,45 +8,41 @@
   <link rel="icon" type="image/png" href="favicon.png"> 
 </head>
 <body class="home-body">
-  <header class="header-home header-nav">
-    <h1 class="titulo-site">Meu Cantinho</h1>
-    
-    <div class="lang-selector home-lang-selector">
-        <label for="lang-switch-home">Idioma:</label>
-        <select id="lang-switch-home">
-            <option value="pt">Português</option>
-            <option value="en">English</option>
-        </select>
+  
+  <header class="header-home">
+    <div class="header-left">
+        <h1 class="titulo-site">Meu Cantinho</h1>
     </div>
-    <header class="header-home header-nav">
-    <h1 class="titulo-site">Meu Cantinho</h1>
-    
-    <button id="theme-toggle" class="btn-theme" title="Alternar Modo Escuro">🌙</button>
 
-    <div class="lang-selector home-lang-selector">
-        <label for="lang-switch-home">Idioma:</label>
-        <select id="lang-switch-home">
-            <option value="pt">Português</option>
-            <option value="en">English</option>
-        </select>
-    </div>
-    
-    </header>
-    
-    <nav class="atalhos">
-      <a href="#inicio" data-lang-key="home">Início</a>
-      <a href="#sobre" data-lang-key="about">Sobre Mim</a>
-      <a href="#favoritos" data-lang-key="favorites">Textos Favoritos</a>
-      <a href="#tags" data-lang-key="tags">Tags</a>
-      <a href="#contato" data-lang-key="contact">Contato</a>
+    <nav class="header-center">
+        <div class="lang-selector-home">
+            <label for="lang-switch-home">Idioma:</label>
+            <select id="lang-switch-home">
+                <option value="pt">Português</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+        
+        <div class="nav-links">
+            <a href="#inicio" data-lang-key="home">Início</a>
+            <a href="#sobre" data-lang-key="about">Sobre Mim</a>
+            <a href="#favoritos" data-lang-key="favorites">Favoritos</a>
+            <a href="#tags" data-lang-key="tags">Tags</a>
+            <a href="#contato" data-lang-key="contact">Contato</a>
+        </div>
     </nav>
+
+    <div class="header-right">
+        <button id="theme-toggle" class="btn-theme" title="Alternar Modo Escuro">🌙</button>
+    </div>
   </header>
 
-  <main class="conteudo-parallax"> <div class="parallax-wrapper" id="wrapper-inicio-sobre">
-     <section id="inicio" class="secao secao-parallax">
-  <h2 data-lang-key="home">Início</h2>
-  <p id="home-inicio-text">Bem-vindo(a) ao meu cantinho — aqui você encontra todos os meus textos, reflexões e histórias. 💛</p>
-</section>
+  <main class="conteudo-parallax"> 
+    <div class="parallax-wrapper" id="wrapper-inicio-sobre">
+      <section id="inicio" class="secao secao-parallax">
+        <h2 data-lang-key="home">Início</h2>
+        <p id="home-inicio-text">Bem-vindo(a) ao meu cantinho — aqui você encontra todos os meus textos, reflexões e histórias. 💛</p>
+      </section>
 
       <section id="sobre" class="secao secao-parallax">
         <h2 data-lang-key="about">Sobre Mim</h2>
@@ -57,8 +53,7 @@
     <div class="parallax-wrapper" id="wrapper-favoritos">
       <section id="favoritos" class="secao secao-parallax">
         <h2 data-lang-key="favorites">Textos Favoritos</h2>
-        <div id="lista-favoritos">
-          </div>
+        <div id="lista-favoritos"></div>
         <a href="#" id="btn-ler-todos" class="botao-catalogo" data-lang-key="all_texts">Ver todos os textos</a>
       </section>
     </div>
@@ -66,8 +61,7 @@
     <div class="parallax-wrapper" id="wrapper-tags">
       <section id="tags" class="secao secao-parallax">
         <h2 data-lang-key="tags">Tags</h2>
-        <div id="lista-tags" class="tags-container">
-          </div>
+        <div id="lista-tags" class="tags-container"></div>
       </section>
     </div>
 
@@ -81,7 +75,6 @@
         </div>
       </section>
     </div>
-
   </main>
 
   <div class="modal-overlay">
@@ -92,12 +85,7 @@
     </div>
   </div>
 
-
   <script src="textos.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
