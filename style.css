@@ -718,3 +718,33 @@ body.dark-theme .fechar-modal:hover {
 body.dark-theme .modal-conteudo::-webkit-scrollbar-thumb {
     background: #444 !important;
 }
+/* ======= CORREÇÃO DO MODAL NO MODO ESCURO ======= */
+
+/* Garante que o fundo da caixa mude para cinza escuro */
+body.dark-theme .modal-box {
+    background-color: #1a1a1a !important; 
+    color: #ffffff !important;
+    border: 1px solid #333 !important;
+}
+
+/* Garante que o título e o texto dentro do modal fiquem brancos */
+body.dark-theme .modal-box h2, 
+body.dark-theme .modal-box h3, 
+body.dark-theme .modal-box p,
+body.dark-theme #modal-conteudo {
+    color: #ffffff !important;
+}
+
+/* Ajusta o botão "X" de fechar o modal */
+body.dark-theme #modal-close-btn {
+    color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+/* Se houver uma barra de rolagem interna, deixa ela escura também */
+body.dark-theme .modal-box::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+body.dark-theme .modal-box::-webkit-scrollbar-thumb {
+    background: #444;
+}
