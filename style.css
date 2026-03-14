@@ -748,3 +748,52 @@ body.dark-theme .modal-box::-webkit-scrollbar-track {
 body.dark-theme .modal-box::-webkit-scrollbar-thumb {
     background: #444;
 }
+/* Layout Base do Cabeçalho Home */
+.header-home {
+    display: flex;
+    justify-content: space-between; /* Separa os 3 blocos: esquerda, centro, direita */
+    align-items: center;
+    padding: 10px 5%;
+    background-color: #fff8e1; /* Cor amarela clara padrão */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Bloco Central: Idioma + Links */
+.header-center {
+    display: flex;
+    flex-direction: column; /* Coloca o idioma em cima dos links ou... */
+    align-items: center;
+    gap: 5px;
+}
+
+/* Se preferir Idioma e Links na mesma linha, use row abaixo: */
+@media (min-width: 768px) {
+    .header-center {
+        flex-direction: row; /* Alinha idioma e links lado a lado no desktop */
+        gap: 20px;
+    }
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #b38b00;
+    font-weight: bold;
+}
+
+/* Ajustes para o Modo Escuro no Cabeçalho Home */
+body.dark-theme .header-home {
+    background-color: #121212 !important;
+    border-bottom: 1px solid #333;
+}
+
+body.dark-theme .nav-links a,
+body.dark-theme .titulo-site {
+    color: #ffffff !important;
+}
