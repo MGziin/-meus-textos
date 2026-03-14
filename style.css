@@ -570,3 +570,58 @@ body.dark-theme .card-texto {
 body.dark-theme .card-texto[data-categoria="Crônica"] {
     border-left: 5px solid #b38b00;
 }
+/* ======= AJUSTE GLOBAL DO CONTÊINER ======= */
+/* Remove o "quadrado" de fundo nos dois temas */
+.catalogo-main, 
+.secao-filtros {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* ======= MODO ESCURO (DARK THEME) ======= */
+body.dark-theme {
+    background-color: #121212 !important; /* Fundo preto/cinza muito escuro */
+    /* Escurece a imagem de fundo para dar contraste aos textos brancos */
+    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('textosfavoritos.png') !important;
+    color: #ffffff !important;
+}
+
+/* Títulos e textos gerais no Modo Escuro */
+body.dark-theme h1, 
+body.dark-theme h2, 
+body.dark-theme h3, 
+body.dark-theme p,
+body.dark-theme label {
+    color: #ffffff !important;
+}
+
+/* Cards de Texto no Modo Escuro */
+body.dark-theme .card-texto, 
+body.dark-theme .card-fav {
+    background-color: #1e1e1e !important; /* Cinza escuro */
+    color: #ffffff !important;
+    border: 1px solid #333 !important;
+}
+
+/* Links e Botões nos Cards no Modo Escuro */
+body.dark-theme .card-texto a, 
+body.dark-theme .btn-ler {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+/* Barra de busca e filtros no Modo Escuro */
+body.dark-theme #barra-busca, 
+body.dark-theme #lang-switch,
+body.dark-theme .tag-pill {
+    background-color: #2c2c2c !important;
+    color: #ffffff !important;
+    border: 1px solid #555 !important;
+}
+
+/* Destaque para a categoria Crônica (ex: Muros Falsos) */
+body.dark-theme .tag-pill.active {
+    background-color: #ffffff !important;
+    color: #121212 !important;
+}
