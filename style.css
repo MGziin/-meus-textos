@@ -1,10 +1,3 @@
-/* ======= PALETA DE CORES =======
-   Fundo principal: #fff9e6 (amarelo claro)
-   Destaques e botões: #ffdb4d (amarelo intenso)
-   Textos: #3b3b3b
-   Bordas e detalhes: #b38b00
-================================== */
-
 /* ======== GERAL ======== */
 body {
   font-family: "Poppins", sans-serif;
@@ -13,896 +6,132 @@ body {
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease;
 }
 
-/* 🟢 NOVO: FUNDO PARALLAX PARA O CATÁLOGO 🟢 */
-.catalogo-body {
-    background-image: url('textosfavoritos.png');
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+h1, h2, h3 { color: #b38b00; }
+a { color: #b38b00; text-decoration: none; }
+
+/* ======== HEADER HOME ======== */
+.header-home {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5%;
+    background-color: #fff3b3;
+    border-bottom: 3px solid #ffdb4d;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-h1, h2, h3 {
-  color: #b38b00; /* Cor padrão dos títulos (amarelo/marrom) */
+.titulo-site { font-size: 1.6rem; margin: 0; }
+
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { font-weight: bold; font-size: 0.95rem; }
+.nav-links a:hover { color: #ffcc00; }
+
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
 }
 
-a {
-  color: #b38b00;
-  text-decoration: none;
+.btn-theme {
+    background: none; border: none;
+    font-size: 1.4rem; cursor: pointer;
 }
 
-a:hover {
-  text-decoration: underline;
+#lang-switch-home {
+    font-size: 0.75rem; padding: 2px;
+    border-radius: 4px; border: 1px solid #b38b00;
 }
 
-/* Garante que imagens e backgrounds grandes se ajustem */
-.img-full-width, img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-/* 🟢 EFEITO PARALLAX (JANELA) DA HOME 🟢 */
-
-/* 1. O Wrapper de Parallax (tem a imagem fixa) */
+/* ======== PARALLAX E SEÇÕES ======== */
 .parallax-wrapper {
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    min-height: 400px; 
-    background-color: #3b3b3b; 
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ffeb99;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-/* 2. O conteúdo da seção (é a "janela" transparente) */
+#wrapper-inicio-sobre { background-image: url('perfil.png'); }
+#wrapper-favoritos { background-image: url('textosfavoritos.png'); }
+#wrapper-tags { background-image: url('tags.png'); }
+#wrapper-contato { background-image: url('contato.png'); }
+
 .secao-parallax {
-    background-color: transparent !important; 
-    box-shadow: none !important;
-    border-bottom: none !important;
-    color: white; 
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); 
+    background-color: rgba(255, 249, 230, 0.1);
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
 }
 
-.secao-parallax h2 {
-    color: white;
+.secao-parallax h2, .secao-parallax p { color: white !important; }
+
+/* ======== CARDS E BOTÕES ======== */
+.card-texto, .card-fav {
+    background: #fffdf4;
+    border: 2px solid #ffeb99;
+    border-radius: 15px;
+    padding: 20px;
+    max-width: 500px;
+    margin: 20px auto;
 }
-.secao-parallax p {
-    color: white;
-}
-.secao-parallax .botao-catalogo,
-.secao-parallax .btn-ler {
+
+.botao-catalogo, .btn-ler {
     background-color: #ffdb4d;
     color: #3b3b3b;
-    border: none;
-}
-.secao-parallax .tag-pill {
-    background-color: #fff7cc;
-    border-color: #ffdb4d;
-    color: #3b3b3b;
-}
-
-
-/* 3. Definindo as imagens (SUAS FOTOS AQUI) */
-
-#wrapper-inicio-sobre {
-    background-image: url('perfil.png'); 
-}
-
-#wrapper-favoritos {
-    background-image: url('textosfavoritos.png'); 
-}
-
-#wrapper-tags {
-    background-image: url('tags.png'); 
-}
-
-#wrapper-contato {
-    background-image: url('contato.png'); 
-}
-
-/* 🟢 FIM DAS MUDANÇAS DE DESTAQUE 🟢 */
-
-
-/* ===== HEADER HOME ===== */
-.header-home {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #fff3b3;
-  padding: 12px 20px;
-  border-bottom: 3px solid #ffdb4d;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.titulo-site {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #b38b00;
-  margin-right: auto;
-}
-
-.atalhos {
-    display: flex;
-    align-items: center;
-}
-
-.atalhos a {
-  margin: 0 10px;
-  font-weight: bold;
-  font-size: 0.95rem;
-}
-
-.atalhos a:hover {
-  color: #ffcc00;
-}
-
-/* Estilo para o seletor de idioma na Home */
-.header-home .lang-selector {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #b38b00;
-    margin-left: 20px; 
-}
-
-/* ===== SEÇÕES ===== */
-.secao {
-  padding: 40px 20px;
-  border-bottom: 2px solid #ffeb99;
-  text-align: center;
-  /* Fundo sólido padrão (usado no catalogo.html e seções normais) */
-  background-color: #fff9e6; 
-}
-
-.secao h2 {
-  margin-bottom: 10px;
-  font-size: 1.4rem;
-}
-
-/* ===== TEXTOS FAVORITOS E CATÁLOGO CARDS ===== */
-.card-texto, .card-fav { 
-  background: #fffdf4;
-  border: 2px solid #ffeb99;
-  border-radius: 15px;
-  padding: 18px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-  max-width: 500px;
-  margin: 20px auto;
-  text-align: left;
-}
-
-.card-texto.favorito, .card-fav.favorito {
-  border: 2px solid gold;
-  position: relative;
-  background-color: #fff8d1;
-}
-
-.card-texto.favorito::after, .card-fav.favorito::after {
-  content: "★";
-  color: gold;
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 1.3em;
-}
-
-/* Estiliza todos os botões de ação com o amarelo */
-.ver-mais, .botao-catalogo, .ler-mais, .btn-ler {
-  background-color: #ffdb4d;
-  border: none;
-  color: #3b3b3b;
-  font-weight: bold;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.2s;
-  display: inline-block;
-  text-decoration: none;
-}
-
-.ver-mais:hover, .botao-catalogo:hover, .ler-mais:hover, .btn-ler:hover {
-  background-color: #ffcc00;
-  transform: translateY(-2px);
-}
-
-/* ===== TAGS (RENOVADAS PARA CATÁLOGO) ===== */
-.tags-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 10px;
-}
-
-/* Estilo para as tags de filtro no Catálogo (tag-pill) */
-.tag-pill {
-  background-color: #fff7cc;
-  border: 2px solid #ffdb4d;
-  border-radius: 20px;
-  padding: 8px 16px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #3b3b3b;
-  transition: all 0.2s;
-  text-decoration: none;
-  display: inline-block;
-  margin: 5px;
-}
-
-.tag-pill:hover, .tag-pill.active {
-  background-color: #ffdb4d;
-  text-decoration: none;
-  transform: scale(1.05);
-}
-
-
-/* ===== CONTATO (Estilo para os botões Lado a Lado) ===== */
-.contato-links {
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 15px;
-    margin-top: 15px;
-    justify-content: center; /* Centraliza os botões */
-}
-
-.link-contato {
-    display: inline-block; 
-}
-
-
-/* ===== ESTILOS DO CATÁLOGO (reuso) ===== */
-/* O .secao do catálogo usará o fundo sólido padrão #fff9e6 */
-.header-catalogo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #fff3b3;
-  padding: 12px 20px;
-  border-bottom: 3px solid #ffdb4d;
-}
-
-.titulo-catalogo {
-  flex-grow: 1;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
-.menu-hamburguer {
-  position: static;
-  font-size: 1.6rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #b38b00;
-  z-index: 11;
-  order: -1;
-}
-
-/* Estilo do Seletor de Idioma (Comum para Home e Catálogo) */
-.lang-selector {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #b38b00;
-}
-.home-lang-selector {
-    margin-left: 20px;
-}
-
-#lang-switch, #lang-switch-home {
-    padding: 5px 8px;
-    border-radius: 5px;
-    border: 1px solid #b38b00;
-    background-color: #fffef2;
-}
-
-/* ESTILOS DO MENU HAMBURGUER (CATÁLOGO) */
-.menu-lateral {
-  position: fixed;
-  top: 0;
-  left: -300px; 
-  width: 250px;
-  height: 100%;
-  background-color: #fff7cc;
-  padding: 20px;
-  z-index: 100;
-  border-right: 3px solid #ffdb4d;
-  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
-  transition: left 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.menu-lateral.ativo {
-  left: 0; 
-}
-
-.menu-lateral a {
-  color: #b38b00;
-  text-decoration: none;
-  margin: 10px 0;
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-
-.menu-lateral a:hover {
-  text-decoration: underline;
-}
-
-.fechar-menu-btn {
-  font-size: 1.2rem;
-  color: #b38b00;
-  text-align: right;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-
-/* 🟢 CORREÇÃO: FUNDO SÓLIDO PARA O CONTEÚDO DO CATÁLOGO 🟢 */
-.catalogo-main {
-    padding: 20px;
-    /* Adiciona o fundo sólido para rolar sobre a imagem do body */
-    background-color: #fff9e6;
-    /* Garante que o conteúdo principal não se estenda pela largura total */
-    max-width: 1200px; 
-    margin: 20px auto; /* Adiciona margem para descolar do header */
-    border-radius: 10px;
-}
-
-.secao-filtros {
-    padding: 0;
-    margin-bottom: 20px;
-    border-bottom: none;
-    text-align: center;
-    background-color: transparent; /* O fundo já está no .catalogo-main */
-}
-
-.tags-filtro-container h3 {
-    margin-top: 0;
-}
-
-#barra-busca {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 2px solid #ffdb4d;
-    border-radius: 8px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    background-color: #fffef2;
-    color: #3b3b3b;
-}
-
-/* ===== MODAL REUSO ===== */
-
-.modal-overlay {
-  display: none; 
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0,0,0,0.55);
-  z-index: 20;
-  align-items: center;
-  justify-content: center;
-  overflow-y: auto; 
-}
-
-.modal-box {
-  background-color: #fffef2;
-  margin: 40px 10px;
-  padding: 25px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 650px;
-  border: 2px solid #ffdb4d;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  position: relative;
-}
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 1.8rem;
-  cursor: pointer;
-  color: #b38b00;
-  line-height: 1;
-}
-
-#modal-conteudo {
-    margin-top: 15px;
-    line-height: 1.6;
-    text-align: left;
-    white-space: pre-wrap;
-    max-height: 60vh; 
-    overflow-y: auto;
-}
-
-#modal-titulo {
-    margin-top: 0;
-    text-align: left;
-}
-
-/* ======= (O bloco da .foto-perfil foi removido) ======= */
-
-/* ======= RESOLVENDO O PROBLEMA DO MENU E LAYOUT NO CELULAR ======= */
-/* Este bloco é essencial para arrumar os prints que você mandou */
-@media (max-width: 768px) {
-    /* Impede o site de "fugir" para o lado criando espaço branco */
-    html, body {
-        overflow-x: hidden;
-        width: 100%;
-    }
-
-    /* O Header agora empilha os itens (Título em cima, menu embaixo) */
-    .header-home {
-        flex-direction: column !important; 
-        height: auto !important;
-        padding: 15px 5px !important;
-        gap: 10px;
-    }
-
-    .titulo-site {
-        margin: 0 auto !important; /* Centraliza o título */
-        font-size: 1.4rem;
-    }
-
-    .home-lang-selector {
-        margin: 0 auto 10px auto !important; /* Centraliza o idioma */
-    }
-
-    /* Menu de links se organiza para caber na tela pequena */
-    .atalhos {
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        width: 100%;
-        gap: 8px;
-        margin-top: 5px;
-    }
-
-    .atalhos a {
-        margin: 5px !important;
-        font-size: 0.9rem;
-        display: inline-block;
-    }
-
-    /* Ajusta a altura dos parallax para não ficarem gigantes no celular */
-    .parallax-wrapper {
-        min-height: 300px !important;
-        background-attachment: scroll !important; /* Melhora o funcionamento no celular */
-    }
-    
-    .secao-parallax {
-         padding: 50px 15px !important; /* Mais espaço para o texto não colar nas bordas */
-    }
-
-    /* Garante que os cards de texto não ultrapassem a largura da tela */
-    .card-texto, .card-fav {
-        width: 94% !important;
-        max-width: 94% !important;
-        margin: 20px auto !important;
-        box-sizing: border-box; 
-    }
-}
-/* ======= BOTÃO DE TEMA ======= */
-.btn-theme {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin-left: 15px;
-    transition: transform 0.2s;
-}
-
-.btn-theme:hover {
-    transform: scale(1.1);
-}
-
-// ======= LÓGICA DO MODO ESCURO =======
-const toggleTheme = () => {
-    const body = document.body;
-    const btn = document.getElementById('theme-toggle');
-    
-    // Alterna a classe
-    body.classList.toggle('dark-theme');
-    
-    // Salva a preferência e muda o ícone
-    if (body.classList.contains('dark-theme')) {
-        localStorage.setItem('theme', 'dark');
-        if (btn) btn.textContent = '☀️';
-        console.log("Modo escuro ativado"); // Log para teste
-    } else {
-        localStorage.setItem('theme', 'light');
-        if (btn) btn.textContent = '🌙';
-        console.log("Modo claro ativado"); // Log para teste
-    }
-};
-
-// Inicialização ao carregar a página
-document.addEventListener('DOMContentLoaded', () => {
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const body = document.body;
-
-    // Aplica o tema salvo antes de mostrar a página
-    if (localStorage.getItem('theme') === 'dark') {
-        body.classList.add('dark-theme');
-        if (themeToggleBtn) themeToggleBtn.textContent = '☀️';
-    }
-
-    // Adiciona o evento de clique
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', toggleTheme);
-    } else {
-        console.error("Botão 'theme-toggle' não encontrado no HTML!");
-    }
-});
-
-/* Isso garante que o modo escuro tenha prioridade total */
-body.dark-theme {
-    background-color: #1a1a1a !important;
-    background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('sua-imagem-de-fundo.png') !important;
-    color: #e0e0e0 !important;
-}
-
-/* Garante que os títulos fiquem visíveis no escuro */
-body.dark-theme h1, 
-body.dark-theme h2, 
-body.dark-theme .titulo-catalogo {
-    color: #f1c40f !important; /* Um tom de dourado para as crônicas */
-}
-
-/* Ajuste para os cards de texto */
-body.dark-theme .card-texto {
-    background-color: #262626 !important;
-    border: 1px solid #444 !important;
-    color: #ddd !important;
-}
-
-/* Destaque para as Crônicas como 'Muros Falsos' */
-body.dark-theme .card-texto[data-categoria="Crônica"] {
-    border-left: 5px solid #b38b00;
-}
-/* ======= AJUSTE GLOBAL DO CONTÊINER ======= */
-/* Remove o "quadrado" de fundo nos dois temas */
-.catalogo-main, 
-.secao-filtros {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-/* ======= MODO ESCURO (DARK THEME) ======= */
-body.dark-theme {
-    background-color: #121212 !important; /* Fundo preto/cinza muito escuro */
-    /* Escurece a imagem de fundo para dar contraste aos textos brancos */
-    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('textosfavoritos.png') !important;
-    color: #ffffff !important;
-}
-
-/* Títulos e textos gerais no Modo Escuro */
-body.dark-theme h1, 
-body.dark-theme h2, 
-body.dark-theme h3, 
-body.dark-theme p,
-body.dark-theme label {
-    color: #ffffff !important;
-}
-
-/* Cards de Texto no Modo Escuro */
-body.dark-theme .card-texto, 
-body.dark-theme .card-fav {
-    background-color: #1e1e1e !important; /* Cinza escuro */
-    color: #ffffff !important;
-    border: 1px solid #333 !important;
-}
-
-/* Links e Botões nos Cards no Modo Escuro */
-body.dark-theme .card-texto a, 
-body.dark-theme .btn-ler {
-    color: #ffffff !important;
-    border-color: #ffffff !important;
-}
-
-/* Barra de busca e filtros no Modo Escuro */
-body.dark-theme #barra-busca, 
-body.dark-theme #lang-switch,
-body.dark-theme .tag-pill {
-    background-color: #2c2c2c !important;
-    color: #ffffff !important;
-    border: 1px solid #555 !important;
-}
-
-/* Destaque para a categoria Crônica (ex: Muros Falsos) */
-body.dark-theme .tag-pill.active {
-    background-color: #ffffff !important;
-    color: #121212 !important;
-}
-/* ======= CABEÇALHO NO MODO ESCURO ======= */
-body.dark-theme .header-catalogo,
-body.dark-theme .header-home {
-    background-color: #121212 !important; /* Preto/Cinza quase total */
-    border-bottom: 1px solid #333 !important; /* Linha sutil para separar do fundo */
-}
-
-/* Título e Botões do Cabeçalho */
-body.dark-theme .titulo-catalogo,
-body.dark-theme .titulo-site,
-body.dark-theme .menu-hamburguer,
-body.dark-theme .lang-selector label {
-    color: #ffffff !important; /* Letras brancas */
-}
-
-/* Ajuste para o fundo do Seletor de Idioma e Busca no Modo Escuro */
-body.dark-theme select,
-body.dark-theme #barra-busca {
-    background-color: #262626 !important;
-    color: #ffffff !important;
-    border: 1px solid #444 !important;
-}
-/* ======= MENU LATERAL NO MODO ESCURO ======= */
-body.dark-theme .menu-lateral {
-    background-color: #121212 !important; /* Fundo preto/cinza muito escuro */
-    border-right: 1px solid #333 !important;
-}
-
-/* Links do menu lateral no Modo Escuro */
-body.dark-theme .menu-lateral a {
-    color: #ffffff !important;
-    border-bottom: 1px solid #262626; /* Linha sutil entre os links */
-}
-
-body.dark-theme .menu-lateral a:hover {
-    background-color: #1e1e1e;
-    color: #f1c40f !important; /* Destaque dourado ao passar o mouse */
-}
-
-/* ======= ESTILIZAÇÃO DO BOTÃO "X" ======= */
-.btn-fechar {
-    background: none !important; /* Remove o fundo cinza */
-    border: none !important;     /* Remove a borda de botão */
-    color: #b38b00;              /* Cor dourada no modo claro */
-    font-size: 2rem;             /* Deixa o X grande e elegante */
-    cursor: pointer;
     padding: 10px 20px;
-    display: block;
-    text-align: right;
-    width: 100%;
-}
-
-/* "X" no Modo Escuro */
-body.dark-theme .btn-fechar {
-    color: #ffffff !important;   /* X branco no modo escuro */
-}
-
-body.dark-theme .btn-fechar:hover {
-    color: #ff0000 !important;   /* Fica vermelho ao passar o mouse para indicar fechar */
-}
-/* ======= MODAIS (TEXTO ABERTO) NO MODO ESCURO ======= */
-
-/* Fundo da caixa do modal */
-body.dark-theme .modal-conteudo {
-    background-color: #1e1e1e !important; /* Cinza escuro para combinar com os cards */
-    color: #ffffff !important;           /* Texto totalmente branco */
-    border: 1px solid #333 !important;   /* Borda sutil */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5) !important;
-}
-
-/* Título e parágrafos dentro do modal */
-body.dark-theme .modal-conteudo h2, 
-body.dark-theme .modal-conteudo h3, 
-body.dark-theme .modal-conteudo p {
-    color: #ffffff !important;
-}
-
-/* O "X" de fechar dentro do modal */
-body.dark-theme .fechar-modal,
-body.dark-theme .close-button {
-    color: #ffffff !important;
-    opacity: 0.8;
-}
-
-body.dark-theme .fechar-modal:hover {
-    color: #ff4444 !important; /* Vermelho ao passar o mouse para facilitar a saída */
-    opacity: 1;
-}
-
-/* Ajuste para a barra de rolagem dentro do modal no modo escuro */
-body.dark-theme .modal-conteudo::-webkit-scrollbar-thumb {
-    background: #444 !important;
-}
-/* ======= CORREÇÃO DO MODAL NO MODO ESCURO ======= */
-
-/* Garante que o fundo da caixa mude para cinza escuro */
-body.dark-theme .modal-box {
-    background-color: #1a1a1a !important; 
-    color: #ffffff !important;
-    border: 1px solid #333 !important;
-}
-
-/* Garante que o título e o texto dentro do modal fiquem brancos */
-body.dark-theme .modal-box h2, 
-body.dark-theme .modal-box h3, 
-body.dark-theme .modal-box p,
-body.dark-theme #modal-conteudo {
-    color: #ffffff !important;
-}
-
-/* Ajusta o botão "X" de fechar o modal */
-body.dark-theme #modal-close-btn {
-    color: #ffffff !important;
-    text-shadow: none !important;
-}
-
-/* Se houver uma barra de rolagem interna, deixa ela escura também */
-body.dark-theme .modal-box::-webkit-scrollbar-track {
-    background: #1a1a1a;
-}
-body.dark-theme .modal-box::-webkit-scrollbar-thumb {
-    background: #444;
-}
-/* Layout Base do Cabeçalho Home */
-.header-home {
-    display: flex;
-    justify-content: space-between; /* Separa os 3 blocos: esquerda, centro, direita */
-    align-items: center;
-    padding: 10px 5%;
-    background-color: #fff8e1; /* Cor amarela clara padrão */
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-/* Bloco Central: Idioma + Links */
-.header-center {
-    display: flex;
-    flex-direction: column; /* Coloca o idioma em cima dos links ou... */
-    align-items: center;
-    gap: 5px;
-}
-
-/* Se preferir Idioma e Links na mesma linha, use row abaixo: */
-@media (min-width: 768px) {
-    .header-center {
-        flex-direction: row; /* Alinha idioma e links lado a lado no desktop */
-        gap: 20px;
-    }
-}
-
-.nav-links {
-    display: flex;
-    gap: 15px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #b38b00;
+    border-radius: 8px;
     font-weight: bold;
 }
 
-/* Ajustes para o Modo Escuro no Cabeçalho Home */
-body.dark-theme .header-home {
-    background-color: #121212 !important;
-    border-bottom: 1px solid #333;
-}
-
-body.dark-theme .nav-links a,
-body.dark-theme .titulo-site {
+/* ======== MODO ESCURO (CORREÇÕES) ======== */
+body.dark-theme {
+    background-color: #000000 !important;
     color: #ffffff !important;
 }
-/* Organização da Direita: Botão em cima, Dropdown embaixo */
-.header-right {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
 
-/* Reduzi o seletor para caber melhor na lateral */
-#lang-switch-home {
-    font-size: 0.8rem;
-    padding: 2px;
-    cursor: pointer;
-}
-
-/* ======= LAYOUT DO CABEÇALHO ======= */
-.header-home {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 5%;
-    background-color: #fff8e1;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-/* Centraliza os links */
-.nav-links {
-    display: flex;
-    gap: 20px;
-}
-
-/* Coloca o Idioma DEBAIXO do botão de Tema */
-.header-right {
-    display: flex;
-    flex-direction: column; /* Alinhamento vertical */
-    align-items: center;
-    gap: 4px;
-}
-
-#lang-switch-home {
-    font-size: 0.75rem;
-    padding: 2px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    background: white;
-}
-
-/* ======= LAYOUT DO CABEÇALHO ======= */
-.header-home {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 5%;
-    background-color: #fff8e1;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-/* Centraliza os links */
-.nav-links {
-    display: flex;
-    gap: 20px;
-}
-
-/* Coloca o Idioma DEBAIXO do botão de Tema */
-.header-right {
-    display: flex;
-    flex-direction: column; /* Alinhamento vertical */
-    align-items: center;
-    gap: 4px;
-}
-
-#lang-switch-home {
-    font-size: 0.75rem;
-    padding: 2px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    background: white;
-}
-
-/* ======= CORREÇÃO DAS DIVISÓRIAS ESCURAS (PARALLAX) ======= */
-
-/* Isso remove as linhas brancas entre as seções no modo escuro */
-body.dark-theme {
-    background-color: #000000 !important; 
-}
-
-/* Garante que o espaço entre os wrappers do parallax fique preto */
-body.dark-theme .parallax-wrapper {
-    background-color: #000000 !important;
-    border: none !important;
-}
-
-/* Ajuste das seções para não vazarem luz */
-body.dark-theme .secao-parallax {
-    background-color: rgba(0, 0, 0, 0.7) !important; /* Fundo semi-transparente para o texto */
-    margin: 0 !important;
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-
-/* Remove qualquer borda clara que possa estar sobrando */
 body.dark-theme .header-home {
     background-color: #121212 !important;
     border-bottom: 1px solid #333;
+}
+
+body.dark-theme .titulo-site, 
+body.dark-theme .nav-links a { color: #ffffff !important; }
+
+body.dark-theme .parallax-wrapper {
+    background-color: #000000 !important;
+    border: none;
+}
+
+body.dark-theme .secao-parallax {
+    background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+body.dark-theme .card-texto, 
+body.dark-theme .card-fav {
+    background-color: #1e1e1e !important;
+    border: 1px solid #333 !important;
+}
+
+/* MODAL NO MODO ESCURO */
+body.dark-theme .modal-box {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+    border: 1px solid #ffdb4d;
+}
+
+/* ======== CELULAR ======== */
+@media (max-width: 768px) {
+    .header-home { flex-direction: column; padding: 15px; gap: 10px; }
+    .nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .parallax-wrapper { background-attachment: scroll; min-height: 350px; }
 }
